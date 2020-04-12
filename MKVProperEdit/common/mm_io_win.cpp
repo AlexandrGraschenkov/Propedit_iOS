@@ -1,0 +1,226 @@
+/*
+   mkvmerge -- utility for splicing together matroska files
+   from component media subtypes
+
+   Distributed under the GPL v2
+   see the file COPYING for details
+   or visit http://www.gnu.org/copyleft/gpl.html
+
+   IO callback class implementation (Windows specific parts)
+
+   Written by Moritz Bunkus <moritz@bunkus.org>.
+*/
+
+#include "common/common_pch.h"
+
+#if defined(SYS_WINDOWS)
+
+#include <direct.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <io.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+
+#include "common/endian.h"
+#include "common/error.h"
+#include "common/fs_sys_helpers.h"
+#include "common/mm_io.h"
+#include "common/mm_io_x.h"
+#include "common/strings/editing.h"
+#include "common/strings/parsing.h"
+#include "common/strings/my_utf8.h"
+
+mm_file_io_c::mm_file_io_c(const std::string &path,
+                           const open_mode mode)
+  : m_file_name(path)
+  , m_file(nullptr)
+  , m_eof(false)
+{
+  DWORD access_mode, share_mode, disposition;
+
+  switch (mode) {
+    case MODE_READ:
+      access_mode = GENERIC_READ;
+      share_mode  = FILE_SHARE_READ | FILE_SHARE_WRITE;
+      disposition = OPEN_EXISTING;
+      break;
+    case MODE_WRITE:
+      access_mode = GENERIC_WRITE | GENERIC_READ;
+      share_mode  = FILE_SHARE_READ;
+      disposition = OPEN_EXISTING;
+      break;
+    case MODE_SAFE:
+      access_mode = GENERIC_WRITE | GENERIC_READ;
+      share_mode  = FILE_SHARE_READ;
+      disposition = OPEN_ALWAYS;
+      break;
+    case MODE_CREATE:
+      access_mode = GENERIC_WRITE | GENERIC_READ;
+      share_mode  = FILE_SHARE_READ;
+      disposition = CREATE_ALWAYS;
+      break;
+    default:
+      throw mtx::invalid_parameter_x();
+  }
+
+  if ((MODE_WRITE == mode) || (MODE_CREATE == mode))
+    prepare_path(path);
+
+  auto w_path = to_wide(path);
+  m_file      = static_cast<void *>(CreateFileW(w_path.c_str(), access_mode, share_mode, nullptr, disposition, 0, nullptr));
+  if (static_cast<HANDLE>(m_file) == INVALID_HANDLE_VALUE)
+    throw mtx::mm_io::open_x{mtx::mm_io::make_error_code()};
+
+  m_dos_style_newlines = true;
+}
+
+void
+mm_file_io_c::close() {
+  if (m_file) {
+    CloseHandle((HANDLE)m_file);
+    m_file = nullptr;
+  }
+  m_file_name.clear();
+}
+
+uint64
+mm_file_io_c::get_real_file_pointer() {
+  LONG high = 0;
+  DWORD low = SetFilePointer((HANDLE)m_file, 0, &high, FILE_CURRENT);
+
+  if ((low == INVALID_SET_FILE_POINTER) && (GetLastError() != NO_ERROR))
+    return (uint64)-1;
+
+  return (((uint64)high) << 32) | (uint64)low;
+}
+
+void
+mm_file_io_c::setFilePointer(int64 offset,
+                             seek_mode mode) {
+  DWORD method = seek_beginning == mode ? FILE_BEGIN
+               : seek_current   == mode ? FILE_CURRENT
+               : seek_end       == mode ? FILE_END
+               :                          FILE_BEGIN;
+  LONG high    = (LONG)(offset >> 32);
+  DWORD low    = SetFilePointer((HANDLE)m_file, (LONG)(offset & 0xffffffff), &high, method);
+
+  if ((INVALID_SET_FILE_POINTER == low) && (GetLastError() != NO_ERROR))
+    throw mtx::mm_io::seek_x{mtx::mm_io::make_error_code()};
+
+  m_eof              = false;
+  m_current_position = (int64_t)low + ((int64_t)high << 32);
+}
+
+uint32
+mm_file_io_c::_read(void *buffer,
+                    size_t size) {
+  DWORD bytes_read;
+
+  if (!ReadFile((HANDLE)m_file, buffer, size, &bytes_read, nullptr)) {
+    m_eof              = true;
+    m_current_position = get_real_file_pointer();
+
+    return 0;
+  }
+
+  m_eof               = size != bytes_read;
+  m_current_position += bytes_read;
+
+  return bytes_read;
+}
+
+size_t
+mm_file_io_c::_write(const void *buffer,
+                     size_t size) {
+  DWORD bytes_written;
+
+  if (!WriteFile((HANDLE)m_file, buffer, size, &bytes_written, nullptr))
+    bytes_written = 0;
+
+  if (bytes_written != size) {
+    auto error          = GetLastError();
+    auto error_msg_utf8 = mtx::sys::format_windows_message(error);
+    mxerror(boost::format(Y("Could not write to the destination file: %1% (%2%)\n")) % error % error_msg_utf8);
+  }
+
+  m_current_position += bytes_written;
+  m_cached_size       = -1;
+  m_eof               = false;
+
+  return bytes_written;
+}
+
+bool
+mm_file_io_c::eof() {
+  return m_eof;
+}
+
+void
+mm_file_io_c::clear_eof() {
+  m_eof = false;
+}
+
+int
+mm_file_io_c::truncate(int64_t pos) {
+  m_cached_size = -1;
+
+  save_pos();
+  if (setFilePointer2(pos)) {
+    bool result = SetEndOfFile((HANDLE)m_file);
+    restore_pos();
+
+    return result ? 0 : -1;
+  }
+
+  restore_pos();
+
+  return -1;
+}
+
+void
+mm_file_io_c::setup() {
+}
+
+static bool s_stdout_binmode_set = false;
+
+size_t
+mm_stdio_c::_write(const void *buffer,
+                   size_t size) {
+  HANDLE h_stdout = GetStdHandle(STD_OUTPUT_HANDLE);
+  if (INVALID_HANDLE_VALUE == h_stdout)
+    return 0;
+
+  DWORD file_type = GetFileType(h_stdout);
+  bool is_console = false;
+  if ((FILE_TYPE_UNKNOWN != file_type) && ((file_type & ~FILE_TYPE_REMOTE) == FILE_TYPE_CHAR)) {
+    DWORD dummy;
+    is_console = GetConsoleMode(h_stdout, &dummy);
+  }
+
+  if (is_console) {
+    const std::wstring &w = to_wide(std::string(static_cast<const char *>(buffer), size));
+    DWORD bytes_written   = 0;
+
+    WriteConsoleW(h_stdout, w.c_str(), w.length(), &bytes_written, nullptr);
+
+    return bytes_written;
+  }
+
+  if (!s_stdout_binmode_set) {
+    _setmode(1, _O_BINARY);
+    s_stdout_binmode_set = true;
+  }
+
+  size_t bytes_written = fwrite(buffer, 1, size, stdout);
+  fflush(stdout);
+
+  m_cached_size = -1;
+
+  return bytes_written;
+}
+
+#endif  // defined(SYS_WINDOWS)
