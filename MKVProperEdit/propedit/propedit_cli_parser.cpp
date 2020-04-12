@@ -58,78 +58,42 @@ propedit_cli_parser_c::add_change() {
 
 void
 propedit_cli_parser_c::add_tags() {
-  try {
-    m_options->add_tags(m_next_arg);
-  } catch (...) {
-    mxerror(boost::format(Y("Invalid selector in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
-  }
 }
 
 void
 propedit_cli_parser_c::add_chapters() {
-  try {
-    m_options->add_chapters(m_next_arg);
-  } catch (...) {
-    mxerror(boost::format(Y("Invalid selector in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
-  }
 }
 
 void
 propedit_cli_parser_c::set_attachment_name() {
-  m_attachment.m_name.reset(m_next_arg);
 }
 
 void
 propedit_cli_parser_c::set_attachment_description() {
-  m_attachment.m_description.reset(m_next_arg);
 }
 
 void
 propedit_cli_parser_c::set_attachment_mime_type() {
-  m_attachment.m_mime_type.reset(m_next_arg);
 }
 
 void
 propedit_cli_parser_c::set_attachment_uid() {
-  auto uid = uint64_t{};
-  if (!parse_number(m_next_arg, uid))
-    mxerror(boost::format(Y("The value '%1%' is not a number.\n")) % m_next_arg);
-
-  m_attachment.m_uid.reset(uid);
 }
 
 void
 propedit_cli_parser_c::add_attachment() {
-  try {
-    m_options->add_attachment_command(attachment_target_c::ac_add, m_next_arg, m_attachment);
-    m_attachment = attachment_target_c::options_t();
-  } catch (...) {
-    mxerror(boost::format(Y("Invalid selector in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
-  }
 }
 
 void
 propedit_cli_parser_c::delete_attachment() {
-  try {
-    m_options->add_attachment_command(attachment_target_c::ac_delete, m_next_arg, m_attachment);
-  } catch (...) {
-    mxerror(boost::format(Y("Invalid selector in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
-  }
 }
 
 void
 propedit_cli_parser_c::replace_attachment() {
-  try {
-    m_options->add_attachment_command(m_current_arg == "--update-attachment" ? attachment_target_c::ac_update : attachment_target_c::ac_replace, m_next_arg, m_attachment);
-    m_attachment = attachment_target_c::options_t();
-  } catch (...) {
-    mxerror(boost::format(Y("Invalid selector in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
-  }
 }
 
 void
 propedit_cli_parser_c::handle_track_statistics_tags() {
-  m_options->add_delete_track_statistics_tags(m_current_arg == "--add-track-statistics-tags" ? tag_target_c::tom_add_track_statistics : tag_target_c::tom_delete_track_statistics);
 }
 
 std::map<property_element_c::ebml_type_e, const char *> &

@@ -13,7 +13,6 @@
 #include "common/common_pch.h"
 
 #include "common/cli_parser.h"
-#include "propedit/attachment_target.h"
 #include "propedit/options.h"
 
 class propedit_cli_parser_c: public mtx::cli::parser_c {

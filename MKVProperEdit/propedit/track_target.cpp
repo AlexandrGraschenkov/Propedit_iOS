@@ -10,9 +10,9 @@
 
 #include "common/common_pch.h"
 
-#include "common/strings/parsing.h"
-#include "propedit/propedit.h"
 #include "propedit/track_target.h"
+
+#define FILE_NOT_MODIFIED Y("The file has not been modified.")
 
 using namespace libmatroska;
 
@@ -109,6 +109,7 @@ track_target_c::execute() {
   fix_mandatory_elements(m_master);
 }
 
+// GOOD
 void
 track_target_c::set_level1_element(ebml_element_cptr level1_element_cp,
                                    ebml_element_cptr track_headers_cp) {
@@ -208,7 +209,7 @@ track_target_c::parse_spec(std::string const &spec) {
     throw false;
 
   std::string prefix = matches[1].str();
-  parse_number(matches[2].str(), m_selection_param);
+  m_selection_param = std::stol(matches[2].str());
 
   m_selection_mode = prefix.empty() ? sm_by_position
                    : prefix == "="  ? sm_by_uid

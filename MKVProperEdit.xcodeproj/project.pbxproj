@@ -11,30 +11,20 @@
 		FA46AD3424430E0F005CA1E2 /* MKVProperEdit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */; };
 		FA46AD3524430E0F005CA1E2 /* MKVProperEdit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA77F14323D1A1C8009DCB2C /* MKVProperEdit.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F14123D1A1C8009DCB2C /* MKVProperEdit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FA77F16323D1A1E1009DCB2C /* attachment_target.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F14A23D1A1E1009DCB2C /* attachment_target.h */; };
 		FA77F16423D1A1E1009DCB2C /* propedit_cli_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F14B23D1A1E1009DCB2C /* propedit_cli_parser.cpp */; };
-		FA77F16523D1A1E1009DCB2C /* resources.rc in Resources */ = {isa = PBXBuildFile; fileRef = FA77F14C23D1A1E1009DCB2C /* resources.rc */; };
 		FA77F16623D1A1E1009DCB2C /* options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F14D23D1A1E1009DCB2C /* options.cpp */; };
 		FA77F16723D1A1E1009DCB2C /* options.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F14E23D1A1E1009DCB2C /* options.h */; };
-		FA77F16823D1A1E1009DCB2C /* manifest-x86.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA77F14F23D1A1E1009DCB2C /* manifest-x86.xml */; };
-		FA77F16923D1A1E1009DCB2C /* tag_target.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F15023D1A1E1009DCB2C /* tag_target.h */; };
 		FA77F16B23D1A1E1009DCB2C /* segment_info_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F15223D1A1E1009DCB2C /* segment_info_target.cpp */; };
 		FA77F16C23D1A1E1009DCB2C /* change.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F15323D1A1E1009DCB2C /* change.cpp */; };
 		FA77F16D23D1A1E1009DCB2C /* propedit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F15423D1A1E1009DCB2C /* propedit.cpp */; };
-		FA77F16E23D1A1E1009DCB2C /* chapter_target.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F15523D1A1E1009DCB2C /* chapter_target.h */; };
-		FA77F16F23D1A1E1009DCB2C /* target_id_manager.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F15623D1A1E1009DCB2C /* target_id_manager.h */; };
 		FA77F17023D1A1E1009DCB2C /* target.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F15723D1A1E1009DCB2C /* target.h */; };
 		FA77F17123D1A1E1009DCB2C /* target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F15823D1A1E1009DCB2C /* target.cpp */; };
 		FA77F17223D1A1E1009DCB2C /* change.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F15923D1A1E1009DCB2C /* change.h */; };
 		FA77F17323D1A1E1009DCB2C /* track_target.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F15A23D1A1E1009DCB2C /* track_target.h */; };
 		FA77F17423D1A1E1009DCB2C /* propedit.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F15B23D1A1E1009DCB2C /* propedit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA77F17523D1A1E1009DCB2C /* track_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F15C23D1A1E1009DCB2C /* track_target.cpp */; };
-		FA77F17623D1A1E1009DCB2C /* attachment_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F15D23D1A1E1009DCB2C /* attachment_target.cpp */; };
 		FA77F17723D1A1E1009DCB2C /* segment_info_target.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F15E23D1A1E1009DCB2C /* segment_info_target.h */; };
-		FA77F17823D1A1E1009DCB2C /* tag_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F15F23D1A1E1009DCB2C /* tag_target.cpp */; };
 		FA77F17923D1A1E1009DCB2C /* propedit_cli_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F16023D1A1E1009DCB2C /* propedit_cli_parser.h */; };
-		FA77F17A23D1A1E1009DCB2C /* chapter_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F16123D1A1E1009DCB2C /* chapter_target.cpp */; };
-		FA77F17B23D1A1E1009DCB2C /* manifest-amd64.xml in Resources */ = {isa = PBXBuildFile; fileRef = FA77F16223D1A1E1009DCB2C /* manifest-amd64.xml */; };
 		FA77F27D23D1A22C009DCB2C /* ebml.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F17D23D1A22C009DCB2C /* ebml.h */; };
 		FA77F27E23D1A22C009DCB2C /* tta.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F17E23D1A22C009DCB2C /* tta.h */; };
 		FA77F27F23D1A22C009DCB2C /* opus.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F17F23D1A22C009DCB2C /* opus.h */; };
@@ -480,31 +470,20 @@
 		FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MKVProperEdit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA77F14123D1A1C8009DCB2C /* MKVProperEdit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKVProperEdit.h; sourceTree = "<group>"; };
 		FA77F14223D1A1C8009DCB2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA77F14A23D1A1E1009DCB2C /* attachment_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attachment_target.h; sourceTree = "<group>"; };
 		FA77F14B23D1A1E1009DCB2C /* propedit_cli_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = propedit_cli_parser.cpp; sourceTree = "<group>"; };
-		FA77F14C23D1A1E1009DCB2C /* resources.rc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = resources.rc; sourceTree = "<group>"; };
 		FA77F14D23D1A1E1009DCB2C /* options.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = options.cpp; sourceTree = "<group>"; };
 		FA77F14E23D1A1E1009DCB2C /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = options.h; sourceTree = "<group>"; };
-		FA77F14F23D1A1E1009DCB2C /* manifest-x86.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "manifest-x86.xml"; sourceTree = "<group>"; };
-		FA77F15023D1A1E1009DCB2C /* tag_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tag_target.h; sourceTree = "<group>"; };
-		FA77F15123D1A1E1009DCB2C /* Rakefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Rakefile; sourceTree = "<group>"; };
 		FA77F15223D1A1E1009DCB2C /* segment_info_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = segment_info_target.cpp; sourceTree = "<group>"; };
 		FA77F15323D1A1E1009DCB2C /* change.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = change.cpp; sourceTree = "<group>"; };
 		FA77F15423D1A1E1009DCB2C /* propedit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = propedit.cpp; sourceTree = "<group>"; };
-		FA77F15523D1A1E1009DCB2C /* chapter_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chapter_target.h; sourceTree = "<group>"; };
-		FA77F15623D1A1E1009DCB2C /* target_id_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target_id_manager.h; sourceTree = "<group>"; };
 		FA77F15723D1A1E1009DCB2C /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
 		FA77F15823D1A1E1009DCB2C /* target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = target.cpp; sourceTree = "<group>"; };
 		FA77F15923D1A1E1009DCB2C /* change.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = change.h; sourceTree = "<group>"; };
 		FA77F15A23D1A1E1009DCB2C /* track_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = track_target.h; sourceTree = "<group>"; };
 		FA77F15B23D1A1E1009DCB2C /* propedit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = propedit.h; sourceTree = "<group>"; };
 		FA77F15C23D1A1E1009DCB2C /* track_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = track_target.cpp; sourceTree = "<group>"; };
-		FA77F15D23D1A1E1009DCB2C /* attachment_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attachment_target.cpp; sourceTree = "<group>"; };
 		FA77F15E23D1A1E1009DCB2C /* segment_info_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = segment_info_target.h; sourceTree = "<group>"; };
-		FA77F15F23D1A1E1009DCB2C /* tag_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tag_target.cpp; sourceTree = "<group>"; };
 		FA77F16023D1A1E1009DCB2C /* propedit_cli_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = propedit_cli_parser.h; sourceTree = "<group>"; };
-		FA77F16123D1A1E1009DCB2C /* chapter_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = chapter_target.cpp; sourceTree = "<group>"; };
-		FA77F16223D1A1E1009DCB2C /* manifest-amd64.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "manifest-amd64.xml"; sourceTree = "<group>"; };
 		FA77F17D23D1A22C009DCB2C /* ebml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ebml.h; sourceTree = "<group>"; };
 		FA77F17E23D1A22C009DCB2C /* tta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tta.h; sourceTree = "<group>"; };
 		FA77F17F23D1A22C009DCB2C /* opus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = opus.h; sourceTree = "<group>"; };
@@ -984,31 +963,20 @@
 		FA77F14923D1A1E1009DCB2C /* propedit */ = {
 			isa = PBXGroup;
 			children = (
-				FA77F14A23D1A1E1009DCB2C /* attachment_target.h */,
-				FA77F14B23D1A1E1009DCB2C /* propedit_cli_parser.cpp */,
-				FA77F14C23D1A1E1009DCB2C /* resources.rc */,
+				FA77F15B23D1A1E1009DCB2C /* propedit.h */,
+				FA77F15423D1A1E1009DCB2C /* propedit.cpp */,
+				FA77F15A23D1A1E1009DCB2C /* track_target.h */,
+				FA77F15C23D1A1E1009DCB2C /* track_target.cpp */,
+				FA77F15223D1A1E1009DCB2C /* segment_info_target.cpp */,
+				FA77F15E23D1A1E1009DCB2C /* segment_info_target.h */,
 				FA77F14D23D1A1E1009DCB2C /* options.cpp */,
 				FA77F14E23D1A1E1009DCB2C /* options.h */,
-				FA77F14F23D1A1E1009DCB2C /* manifest-x86.xml */,
-				FA77F15023D1A1E1009DCB2C /* tag_target.h */,
-				FA77F15123D1A1E1009DCB2C /* Rakefile */,
-				FA77F15223D1A1E1009DCB2C /* segment_info_target.cpp */,
+				FA77F16023D1A1E1009DCB2C /* propedit_cli_parser.h */,
+				FA77F14B23D1A1E1009DCB2C /* propedit_cli_parser.cpp */,
+				FA77F15923D1A1E1009DCB2C /* change.h */,
 				FA77F15323D1A1E1009DCB2C /* change.cpp */,
-				FA77F15423D1A1E1009DCB2C /* propedit.cpp */,
-				FA77F15523D1A1E1009DCB2C /* chapter_target.h */,
-				FA77F15623D1A1E1009DCB2C /* target_id_manager.h */,
 				FA77F15723D1A1E1009DCB2C /* target.h */,
 				FA77F15823D1A1E1009DCB2C /* target.cpp */,
-				FA77F15923D1A1E1009DCB2C /* change.h */,
-				FA77F15A23D1A1E1009DCB2C /* track_target.h */,
-				FA77F15B23D1A1E1009DCB2C /* propedit.h */,
-				FA77F15C23D1A1E1009DCB2C /* track_target.cpp */,
-				FA77F15D23D1A1E1009DCB2C /* attachment_target.cpp */,
-				FA77F15E23D1A1E1009DCB2C /* segment_info_target.h */,
-				FA77F15F23D1A1E1009DCB2C /* tag_target.cpp */,
-				FA77F16023D1A1E1009DCB2C /* propedit_cli_parser.h */,
-				FA77F16123D1A1E1009DCB2C /* chapter_target.cpp */,
-				FA77F16223D1A1E1009DCB2C /* manifest-amd64.xml */,
 			);
 			path = propedit;
 			sourceTree = "<group>";
@@ -1594,7 +1562,6 @@
 				FA77F27D23D1A22C009DCB2C /* ebml.h in Headers */,
 				FA77F29723D1A22C009DCB2C /* editing.h in Headers */,
 				FA77F17323D1A1E1009DCB2C /* track_target.h in Headers */,
-				FA77F16923D1A1E1009DCB2C /* tag_target.h in Headers */,
 				FA77F2E923D1A22C009DCB2C /* stereo_mode.h in Headers */,
 				FA77F28723D1A22C009DCB2C /* truehd.h in Headers */,
 				FA77F33D23D1A22C009DCB2C /* avc_types.h in Headers */,
@@ -1609,11 +1576,9 @@
 				FA77F2C323D1A22C009DCB2C /* chapters.h in Headers */,
 				FAD6F3FF243DB22B00C4FDC3 /* json.hpp in Headers */,
 				FA77F33523D1A22C009DCB2C /* header_removal.h in Headers */,
-				FA77F16323D1A1E1009DCB2C /* attachment_target.h in Headers */,
 				FA77F2A423D1A22C009DCB2C /* mp4.h in Headers */,
 				FA77F2E423D1A22C009DCB2C /* ivf.h in Headers */,
 				FA77F32323D1A22C009DCB2C /* sorting.h in Headers */,
-				FA77F16F23D1A1E1009DCB2C /* target_id_manager.h in Headers */,
 				FA77F30A23D1A22C009DCB2C /* target_type.h in Headers */,
 				FA77F30F23D1A22C009DCB2C /* ogmstreams.h in Headers */,
 				FA77F2C223D1A22C009DCB2C /* memory_slice_cursor.h in Headers */,
@@ -1688,7 +1653,6 @@
 				FA77F32F23D1A22C009DCB2C /* locale_string.h in Headers */,
 				FA77F17923D1A1E1009DCB2C /* propedit_cli_parser.h in Headers */,
 				FA77F36823D1A22C009DCB2C /* webm.h in Headers */,
-				FA77F16E23D1A1E1009DCB2C /* chapter_target.h in Headers */,
 				FA77F2AD23D1A22C009DCB2C /* hdsub.h in Headers */,
 				FA77F35423D1A22C009DCB2C /* logger.h in Headers */,
 				FA77F32D23D1A22C009DCB2C /* logger_win.h in Headers */,
@@ -1930,9 +1894,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA77F17B23D1A1E1009DCB2C /* manifest-amd64.xml in Resources */,
-				FA77F16523D1A1E1009DCB2C /* resources.rc in Resources */,
-				FA77F16823D1A1E1009DCB2C /* manifest-x86.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2038,7 +1999,6 @@
 				FA77F2FA23D1A22C009DCB2C /* iso639.cpp in Sources */,
 				FA77F30C23D1A22C009DCB2C /* webm.cpp in Sources */,
 				FA77F34F23D1A22C009DCB2C /* kax_file.cpp in Sources */,
-				FA77F17623D1A1E1009DCB2C /* attachment_target.cpp in Sources */,
 				FA77F33323D1A22C009DCB2C /* avcc.cpp in Sources */,
 				FA77F31523D1A22C009DCB2C /* debugging.cpp in Sources */,
 				FA77F33423D1A22C009DCB2C /* header_removal.cpp in Sources */,
@@ -2048,7 +2008,6 @@
 				FA77F2CD23D1A22C009DCB2C /* mpls.cpp in Sources */,
 				FA77F35323D1A22C009DCB2C /* translation.cpp in Sources */,
 				FA77F32723D1A22C009DCB2C /* mm_io.cpp in Sources */,
-				FA77F17823D1A1E1009DCB2C /* tag_target.cpp in Sources */,
 				FA77F28523D1A22C009DCB2C /* memory.cpp in Sources */,
 				FA77F2B623D1A22C009DCB2C /* win_itaskbarlist3.cpp in Sources */,
 				FA77F2ED23D1A22C009DCB2C /* opus.cpp in Sources */,
@@ -2082,7 +2041,6 @@
 				FA77F30E23D1A22C009DCB2C /* mm_multi_file_io.cpp in Sources */,
 				FA77F2E123D1A22C009DCB2C /* aac.cpp in Sources */,
 				FA77F2F223D1A22C009DCB2C /* cli_parser.cpp in Sources */,
-				FA77F17A23D1A1E1009DCB2C /* chapter_target.cpp in Sources */,
 				FA77F36323D1A22C009DCB2C /* stereo_mode.cpp in Sources */,
 				FA77F35F23D1A22C009DCB2C /* json.cpp in Sources */,
 				FA77F36B23D1A22C009DCB2C /* command_line.cpp in Sources */,

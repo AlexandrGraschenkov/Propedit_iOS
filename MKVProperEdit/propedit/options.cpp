@@ -10,15 +10,8 @@
 
 #include "common/common_pch.h"
 
-#include <matroska/KaxChapters.h>
-#include <matroska/KaxTag.h>
-#include <matroska/KaxTags.h>
-
-#include "propedit/chapter_target.h"
 #include "propedit/options.h"
-#include "propedit/propedit.h"
 #include "propedit/segment_info_target.h"
-#include "propedit/tag_target.h"
 #include "propedit/track_target.h"
 
 options_c::options_c()
@@ -94,33 +87,6 @@ options_c::add_track_or_segmentinfo_target(std::string const &spec) {
   return target;
 }
 
-void
-options_c::add_tags(std::string const &spec) {
-  target_cptr target{new tag_target_c{}};
-  static_cast<tag_target_c *>(target.get())->parse_tags_spec(spec);
-  m_targets.push_back(target);
-}
-
-void
-options_c::add_chapters(const std::string &spec) {
-  target_cptr target{new chapter_target_c{}};
-  static_cast<chapter_target_c *>(target.get())->parse_chapter_spec(spec);
-  m_targets.push_back(target);
-}
-
-void
-options_c::add_attachment_command(attachment_target_c::command_e command,
-                                  const std::string &spec,
-                                  attachment_target_c::options_t const &options) {
-  target_cptr target{new attachment_target_c};
-  static_cast<attachment_target_c *>(target.get())->parse_spec(command, spec, options);
-  m_targets.push_back(target);
-}
-
-void
-options_c::add_delete_track_statistics_tags(tag_target_c::tag_operation_mode_e operation_mode) {
-  m_targets.push_back(std::make_shared<tag_target_c>(operation_mode));
-}
 
 void
 options_c::set_file_name(const std::string &file_name) {
@@ -181,7 +147,7 @@ read_element(kax_analyzer_c *analyzer,
     e = analyzer->read_element(index);
 
   if (require_existance && (!e || !dynamic_cast<T *>(e.get())))
-    mxerror(boost::format(Y("Modification of properties in the section '%1%' was requested, but no corresponding level 1 element was found in the file. %2%\n")) % category % FILE_NOT_MODIFIED);
+    mxerror(boost::format(Y("Modification of properties in the section '%1%' was requested, but no corresponding level 1 element was found in the file. %2%\n")) % category % "FILE_NOT_MODIFIED");
 
   return e;
 }
@@ -190,48 +156,11 @@ void
 options_c::find_elements(kax_analyzer_c *analyzer) {
   ebml_element_cptr tracks(read_element<KaxTracks>(analyzer, Y("Track headers")));
   ebml_element_cptr info, tags, chapters, attachments;
-  attachment_id_manager_cptr attachment_id_manager;
 
   for (auto &target_ptr : m_targets) {
     target_c &target = *target_ptr;
-    if (dynamic_cast<segment_info_target_c *>(&target)) {
-      if (!info)
-        info = read_element<KaxInfo>(analyzer, Y("Segment information"));
-      target.set_level1_element(info);
-
-    } else if (dynamic_cast<tag_target_c *>(&target)) {
-      if (!tags) {
-        tags = read_element<KaxTags>(analyzer, Y("Tags"), false);
-        if (!tags)
-          tags = ebml_element_cptr(new KaxTags);
-      }
-
-      target.set_level1_element(tags, tracks);
-
-    } else if (dynamic_cast<chapter_target_c *>(&target)) {
-      if (!chapters) {
-        chapters = read_element<KaxChapters>(analyzer, Y("Chapters"), false);
-        if (!chapters)
-          chapters = ebml_element_cptr(new KaxChapters);
-      }
-
-      target.set_level1_element(chapters, tracks);
-
-    } else if (dynamic_cast<attachment_target_c *>(&target)) {
-      if (!attachments) {
-        attachments = read_element<KaxAttachments>(analyzer, Y("Attachments"), false);
-        if (!attachments)
-          attachments = ebml_element_cptr(new KaxAttachments);
-
-        attachment_id_manager = std::make_shared<attachment_id_manager_c>(static_cast<EbmlMaster *>(attachments.get()), 1);
-      }
-
-      static_cast<attachment_target_c &>(target).set_id_manager(attachment_id_manager);
-      target.set_level1_element(attachments);
-
-    } else if (dynamic_cast<track_target_c *>(&target))
+    if (dynamic_cast<track_target_c *>(&target))
       target.set_level1_element(tracks);
-
     else
       assert(false);
   }
@@ -246,10 +175,6 @@ options_c::merge_targets() {
 
   for (auto &target : m_targets) {
     auto track_target = dynamic_cast<track_target_c *>(target.get());
-    if (!track_target || dynamic_cast<tag_target_c *>(target.get())) {
-      targets_to_keep.push_back(target);
-      continue;
-    }
 
     auto existing_target_it = targets_by_track_uid.find(track_target->get_track_uid());
     auto track_uid          = target->get_track_uid();

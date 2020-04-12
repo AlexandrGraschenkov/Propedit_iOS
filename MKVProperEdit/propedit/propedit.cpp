@@ -190,10 +190,4 @@ run_edit(int argc,
   }
 
   run(options);
-
-//  mxexit();
-}
-
-void test_class::print() {
-    kkk = 42;
 }
