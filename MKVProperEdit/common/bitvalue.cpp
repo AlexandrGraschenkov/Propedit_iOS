@@ -16,7 +16,6 @@
 #include "common/bitvalue.h"
 #include "common/error.h"
 #include "common/memory.h"
-#include "common/random.h"
 #include "common/strings/editing.h"
 
 namespace mtx { namespace bits {
@@ -116,7 +115,7 @@ value_c::operator [](size_t index)
 
 void
 value_c::generate_random() {
-  random_c::generate_bytes(m_value->get_buffer(), m_value->get_size());
+//  random_c::generate_bytes(m_value->get_buffer(), m_value->get_size());
 }
 
 void

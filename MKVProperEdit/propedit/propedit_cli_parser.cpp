@@ -235,9 +235,6 @@ propedit_cli_parser_c::init_parser() {
 
 void
 propedit_cli_parser_c::validate() {
-  if (m_attachment.m_name || m_attachment.m_description || m_attachment.m_mime_type || m_attachment.m_uid)
-    mxerror(Y("One of the options '--attachment-name', '--attachment-description', '--attachment-mime-type' or '--attachment-uid' has been used "
-              "without a following '--add-attachment', '--replace-attachment' or '--update-attachment' option.\n"));
 }
 
 options_cptr

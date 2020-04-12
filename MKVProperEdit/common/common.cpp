@@ -28,7 +28,6 @@
 
 #include "common/fs_sys_helpers.h"
 #include "common/hacks.h"
-#include "common/random.h"
 #include "common/stereo_mode.h"
 #include "common/strings/editing.h"
 #include "common/translation.h"
@@ -177,8 +176,6 @@ set_process_priority(int priority) {
 void
 mtx_common_init(std::string const &program_name,
                 char const *argv0) {
-  random_c::init();
-
   g_cc_local_utf8 = charset_converter_c::init("");
 
   init_common_output(true);
@@ -200,8 +197,6 @@ mtx_common_init(std::string const &program_name,
   init_common_output(false);
 
   stereo_mode_c::init();
-
-  mtx::sys::determine_path_to_current_executable(argv0 ? std::string{argv0} : std::string{});
 }
 
 std::string const &

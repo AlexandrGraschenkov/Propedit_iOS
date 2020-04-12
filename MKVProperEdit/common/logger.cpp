@@ -56,7 +56,7 @@ target_c::format_line(std::string const &message) {
 target_c &
 target_c::get_default_logger() {
   if (!s_default_logger) {
-    auto var = mtx::sys::get_environment_variable("MTX_LOGGER");
+    std::string var = "";
 
     if (var.empty()) {
 #if defined(SYS_WINDOWS)

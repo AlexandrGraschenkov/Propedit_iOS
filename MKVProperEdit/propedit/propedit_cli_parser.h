@@ -9,6 +9,7 @@
 */
 
 #pragma once
+// 
 
 #include "common/common_pch.h"
 
@@ -19,7 +20,6 @@ class propedit_cli_parser_c: public mtx::cli::parser_c {
 protected:
   options_cptr m_options;
   target_cptr m_target;
-  attachment_target_c::options_t m_attachment;
 
 public:
   propedit_cli_parser_c(const std::vector<std::string> &args);

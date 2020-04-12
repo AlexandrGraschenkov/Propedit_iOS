@@ -81,10 +81,10 @@ create_unique_number(unique_id_category_e category) {
     return s_random_unique_numbers[category].size();
   }
 
-  uint64_t random_number;
-  do {
-    random_number = random_c::generate_64bits();
-  } while ((random_number == 0) || !is_unique_number(random_number, category));
+  uint64_t random_number = 42;
+//  do {
+//    random_number = random_c::generate_64bits();
+//  } while ((random_number == 0) || !is_unique_number(random_number, category));
   add_unique_number(random_number, category);
 
   return random_number;
