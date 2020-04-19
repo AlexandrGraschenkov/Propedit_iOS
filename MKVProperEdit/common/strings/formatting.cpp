@@ -24,8 +24,8 @@
 std::string
 format_timestamp(int64_t timestamp,
                 unsigned int precision) {
-  static boost::format s_bf_format("%4%%|1$02d|:%|2$02d|:%|3$02d|");
-  static boost::format s_bf_decimals(".%|1$09d|");
+  static strformat::bstr s_bf_format("%4%%|1$02d|:%|2$02d|:%|3$02d|");
+  static strformat::bstr s_bf_decimals(".%|1$09d|");
 
   bool negative = 0 > timestamp;
   if (negative)
@@ -65,9 +65,9 @@ format_timestamp(int64_t timestamp,
   auto result  = std::string{};
   auto width   = 0u;
   auto escaped = false;
-  auto fmt1    = boost::format("%1%");
-  auto fmt2    = boost::format("%|1$02d|");
-  auto fmt9    = boost::format("%|1$09d|");
+  auto fmt1    = strformat::bstr("%1%");
+  auto fmt2    = strformat::bstr("%|1$02d|");
+  auto fmt9    = strformat::bstr("%|1$09d|");
 
   for (auto const &c : format) {
     if (escaped) {
@@ -127,10 +127,10 @@ to_string(int64_t numerator,
   if (0 == fractional_part)
     return output;
 
-  static boost::format s_bf_precision_format_format(".%%0%1%d");
+  static strformat::bstr s_bf_precision_format_format(".%%0%1%d");
 
   std::string format         = (s_bf_precision_format_format % precision).str();
-  output                    += (boost::format(format) % fractional_part).str();
+  output                    += (strformat::bstr(format) % fractional_part).str();
   std::string::iterator end  = output.end() - 1;
 
   while (*end == '0')
@@ -290,8 +290,8 @@ to_hex(const unsigned char *buf,
   if (!buf || !size)
     return {};
 
-  static boost::format s_bf_to_hex("0x%|1$02x|");
-  static boost::format s_bf_to_hex_compact("%|1$02x|");
+  static strformat::bstr s_bf_to_hex("0x%|1$02x|");
+  static strformat::bstr s_bf_to_hex_compact("%|1$02x|");
 
   std::string hex;
   for (int idx = 0; idx < static_cast<int>(size); ++idx)
@@ -306,22 +306,22 @@ create_minutes_seconds_time_string(unsigned int seconds,
   unsigned int minutes = seconds / 60;
   seconds              = seconds % 60;
 
-  std::string  result  = (boost::format(NY("%1% second", "%1% seconds", seconds)) % seconds).str();
+  std::string  result  = (strformat::bstr(NY("%1% second", "%1% seconds", seconds)) % seconds).str();
 
   if (!minutes && omit_minutes_if_zero)
     return result;
 
-  return (  boost::format("%1% %2%")
-          % (boost::format(NY("%1% minute", "%1% minutes", minutes)) % minutes)
+  return (  strformat::bstr("%1% %2%")
+          % (strformat::bstr(NY("%1% minute", "%1% minutes", minutes)) % minutes)
           % result).str();
 }
 
 std::string
 format_file_size(int64_t size) {
-  auto result = size <       1024ll ? (boost::format(NY("%1% byte", "%1% bytes", size)) % size)
-              : size <    1048576ll ? (boost::format(Y("%1%.%2% KiB"))                  % (size / 1024)               % ((size * 10 /               1024) % 10))
-              : size < 1073741824ll ? (boost::format(Y("%1%.%2% MiB"))                  % (size / 1024 / 1024)        % ((size * 10 /        1024 / 1024) % 10))
-              :                       (boost::format(Y("%1%.%2% GiB"))                  % (size / 1024 / 1024 / 1024) % ((size * 10 / 1024 / 1024 / 1024) % 10));
+  auto result = size <       1024ll ? (strformat::bstr(NY("%1% byte", "%1% bytes", size)) % size)
+              : size <    1048576ll ? (strformat::bstr(Y("%1%.%2% KiB"))                  % (size / 1024)               % ((size * 10 /               1024) % 10))
+              : size < 1073741824ll ? (strformat::bstr(Y("%1%.%2% MiB"))                  % (size / 1024 / 1024)        % ((size * 10 /        1024 / 1024) % 10))
+              :                       (strformat::bstr(Y("%1%.%2% GiB"))                  % (size / 1024 / 1024 / 1024) % ((size * 10 / 1024 / 1024 / 1024) % 10));
 
   return result.str();
 }

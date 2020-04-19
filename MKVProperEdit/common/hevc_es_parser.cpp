@@ -35,7 +35,7 @@ std::unordered_map<int, std::string> es_parser_c::ms_nalu_names_by_type;
 void
 slice_info_t::dump()
   const {
-  mxinfo(boost::format("slice_info dump:\n"
+  mxinfo(strformat::bstr("slice_info dump:\n"
                        "  nalu_type:                  %1%\n"
                        "  type:                       %2%\n"
                        "  pps_id:                     %3%\n"
@@ -82,12 +82,12 @@ es_parser_c::es_parser_c()
 }
 
 es_parser_c::~es_parser_c() {
-  mxdebug_if(m_debug_timestamps, boost::format("stream_position %1% parsed_position %2%\n") % m_stream_position % m_parsed_position);
+  mxdebug_if(m_debug_timestamps, strformat::bstr("stream_position %1% parsed_position %2%\n") % m_stream_position % m_parsed_position);
 
   if (!debugging_c::requested("hevc_statistics"))
     return;
 
-  mxdebug(boost::format("HEVC statistics: #frames: out %1% discarded %2% #timestamps: in %3% generated %4% discarded %5% num_fields: %6% num_frames: %7%\n")
+  mxdebug(strformat::bstr("HEVC statistics: #frames: out %1% discarded %2% #timestamps: in %3% generated %4% discarded %5% num_fields: %6% num_frames: %7%\n")
           % m_stats.num_frames_out % m_stats.num_frames_discarded % m_stats.num_timestamps_in % m_stats.num_timestamps_generated % m_stats.num_timestamps_discarded
           % m_stats.num_field_slices % m_stats.num_frame_slices);
 
@@ -98,12 +98,12 @@ es_parser_c::~es_parser_c() {
   mxdebug("hevc: Number of NALUs by type:\n");
   for (int i = 0, size = m_stats.num_nalus_by_type.size(); i < size; ++i)
     if (0 != m_stats.num_nalus_by_type[i])
-      mxdebug(boost::format("  %1%: %2%\n") % get_nalu_type_name(i) % m_stats.num_nalus_by_type[i]);
+      mxdebug(strformat::bstr("  %1%: %2%\n") % get_nalu_type_name(i) % m_stats.num_nalus_by_type[i]);
 
   mxdebug("hevc: Number of slices by type:\n");
   for (int i = 0; 2 >= i; ++i)
     if (0 != m_stats.num_slices_by_type[i])
-      mxdebug(boost::format("  %1%: %2%\n") % s_type_names[i] % m_stats.num_slices_by_type[i]);
+      mxdebug(strformat::bstr("  %1%: %2%\n") % s_type_names[i] % m_stats.num_slices_by_type[i]);
 }
 
 bool
@@ -296,7 +296,7 @@ es_parser_c::handle_vps_nalu(memory_cptr const &nalu) {
     m_hevcc_changed = true;
 
   } else if (m_vps_info_list[i].checksum != vps_info.checksum) {
-    mxverb(2, boost::format("hevc: VPS ID %|1$04x| changed; checksum old %|2$04x| new %|3$04x|\n") % vps_info.id % m_vps_info_list[i].checksum % vps_info.checksum);
+    mxverb(2, strformat::bstr("hevc: VPS ID %|1$04x| changed; checksum old %|2$04x| new %|3$04x|\n") % vps_info.id % m_vps_info_list[i].checksum % vps_info.checksum);
 
     m_vps_info_list[i] = vps_info;
     m_vps_list[i]      = nalu;
@@ -356,7 +356,7 @@ es_parser_c::handle_sps_nalu(memory_cptr const &nalu) {
     m_hevcc_changed = true;
 
   } else if (m_sps_info_list[i].checksum != sps_info.checksum) {
-    mxverb(2, boost::format("hevc: SPS ID %|1$04x| changed; checksum old %|2$04x| new %|3$04x|\n") % sps_info.id % m_sps_info_list[i].checksum % sps_info.checksum);
+    mxverb(2, strformat::bstr("hevc: SPS ID %|1$04x| changed; checksum old %|2$04x| new %|3$04x|\n") % sps_info.id % m_sps_info_list[i].checksum % sps_info.checksum);
 
     cleanup();
 
@@ -398,7 +398,7 @@ es_parser_c::handle_sps_nalu(memory_cptr const &nalu) {
   if (!has_stream_default_duration()
       && sps_info.timing_info_valid()) {
     m_stream_default_duration = sps_info.default_duration();
-    mxdebug_if(m_debug_timestamps, boost::format("Stream default duration: %1%\n") % m_stream_default_duration);
+    mxdebug_if(m_debug_timestamps, strformat::bstr("Stream default duration: %1%\n") % m_stream_default_duration);
   }
 
   if (!m_par_found
@@ -427,7 +427,7 @@ es_parser_c::handle_pps_nalu(memory_cptr const &nalu) {
     m_hevcc_changed = true;
 
   } else if (m_pps_info_list[i].checksum != pps_info.checksum) {
-    mxverb(2, boost::format("hevc: PPS ID %|1$04x| changed; checksum old %|2$04x| new %|3$04x|\n") % pps_info.id % m_pps_info_list[i].checksum % pps_info.checksum);
+    mxverb(2, strformat::bstr("hevc: PPS ID %|1$04x| changed; checksum old %|2$04x| new %|3$04x|\n") % pps_info.id % m_pps_info_list[i].checksum % pps_info.checksum);
 
     if (m_pps_info_list[i].sps_id != pps_info.sps_id)
       cleanup();
@@ -454,7 +454,7 @@ es_parser_c::handle_nalu(memory_cptr const &nalu,
 
   int type = (*(nalu->get_buffer()) >> 1) & 0x3F;
 
-  mxdebug_if(m_debug_nalu_types, boost::format("NALU type 0x%|1$02x| (%2%) size %3%\n") % type % get_nalu_type_name(type) % nalu->get_size());
+  mxdebug_if(m_debug_nalu_types, strformat::bstr("NALU type 0x%|1$02x| (%2%) size %3%\n") % type % get_nalu_type_name(type) % nalu->get_size());
 
   ++m_stats.num_nalus_by_type[std::min(type, 63)];
 
@@ -553,7 +553,7 @@ es_parser_c::parse_slice(memory_cptr const &nalu,
       if (m_pps_info_list[pps_idx].id == si.pps_id)
         break;
     if (m_pps_info_list.size() == pps_idx) {
-      mxverb(3, boost::format("slice parser error: PPS not found: %1%\n") % si.pps_id);
+      mxverb(3, strformat::bstr("slice parser error: PPS not found: %1%\n") % si.pps_id);
       return false;
     }
 
@@ -643,7 +643,7 @@ es_parser_c::get_most_often_used_duration()
 
   // No duration at all!? No frame?
   if (m_duration_frequency.end() == most_often) {
-    mxdebug_if(m_debug_timestamps, boost::format("Duration frequency: none found, using 25 FPS\n"));
+    mxdebug_if(m_debug_timestamps, strformat::bstr("Duration frequency: none found, using 25 FPS\n"));
     return 1000000000ll / 25;
   }
 
@@ -655,10 +655,10 @@ es_parser_c::get_most_often_used_duration()
       best = std::make_pair(common_default_duration, diff);
   }
 
-  mxdebug_if(m_debug_timestamps, boost::format("Duration frequency. Result: %1%, diff %2%. Best before adjustment: %3%. All: %4%\n")
+  mxdebug_if(m_debug_timestamps, strformat::bstr("Duration frequency. Result: %1%, diff %2%. Best before adjustment: %3%. All: %4%\n")
              % best.first % best.second % most_often->first
              % boost::accumulate(m_duration_frequency, std::string(""), [](std::string const &accu, std::pair<int64_t, int64_t> const &pair) {
-                 return accu + (boost::format(" <%1% %2%>") % pair.first % pair.second).str();
+                 return accu + (strformat::bstr(" <%1% %2%>") % pair.first % pair.second).str();
                }));
 
   return best.first;
@@ -747,19 +747,19 @@ es_parser_c::calculate_provided_timestamps_to_use() {
   }
 
   mxdebug_if(m_debug_timestamps,
-             boost::format("cleanup; num frames %1% num provided timestamps available %2% num provided timestamps to use %3%\n"
+             strformat::bstr("cleanup; num frames %1% num provided timestamps available %2% num provided timestamps to use %3%\n"
                            "  frames:\n%4%"
                            "  provided timestamps (available):\n%5%"
                            "  provided timestamps (to use):\n%6%")
              % num_frames % num_provided_timestamps % provided_timestamps_to_use.size()
              % boost::accumulate(m_frames, std::string{}, [](auto const &str, auto const &frame) {
-                 return str + (boost::format("    pos %1% size %2% key? %3%\n") % frame.m_position % frame.m_data->get_size() % frame.m_keyframe).str();
+                 return str + (strformat::bstr("    pos %1% size %2% key? %3%\n") % frame.m_position % frame.m_data->get_size() % frame.m_keyframe).str();
                })
              % boost::accumulate(m_provided_timestamps, std::string{}, [](auto const &str, auto const &provided_timestamp) {
-                 return str + (boost::format("    pos %1% timestamp %2%\n") % provided_timestamp.second % format_timestamp(provided_timestamp.first)).str();
+                 return str + (strformat::bstr("    pos %1% timestamp %2%\n") % provided_timestamp.second % format_timestamp(provided_timestamp.first)).str();
                })
              % boost::accumulate(provided_timestamps_to_use, std::string{}, [](auto const &str, auto const &provided_timestamp) {
-                 return str + (boost::format("    timestamp %1%\n") % format_timestamp(provided_timestamp)).str();
+                 return str + (strformat::bstr("    timestamp %1%\n") % format_timestamp(provided_timestamp)).str();
                }));
 
   m_provided_timestamps.erase(m_provided_timestamps.begin(), m_provided_timestamps.begin() + provided_timestamps_idx);
@@ -801,9 +801,9 @@ es_parser_c::calculate_frame_timestamps() {
 
   m_max_timestamp = m_frames.back().m_end;
 
-  mxdebug_if(m_debug_timestamps, boost::format("CLEANUP frames <pres_ord dec_ord has_prov_ts tc dur>: %1%\n")
+  mxdebug_if(m_debug_timestamps, strformat::bstr("CLEANUP frames <pres_ord dec_ord has_prov_ts tc dur>: %1%\n")
              % boost::accumulate(m_frames, std::string(""), [](std::string const &accu, frame_t const &frame) {
-                 return accu + (boost::format(" <%1% %2% %3% %4% %5%>") % frame.m_presentation_order % frame.m_decode_order % frame.m_has_provided_timestamp % frame.m_start % (frame.m_end - frame.m_start)).str();
+                 return accu + (strformat::bstr(" <%1% %2% %3% %4% %5%>") % frame.m_presentation_order % frame.m_decode_order % frame.m_has_provided_timestamp % frame.m_start % (frame.m_end - frame.m_start)).str();
                }));
 
   if (!m_simple_picture_order)
@@ -925,7 +925,7 @@ es_parser_c::dump_info()
   const {
   mxinfo("Dumping m_frames_out:\n");
   for (auto &frame : m_frames_out) {
-    mxinfo(boost::format("size %1% key %2% start %3% end %4% ref1 %5% adler32 0x%|6$08x|\n")
+    mxinfo(strformat::bstr("size %1% key %2% start %3% end %4% ref1 %5% adler32 0x%|6$08x|\n")
            % frame.m_data->get_size()
            % frame.m_keyframe
            % format_timestamp(frame.m_start)

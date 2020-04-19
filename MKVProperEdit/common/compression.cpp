@@ -46,7 +46,7 @@ compressor_c::~compressor_c() {
     return;
 
   mxverb(2,
-         boost::format("compression: Overall stats: raw size: %1%, compressed size: %2%, items: %3%, ratio: %|4$.2f|%%, avg bytes per item: %5%\n")
+         strformat::bstr("compression: Overall stats: raw size: %1%, compressed size: %2%, items: %3%, ratio: %|4$.2f|%%, avg bytes per item: %5%\n")
          % raw_size % compressed_size % items % (compressed_size * 100.0 / raw_size) % (compressed_size / items));
 }
 

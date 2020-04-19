@@ -423,7 +423,7 @@ fix_elements_set_to_default_value_if_unset(EbmlElement *e) {
     return;
 
   mxdebug_if(s_debug,
-             boost::format("fix_elements_in_master: element has default, but value is no set; setting: ID %|1$08x| name %2%\n")
+             strformat::bstr("fix_elements_in_master: element has default, but value is no set; setting: ID %|1$08x| name %2%\n")
              % t->Generic().GlobalId.GetValue() % t->Generic().DebugName);
   t->SetValue(t->GetValue());
 }
@@ -437,7 +437,7 @@ fix_elements_in_master(EbmlMaster *master) {
 
   auto callbacks = find_ebml_callbacks(KaxSegment::ClassInfos, master->Generic().GlobalId);
   if (!callbacks) {
-    mxdebug_if(s_debug, boost::format("fix_elements_in_master: No callbacks found for ID %|1$08x|\n") % master->Generic().GlobalId.GetValue());
+    mxdebug_if(s_debug, strformat::bstr("fix_elements_in_master: No callbacks found for ID %|1$08x|\n") % master->Generic().GlobalId.GetValue());
     return;
   }
 
@@ -630,13 +630,13 @@ must_be_present_in_master_by_id(EbmlId const &id) {
 
   auto semantic = find_ebml_semantic(KaxSegment::ClassInfos, id);
   if (!semantic || !semantic->IsMandatory()) {
-    mxdebug_if(s_debug, boost::format("ID %|1$08x|: 0 (either no semantic or not mandatory)\n") % id.GetValue());
+    mxdebug_if(s_debug, strformat::bstr("ID %|1$08x|: 0 (either no semantic or not mandatory)\n") % id.GetValue());
     return false;
   }
 
   auto elt = std::shared_ptr<EbmlElement>(&semantic->Create());
 
-  mxdebug_if(s_debug, boost::format("ID %|1$08x|: %2% (default is %3%set)\n") % id.GetValue() % (!elt->DefaultISset()) % (elt->DefaultISset() ? "" : "not "));
+  mxdebug_if(s_debug, strformat::bstr("ID %|1$08x|: %2% (default is %3%set)\n") % id.GetValue() % (!elt->DefaultISset()) % (elt->DefaultISset() ? "" : "not "));
 
   return !elt->DefaultISset();
 }

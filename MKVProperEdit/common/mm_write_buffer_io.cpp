@@ -60,7 +60,7 @@ mm_write_buffer_io_c::setFilePointer(int64 offset,
 
   if (m_debug_seek) {
     int64_t previous_pos = mm_proxy_io_c::getFilePointer();
-    mxdebug(boost::format("seek from %1% to %2% diff %3%\n") % previous_pos % new_pos % (new_pos - previous_pos));
+    mxdebug(strformat::bstr("seek from %1% to %2% diff %3%\n") % previous_pos % new_pos % (new_pos - previous_pos));
   }
 
   mm_proxy_io_c::setFilePointer(offset, mode);
@@ -133,7 +133,7 @@ mm_write_buffer_io_c::flush_buffer() {
   size_t fill    = m_fill;
   m_fill         = 0;
 
-  mxdebug_if(m_debug_write, boost::format("flush_buffer() at %1% for %2% written %3%\n") % (mm_proxy_io_c::getFilePointer() - written) % fill % written);
+  mxdebug_if(m_debug_write, strformat::bstr("flush_buffer() at %1% for %2% written %3%\n") % (mm_proxy_io_c::getFilePointer() - written) % fill % written);
 
   if (written != fill)
     throw mtx::mm_io::insufficient_space_x();

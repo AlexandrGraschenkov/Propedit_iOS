@@ -31,7 +31,7 @@ propedit_cli_parser_c::set_parse_mode() {
   try {
     m_options->set_parse_mode(m_next_arg);
   } catch (...) {
-    mxerror(boost::format(Y("Unknown parse mode in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
+    mxerror(strformat::bstr(Y("Unknown parse mode in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
   }
 }
 
@@ -40,7 +40,7 @@ propedit_cli_parser_c::add_target() {
   try {
     m_target = m_options->add_track_or_segmentinfo_target(m_next_arg);
   } catch (...) {
-    mxerror(boost::format(Y("Invalid selector in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
+    mxerror(strformat::bstr(Y("Invalid selector in '%1% %2%'.\n")) % m_current_arg % m_next_arg);
   }
 }
 
@@ -52,7 +52,7 @@ propedit_cli_parser_c::add_change() {
                                  :                                                         change_c::ct_delete;
     m_target->add_change(type, m_next_arg);
   } catch (std::runtime_error &error) {
-    mxerror(boost::format(Y("Invalid change spec (%3%) in '%1% %2%'.\n")) % m_current_arg % m_next_arg % error.what());
+    mxerror(strformat::bstr(Y("Invalid change spec (%3%) in '%1% %2%'.\n")) % m_current_arg % m_next_arg % error.what());
   }
 }
 
@@ -143,11 +143,11 @@ propedit_cli_parser_c::list_property_names_for_table(const std::vector<property_
   auto max_name_len = boost::accumulate(table, 0u, [](size_t a, const property_element_c &e) { return std::max(a, e.m_name.length()); });
 
   static boost::regex s_newline_re("\\s*\\n\\s*", boost::regex::perl);
-  boost::format format((boost::format("%%|1$-%1%s| | %%|2$-2s| |") % max_name_len).str());
+  strformat::bstr format((strformat::bstr("%%|1$-%1%s| | %%|2$-2s| |") % max_name_len).str());
   std::string indent_string = std::string(max_name_len, ' ') + " |    | ";
 
   mxinfo("\n");
-  mxinfo(boost::format(Y("Elements in the category '%1%' ('--edit %2%'):\n")) % title % edit_spec);
+  mxinfo(strformat::bstr(Y("Elements in the category '%1%' ('--edit %2%'):\n")) % title % edit_spec);
 
   for (auto &property : table) {
     std::string name        = (format % property.m_name % ebml_type_map[property.m_type]).str();

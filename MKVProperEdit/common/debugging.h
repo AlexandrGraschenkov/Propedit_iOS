@@ -29,7 +29,7 @@ protected:
 public:
   static void send_to_logger(bool enable);
   static void output(std::string const &msg);
-  static void output(boost::format const &msg) {
+  static void output(strformat::bstr const &msg) {
     output(msg.str());
   }
 
@@ -99,7 +99,7 @@ public:
   static void invalidate_cache();
 };
 
-#define mxdebug(msg) debugging_c::output((boost::format("Debug> %1%:%|2$04d|: %3%") % __FILE__ % __LINE__ % (msg)).str())
+#define mxdebug(msg) debugging_c::output((strformat::bstr("Debug> %1%:%|2$04d|: %3%") % __FILE__ % __LINE__ % (msg)).str())
 
 #define mxdebug_if(condition, msg) \
   if (condition) {                 \

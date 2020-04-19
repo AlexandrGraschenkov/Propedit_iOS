@@ -166,9 +166,9 @@ ebml_converter_c::parse_uint(parser_context_t &ctx) {
     throw malformed_data_x{ ctx.name, ctx.node.offset_debug(), Y("An unsigned integer was expected.") };
 
   if (ctx.limits.has_min && (value < static_cast<uint64_t>(ctx.limits.min)))
-    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Minimum allowed value: %1%, actual value: %2%")) % ctx.limits.min % value).str() };
+    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Minimum allowed value: %1%, actual value: %2%")) % ctx.limits.min % value).str() };
   if (ctx.limits.has_max && (value > static_cast<uint64_t>(ctx.limits.max)))
-    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Maximum allowed value: %1%, actual value: %2%")) % ctx.limits.max % value).str() };
+    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Maximum allowed value: %1%, actual value: %2%")) % ctx.limits.max % value).str() };
 
   static_cast<EbmlUInteger &>(ctx.e).SetValue(value);
 }
@@ -180,9 +180,9 @@ ebml_converter_c::parse_int(parser_context_t &ctx) {
     throw malformed_data_x{ ctx.name, ctx.node.offset_debug() };
 
   if (ctx.limits.has_min && (value < ctx.limits.min))
-    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Minimum allowed value: %1%, actual value: %2%")) % ctx.limits.min % value).str() };
+    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Minimum allowed value: %1%, actual value: %2%")) % ctx.limits.min % value).str() };
   if (ctx.limits.has_max && (value > ctx.limits.max))
-    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Maximum allowed value: %1%, actual value: %2%")) % ctx.limits.max % value).str() };
+    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Maximum allowed value: %1%, actual value: %2%")) % ctx.limits.max % value).str() };
 
   static_cast<EbmlSInteger &>(ctx.e).SetValue(value);
 }
@@ -201,7 +201,7 @@ void
 ebml_converter_c::parse_timestamp(parser_context_t &ctx) {
   int64_t value;
   if (!::parse_timestamp(strip_copy(ctx.content), value)) {
-    auto details = (boost::format(Y("Expected a time in the following format: HH:MM:SS.nnn "
+    auto details = (strformat::bstr(Y("Expected a time in the following format: HH:MM:SS.nnn "
                                     "(HH = hour, MM = minute, SS = second, nnn = millisecond up to nanosecond. "
                                     "You may use up to nine digits for 'n' which would mean nanosecond precision). "
                                     "You may omit the hour as well. Found '%1%' instead. Additional error message: %2%"))
@@ -211,9 +211,9 @@ ebml_converter_c::parse_timestamp(parser_context_t &ctx) {
   }
 
   if (ctx.limits.has_min && (value < ctx.limits.min))
-    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Minimum allowed value: %1%, actual value: %2%")) % ctx.limits.min % value).str() };
+    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Minimum allowed value: %1%, actual value: %2%")) % ctx.limits.min % value).str() };
   if (ctx.limits.has_max && (value > ctx.limits.max))
-    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Maximum allowed value: %1%, actual value: %2%")) % ctx.limits.max % value).str() };
+    throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Maximum allowed value: %1%, actual value: %2%")) % ctx.limits.max % value).str() };
 
   static_cast<EbmlUInteger &>(ctx.e).SetValue(value);
 }
@@ -222,9 +222,9 @@ void
 ebml_converter_c::parse_binary(parser_context_t &ctx) {
   auto test_min_max = [&ctx](auto const &content) {
     if (ctx.limits.has_min && (content.length() < static_cast<size_t>(ctx.limits.min)))
-      throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Minimum allowed length: %1%, actual length: %2%")) % ctx.limits.min % content.length()).str() };
+      throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Minimum allowed length: %1%, actual length: %2%")) % ctx.limits.min % content.length()).str() };
     if (ctx.limits.has_max && (content.length() > static_cast<size_t>(ctx.limits.max)))
-      throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Maximum allowed length: %1%, actual length: %2%")) % ctx.limits.max % content.length()).str() };
+      throw out_of_range_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Maximum allowed length: %1%, actual length: %2%")) % ctx.limits.max % content.length()).str() };
   };
 
   ctx.handled_attributes["format"] = true;
@@ -249,7 +249,7 @@ ebml_converter_c::parse_binary(parser_context_t &ctx) {
       static_cast<EbmlBinary &>(ctx.e).CopyBuffer(reinterpret_cast<binary const *>(content.c_str()), size);
 
     } catch (mtx::mm_io::exception &) {
-      throw malformed_data_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Could not open/read the file '%1%'.")) % file_name).str() };
+      throw malformed_data_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Could not open/read the file '%1%'.")) % file_name).str() };
     }
 
     return;
@@ -282,7 +282,7 @@ ebml_converter_c::parse_binary(parser_context_t &ctx) {
     }
 
   } else if (format != "ascii")
-    throw malformed_data_x{ ctx.name, ctx.node.offset_debug(), (boost::format(Y("Invalid 'format' attribute '%1%'.")) % format).str() };
+    throw malformed_data_x{ ctx.name, ctx.node.offset_debug(), (strformat::bstr(Y("Invalid 'format' attribute '%1%'.")) % format).str() };
 
   test_min_max(content);
 
@@ -321,7 +321,7 @@ ebml_converter_c::to_xml_recursively(pugi::xml_node &parent,
 
   else {
     parent.remove_child(new_node);
-    parent.append_child(pugi::node_comment).set_value((boost::format(" unknown EBML element '%1%' ") % name).str().c_str());
+    parent.append_child(pugi::node_comment).set_value((strformat::bstr(" unknown EBML element '%1%' ") % name).str().c_str());
   }
 }
 
@@ -334,7 +334,7 @@ ebml_converter_c::to_ebml(std::string const &file_name,
     return ebml_master_cptr();
 
   if (root_name != root_node.name())
-    throw conversion_x{boost::format(Y("The root element must be <%1%>.")) % root_name};
+    throw conversion_x{strformat::bstr(Y("The root element must be <%1%>.")) % root_name};
 
   ebml_master_cptr ebml_root{new KaxSegment};
 
@@ -491,13 +491,13 @@ ebml_converter_c::dump_semantics_recursively(int level,
 
     if (limits->second.has_min && limits->second.has_max) {
       if (limits->second.min == limits->second.max)
-        limits_str = (boost::format("%2% == %1%")        % limits->second.min                      % label).str();
+        limits_str = (strformat::bstr("%2% == %1%")        % limits->second.min                      % label).str();
       else
-        limits_str = (boost::format("%1% <= %3% <= %2%") % limits->second.min % limits->second.max % label).str();
+        limits_str = (strformat::bstr("%1% <= %3% <= %2%") % limits->second.min % limits->second.max % label).str();
     } else if (limits->second.has_min)
-      limits_str = (boost::format("%1% <= %2%")          % limits->second.min                      % label).str();
+      limits_str = (strformat::bstr("%1% <= %2%")          % limits->second.min                      % label).str();
     else
-      limits_str = (boost::format("%2% <= %1%")                               % limits->second.max % label).str();
+      limits_str = (strformat::bstr("%2% <= %1%")                               % limits->second.max % label).str();
 
     limits_str = std::string{", valid range: "} + limits_str;
   }
@@ -510,7 +510,7 @@ ebml_converter_c::dump_semantics_recursively(int level,
             : dynamic_cast<EbmlBinary        *>(&element) ? "binary"
             :                                               "unknown";
 
-  mxinfo(boost::format("%1%%2% (%3%%4%)\n") % std::string(level * 2, ' ') % tag_name % type % limits_str);
+  mxinfo(strformat::bstr("%1%%2% (%3%%4%)\n") % std::string(level * 2, ' ') % tag_name % type % limits_str);
 
   if (!dynamic_cast<EbmlMaster *>(&element) || visited_masters[tag_name])
     return;

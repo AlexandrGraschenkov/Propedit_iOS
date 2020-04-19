@@ -44,7 +44,7 @@ header_removal_compressor_c::do_compress(memory_cptr const &buffer) {
 
   size_t size = m_bytes->get_size();
   if (buffer->get_size() < size)
-    throw mtx::compression_x(boost::format(Y("Header removal compression not possible because the buffer contained %1% bytes "
+    throw mtx::compression_x(strformat::bstr(Y("Header removal compression not possible because the buffer contained %1% bytes "
                                              "which is less than the size of the headers that should be removed, %2%.")) % buffer->get_size() % size);
 
   unsigned char *buffer_ptr = buffer->get_buffer();
@@ -55,10 +55,10 @@ header_removal_compressor_c::do_compress(memory_cptr const &buffer) {
     size_t i;
 
     for (i = 0; size > i; ++i) {
-      b_buffer += (boost::format(" %|1$02x|") % static_cast<unsigned int>(buffer_ptr[i])).str();
-      b_bytes  += (boost::format(" %|1$02x|") % static_cast<unsigned int>(bytes_ptr[i])).str();
+      b_buffer += (strformat::bstr(" %|1$02x|") % static_cast<unsigned int>(buffer_ptr[i])).str();
+      b_bytes  += (strformat::bstr(" %|1$02x|") % static_cast<unsigned int>(bytes_ptr[i])).str();
     }
-    throw mtx::compression_x(boost::format(Y("Header removal compression not possible because the buffer did not start with the bytes that should be removed. "
+    throw mtx::compression_x(strformat::bstr(Y("Header removal compression not possible because the buffer did not start with the bytes that should be removed. "
                                              "Wanted bytes:%1%; found:%2%.")) % b_bytes % b_buffer);
   }
 
@@ -89,7 +89,7 @@ analyze_header_removal_compressor_c::~analyze_header_removal_compressor_c() {
     mxinfo("Analysis complete but no similarities found.\n");
 
   else {
-    mxinfo(boost::format("Analysis complete. %1% identical byte(s) at the start of each of the %2% packet(s). Hex dump of the content:\n") % m_bytes->get_size() % m_packet_counter);
+    mxinfo(strformat::bstr("Analysis complete. %1% identical byte(s) at the start of each of the %2% packet(s). Hex dump of the content:\n") % m_bytes->get_size() % m_packet_counter);
     debugging_c::hexdump(m_bytes->get_buffer(), m_bytes->get_size());
   }
 }

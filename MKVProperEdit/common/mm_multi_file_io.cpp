@@ -166,7 +166,7 @@ mm_multi_file_io_c::display_other_file_info() {
     }
 
   if (!out.str().empty())
-    mxinfo(boost::format(Y("'%1%': Processing the following files as well: %2%\n")) % m_display_file_name % out.str());
+    mxinfo(strformat::bstr(Y("'%1%': Processing the following files as well: %2%\n")) % m_display_file_name % out.str());
 }
 
 void

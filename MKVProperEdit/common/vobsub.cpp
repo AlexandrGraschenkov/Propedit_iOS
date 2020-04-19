@@ -21,7 +21,7 @@ create_default_index(unsigned int width,
                      std::string const &palette) {
   auto palette_to_use = palette.empty() ? std::string{"bebebe, 171717, 5f5f5f, e7e7e7, 828282, 828282, 828282, 828282, 828282, 828282, 828282, 828282, bebebe, 000000, f6f6f6, 828282"} : palette;
 
-  return (boost::format("# VobSub index file, v7 (do not modify this line!)\n"
+  return (strformat::bstr("# VobSub index file, v7 (do not modify this line!)\n"
                         "#\n"
                         "# To repair desyncronization, you can insert gaps this way:\n"
                         "# (it usually happens after vob id changes)\n"

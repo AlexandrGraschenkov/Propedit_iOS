@@ -64,7 +64,7 @@ namespace mtx {
     std::string m_message;
   public:
     kax_analyzer_x(const std::string &message)  : m_message(message)       { }
-    kax_analyzer_x(const boost::format &message): m_message(message.str()) { }
+    kax_analyzer_x(const strformat::bstr &message): m_message(message.str()) { }
     virtual ~kax_analyzer_x() throw() { }
 
     virtual const char *what() const throw() {
@@ -159,7 +159,7 @@ public:
   virtual void log_debug_message(const std::string &message) {
     _log_debug_message(message);
   }
-  virtual void log_debug_message(const boost::format &message) {
+  virtual void log_debug_message(const strformat::bstr &message) {
     _log_debug_message(message.str());
   }
   virtual void debug_abort_process() {

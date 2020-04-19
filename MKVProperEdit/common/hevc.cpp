@@ -423,7 +423,7 @@ vui_parameters_copy(mtx::bits::reader_c &r,
 
 void
 sps_info_t::dump() {
-  mxinfo(boost::format("sps_info dump:\n"
+  mxinfo(strformat::bstr("sps_info dump:\n"
                        "  id:                                    %1%\n"
                        "  log2_max_pic_order_cnt_lsb:            %2%\n"
                        "  vui_present:                           %3%\n"
@@ -466,7 +466,7 @@ sps_info_t::default_duration()
 
 void
 pps_info_t::dump() {
-  mxinfo(boost::format("pps_info dump:\n"
+  mxinfo(strformat::bstr("pps_info dump:\n"
                        "id: %1%\n"
                        "sps_id: %2%\n"
                        "checksum: %|3$08x|\n")

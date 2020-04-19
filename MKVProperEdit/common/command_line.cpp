@@ -49,7 +49,7 @@ read_args_from_old_option_file(std::vector<std::string> &args,
   try {
     mm_io = std::make_shared<mm_text_io_c>(new mm_file_io_c(filename));
   } catch (mtx::mm_io::exception &ex) {
-    mxerror(boost::format(Y("The file '%1%' could not be opened for reading: %2%.\n")) % filename % ex);
+    mxerror(strformat::bstr(Y("The file '%1%' could not be opened for reading: %2%.\n")) % filename % ex);
   }
 
   skip_next = false;
@@ -86,7 +86,7 @@ read_args_from_json_file(std::vector<std::string> &args,
     io->read(buffer, io->get_size());
 
   } catch (mtx::mm_io::exception &ex) {
-    mxerror(boost::format(Y("The file '%1%' could not be opened for reading: %2%.\n")) % filename % ex);
+    mxerror(strformat::bstr(Y("The file '%1%' could not be opened for reading: %2%.\n")) % filename % ex);
   }
 
   try {
@@ -114,7 +114,7 @@ read_args_from_json_file(std::vector<std::string> &args,
     }
 
   } catch (std::exception const &ex) {
-    mxerror(boost::format("The JSON option file '%1%' contains an error: %2%.\n") % filename % ex.what());
+    mxerror(strformat::bstr("The JSON option file '%1%' contains an error: %2%.\n") % filename % ex.what());
   }
 }
 
@@ -134,7 +134,7 @@ command_line_args_from_environment() {
   std::vector<std::string> all_args;
 
   auto process = [&all_args](std::string const &variable) {
-    auto value = getenv((boost::format("%1%_OPTIONS") % variable).str().c_str());
+    auto value = getenv((strformat::bstr("%1%_OPTIONS") % variable).str().c_str());
     if (value && value[0]) {
       auto args = split(value, " ");
       std::transform(args.begin(), args.end(), std::back_inserter(all_args), unescape);
@@ -283,7 +283,7 @@ handle_common_args(std::vector<std::string> &args,
         ((redirect_output_short != "") &&
          (args[i] == redirect_output_short))) {
       if ((i + 1) == args.size())
-        mxerror(boost::format(Y("'%1%' is missing the file name.\n")) % args[i]);
+        mxerror(strformat::bstr(Y("'%1%' is missing the file name.\n")) % args[i]);
       try {
         if (!stdio_redirected()) {
           mm_io_cptr file = mm_write_buffer_io_c::open(args[i + 1], 128 * 1024);
@@ -292,7 +292,7 @@ handle_common_args(std::vector<std::string> &args,
         }
         args.erase(args.begin() + i, args.begin() + i + 2);
       } catch(mtx::mm_io::exception &) {
-        mxerror(boost::format(Y("Could not open the file '%1%' for directing the output.\n")) % args[i + 1]);
+        mxerror(strformat::bstr(Y("Could not open the file '%1%' for directing the output.\n")) % args[i + 1]);
       }
     } else
       ++i;
@@ -309,14 +309,14 @@ handle_common_args(std::vector<std::string> &args,
         mxinfo(Y("Available translations:\n"));
         std::vector<translation_c>::iterator translation = translation_c::ms_available_translations.begin();
         while (translation != translation_c::ms_available_translations.end()) {
-          mxinfo(boost::format("  %1% (%2%)\n") % translation->get_locale() % translation->m_english_name);
+          mxinfo(strformat::bstr("  %1% (%2%)\n") % translation->get_locale() % translation->m_english_name);
           ++translation;
         }
         mxexit();
       }
 
       if (-1 == translation_c::look_up_translation(args[i + 1]))
-        mxerror(boost::format(Y("There is no translation available for '%1%'.\n")) % args[i + 1]);
+        mxerror(strformat::bstr(Y("There is no translation available for '%1%'.\n")) % args[i + 1]);
 
       init_locales(args[i + 1]);
 
@@ -331,7 +331,7 @@ handle_common_args(std::vector<std::string> &args,
   i = 0;
   while (args.size() > i) {
     if ((args[i] == "-V") || (args[i] == "--version")) {
-      mxinfo(boost::format("%1%\n") % g_version_info);
+      mxinfo(strformat::bstr("%1%\n") % g_version_info);
       mxexit();
 
     } else if ((args[i] == "-v") || (args[i] == "--verbose")) {
@@ -355,7 +355,7 @@ handle_common_args(std::vector<std::string> &args,
 
 void
 display_usage(int exit_code) {
-  mxinfo(boost::format("%1%\n") % g_usage_text);
+  mxinfo(strformat::bstr("%1%\n") % g_usage_text);
   mxexit(exit_code);
 }
 

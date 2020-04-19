@@ -49,24 +49,24 @@ kax_file_c::read_next_level1_element(uint32_t wanted_id,
     auto element = read_next_level1_element_internal(wanted_id);
 
     if (report_cluster_timestamp && (-1 != m_timestamp_scale))
-      report(boost::format(Y("The first cluster timestamp after the resync is %1%.\n"))
+      report(strformat::bstr(Y("The first cluster timestamp after the resync is %1%.\n"))
              % format_timestamp(FindChildValue<KaxClusterTimecode>(static_cast<KaxCluster *>(element)) * m_timestamp_scale));
 
     return element;
 
   } catch (mtx::mm_io::exception &e) {
-    mxwarn(boost::format("%1% %2% %3%\n")
-           % (boost::format(Y("%1%: an exception occurred (message: %2%; type: %3%).")) % "kax_file_c::read_next_level1_element()" % (boost::format("%1% / %2%") % e.what() % e.error()) % typeid(e).name())
+    mxwarn(strformat::bstr("%1% %2% %3%\n")
+           % (strformat::bstr(Y("%1%: an exception occurred (message: %2%; type: %3%).")) % "kax_file_c::read_next_level1_element()" % (strformat::bstr("%1% / %2%") % e.what() % e.error()) % typeid(e).name())
            % Y("This usually indicates a damaged file structure.") % Y("The file will not be processed further."));
 
   } catch (std::exception &e) {
-    mxwarn(boost::format("%1% %2% %3%\n")
-           % (boost::format(Y("%1%: an exception occurred (message: %2%; type: %3%).")) % "kax_file_c::read_next_level1_element()" % e.what() % typeid(e).name())
+    mxwarn(strformat::bstr("%1% %2% %3%\n")
+           % (strformat::bstr(Y("%1%: an exception occurred (message: %2%; type: %3%).")) % "kax_file_c::read_next_level1_element()" % e.what() % typeid(e).name())
            % Y("This usually indicates a damaged file structure.") % Y("The file will not be processed further."));
 
   } catch (...) {
-    mxwarn(boost::format("%1% %2% %3%\n")
-           % (boost::format(Y("%1%: an unknown exception occurred.")) % "kax_file_c::read_next_level1_element()")
+    mxwarn(strformat::bstr("%1% %2% %3%\n")
+           % (strformat::bstr(Y("%1%: an unknown exception occurred.")) % "kax_file_c::read_next_level1_element()")
            % Y("This usually indicates a damaged file structure.") % Y("The file will not be processed further."));
   }
   return nullptr;
@@ -86,7 +86,7 @@ kax_file_c::read_next_level1_element_internal(uint32_t wanted_id) {
   m_in.setFilePointer(search_start_pos, seek_beginning);
 
   if (m_debug_read_next)
-    mxinfo(boost::format("kax_file::read_next_level1_element(): search at %1% for %|4$x| act id %|2$x| is_valid %3%\n") % search_start_pos % actual_id.m_value % actual_id.is_valid() % wanted_id);
+    mxinfo(strformat::bstr("kax_file::read_next_level1_element(): search at %1% for %|4$x| act id %|2$x| is_valid %3%\n") % search_start_pos % actual_id.m_value % actual_id.is_valid() % wanted_id);
 
   // If no valid ID was read then re-sync right away. No other tests
   // can be run.
@@ -117,7 +117,7 @@ kax_file_c::read_next_level1_element_internal(uint32_t wanted_id) {
       auto ok           = (0 != element_size) && m_in.setFilePointer2(l1->GetElementPosition() + element_size, seek_beginning);
 
       if (m_debug_read_next)
-        mxinfo(boost::format("kax_file::read_next_level1_element(): other level 1 element %1% new pos %2% fsize %3% epos %4% esize %5%\n")
+        mxinfo(strformat::bstr("kax_file::read_next_level1_element(): other level 1 element %1% new pos %2% fsize %3% epos %4% esize %5%\n")
                % EBML_NAME(l1)  % (l1->GetElementPosition() + element_size) % m_file_size
                % l1->GetElementPosition() % element_size);
 
@@ -154,7 +154,7 @@ kax_file_c::read_one_element() {
     l1->Read(*m_es.get(), EBML_INFO_CONTEXT(*callbacks), upper_lvl_el, l2, true);
 
   } catch (std::runtime_error &e) {
-    mxdebug_if(m_debug_resync, boost::format("exception reading element data: %1%\n") % e.what());
+    mxdebug_if(m_debug_resync, strformat::bstr("exception reading element data: %1%\n") % e.what());
     m_in.setFilePointer(l1->GetElementPosition() + 1);
     delete l1;
     return nullptr;
@@ -162,8 +162,8 @@ kax_file_c::read_one_element() {
 
   auto element_size = get_element_size(l1);
   if (m_debug_resync)
-    mxinfo(boost::format("kax_file::read_one_element(): read element at %1% calculated size %2% stored size %3%\n")
-           % l1->GetElementPosition() % element_size % (l1->IsFiniteSize() ? (boost::format("%1%") % l1->ElementSize()).str() : std::string("unknown")));
+    mxinfo(strformat::bstr("kax_file::read_one_element(): read element at %1% calculated size %2% stored size %3%\n")
+           % l1->GetElementPosition() % element_size % (l1->IsFiniteSize() ? (strformat::bstr("%1%") % l1->ElementSize()).str() : std::string("unknown")));
   m_in.setFilePointer(l1->GetElementPosition() + element_size, seek_beginning);
 
   return l1;
@@ -208,21 +208,21 @@ kax_file_c::resync_to_level1_element_internal(uint32_t wanted_id) {
   auto start_time    = mtx::sys::get_current_time_millis();
   auto is_cluster_id = !wanted_id || (EBML_ID_VALUE(EBML_ID(KaxCluster)) == wanted_id); // 0 means: any level 1 element will do
 
-  report(boost::format(Y("%1%: Error in the Matroska file structure at position %2%. Resyncing to the next level 1 element.\n"))
+  report(strformat::bstr(Y("%1%: Error in the Matroska file structure at position %2%. Resyncing to the next level 1 element.\n"))
          % m_in.get_file_name() % m_resync_start_pos);
 
   if (is_cluster_id && (-1 != m_last_timestamp)) {
-    report(boost::format(Y("The last timestamp processed before the error was encountered was %1%.\n")) % format_timestamp(m_last_timestamp));
+    report(strformat::bstr(Y("The last timestamp processed before the error was encountered was %1%.\n")) % format_timestamp(m_last_timestamp));
     m_last_timestamp = -1;
   }
 
   if (m_debug_resync)
-    mxinfo(boost::format("kax_file::resync_to_level1_element(): starting at %1% potential ID %|2$08x|\n") % m_resync_start_pos % actual_id);
+    mxinfo(strformat::bstr("kax_file::resync_to_level1_element(): starting at %1% potential ID %|2$08x|\n") % m_resync_start_pos % actual_id);
 
   while (m_in.getFilePointer() < m_file_size) {
     auto now = mtx::sys::get_current_time_millis();
     if ((now - start_time) >= 10000) {
-      report(boost::format("Still resyncing at position %1%.\n") % m_in.getFilePointer());
+      report(strformat::bstr("Still resyncing at position %1%.\n") % m_in.getFilePointer());
       start_time = now;
     }
 
@@ -238,14 +238,14 @@ kax_file_c::resync_to_level1_element_internal(uint32_t wanted_id) {
     auto valid_unknown_size = false;
 
     if (m_debug_resync)
-      mxinfo(boost::format("kax_file::resync_to_level1_element(): byte-for-byte search, found level 1 ID %|2$x| at %1%\n") % current_start_pos % actual_id);
+      mxinfo(strformat::bstr("kax_file::resync_to_level1_element(): byte-for-byte search, found level 1 ID %|2$x| at %1%\n") % current_start_pos % actual_id);
 
     try {
       for (auto idx = 0; 3 > idx; ++idx) {
         auto length = vint_c::read(m_in);
 
         if (m_debug_resync)
-          mxinfo(boost::format("kax_file::resync_to_level1_element():   read ebml length %1%/%2% valid? %3% unknown? %4%\n")
+          mxinfo(strformat::bstr("kax_file::resync_to_level1_element():   read ebml length %1%/%2% valid? %3% unknown? %4%\n")
                  % length.m_value % length.m_coded_size % length.is_valid() % length.is_unknown());
 
         if (length.is_unknown()) {
@@ -262,7 +262,7 @@ kax_file_c::resync_to_level1_element_internal(uint32_t wanted_id) {
         auto next_id = m_in.read_uint32_be();
 
         if (m_debug_resync)
-          mxinfo(boost::format("kax_file::resync_to_level1_element():   next ID is %|1$x| at %2%\n") % next_id % element_pos);
+          mxinfo(strformat::bstr("kax_file::resync_to_level1_element():   next ID is %|1$x| at %2%\n") % next_id % element_pos);
 
         if (   ((0 != wanted_id) && (wanted_id != next_id))
             || ((0 == wanted_id) && !is_level1_element_id(vint_c(next_id, 4))))
@@ -274,7 +274,7 @@ kax_file_c::resync_to_level1_element_internal(uint32_t wanted_id) {
     }
 
     if ((4 == num_headers) || valid_unknown_size) {
-      report(boost::format(Y("Resyncing successful at position %1%.\n")) % current_start_pos);
+      report(strformat::bstr(Y("Resyncing successful at position %1%.\n")) % current_start_pos);
       m_in.setFilePointer(current_start_pos, seek_beginning);
       return read_next_level1_element(wanted_id, is_cluster_id);
     }
@@ -348,7 +348,7 @@ kax_file_c::enable_reporting(bool enable) {
 }
 
 void
-kax_file_c::report(boost::format const &message) {
+kax_file_c::report(strformat::bstr const &message) {
   if (m_reporting_enabled)
     mxwarn(message);
 }

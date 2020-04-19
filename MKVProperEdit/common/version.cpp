@@ -33,7 +33,7 @@ version_number_t::version_number_t(const std::string &s)
   : valid{}
 {
   if (debugging_c::requested("version_check"))
-    mxinfo(boost::format("version check: Parsing %1%\n") % s);
+    mxinfo(strformat::bstr("version check: Parsing %1%\n") % s);
 
   // Match the following:
   // 4.4.0
@@ -76,7 +76,7 @@ version_number_t::version_number_t(const std::string &s)
     valid = false;
 
   if (debugging_c::requested("version_check"))
-    mxinfo(boost::format("version check: parse OK; result: %1%\n") % to_string());
+    mxinfo(strformat::bstr("version check: parse OK; result: %1%\n") % to_string());
 }
 
 int
@@ -140,7 +140,7 @@ get_version_info(const std::string &program,
 
   if (!program.empty())
     info.push_back(program);
-  info.push_back((boost::format("v%1% ('%2%')") % PACKAGE_VERSION % VERSIONNAME).str());
+  info.push_back((strformat::bstr("v%1% ('%2%')") % PACKAGE_VERSION % VERSIONNAME).str());
 
   if (flags & vif_architecture)
 #if defined(ARCH_64BIT)
@@ -170,7 +170,7 @@ parse_latest_release_version(mtx::xml::document_cptr const &doc) {
   mtx_release_version_t release;
 
   release.latest_source             = version_number_t{doc->select_node("/mkvtoolnix-releases/latest-source/version").node().child_value()};
-  release.latest_windows_build      = version_number_t{(boost::format("%1% build %2%")
+  release.latest_windows_build      = version_number_t{(strformat::bstr("%1% build %2%")
                                                         % doc->select_node("/mkvtoolnix-releases/latest-windows-pre/version").node().child_value()
                                                         % doc->select_node("/mkvtoolnix-releases/latest-windows-pre/build").node().child_value()).str()};
   release.valid                     = release.latest_source.valid;
@@ -185,7 +185,7 @@ parse_latest_release_version(mtx::xml::document_cptr const &doc) {
   if (debugging_c::requested("version_check")) {
     std::stringstream urls;
     brng::for_each(release.urls, [&urls](auto const &kv) { urls << " " << kv.first << ":" << kv.second; });
-    mxdebug(boost::format("update check: current %1% latest source %2% latest winpre %3% URLs%4%\n")
+    mxdebug(strformat::bstr("update check: current %1% latest source %2% latest winpre %3% URLs%4%\n")
             % release.current_version.to_string() % release.latest_source.to_string() % release.latest_windows_build.to_string() % urls.str());
   }
 
@@ -197,7 +197,7 @@ get_default_segment_info_data(std::string const &application) {
   segment_info_data_t data{};
 
   if (!hack_engaged(ENGAGE_NO_VARIABLE_DATA)) {
-    data.muxing_app   = (boost::format("libebml v%1% + libmatroska v%2%") % EbmlCodeVersion % KaxCodeVersion).str();
+    data.muxing_app   = (strformat::bstr("libebml v%1% + libmatroska v%2%") % EbmlCodeVersion % KaxCodeVersion).str();
     data.writing_app  = get_version_info(application, static_cast<version_info_flags_e>(vif_full | vif_untranslated));
     data.writing_date = boost::posix_time::second_clock::universal_time();
 

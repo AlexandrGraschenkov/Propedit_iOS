@@ -102,8 +102,8 @@ debugging_c::output(std::string const &msg) {
 void
 debugging_c::hexdump(const void *buffer_to_dump,
                      size_t length) {
-  static auto s_fmt_line = boost::format{"Debug> %|1$08x|  "};
-  static auto s_fmt_byte = boost::format{"%|1$02x| "};
+  static auto s_fmt_line = strformat::bstr{"Debug> %|1$08x|  "};
+  static auto s_fmt_byte = strformat::bstr{"%|1$02x| "};
 
   std::stringstream dump, ascii;
   auto buffer     = static_cast<const unsigned char *>(buffer_to_dump);
@@ -195,7 +195,7 @@ ebml_dumper_c::to_string(EbmlElement const *element)
        : dynamic_cast<EbmlUnicodeString const *>(element) ?             static_cast<EbmlUnicodeString const *>(element)->GetValueUTF8()
        : dynamic_cast<EbmlString        const *>(element) ?             static_cast<EbmlString        const *>(element)->GetValue()
        : dynamic_cast<EbmlDate          const *>(element) ? ::to_string(static_cast<EbmlDate          const *>(element)->GetEpochDate())
-       : (boost::format("(type: %1% size: %2%)") %
+       : (strformat::bstr("(type: %1% size: %2%)") %
           (  dynamic_cast<EbmlBinary const *>(element)    ? "binary"
            : dynamic_cast<EbmlMaster const *>(element)    ? "master"
            : dynamic_cast<EbmlVoid   const *>(element)    ? "void"
@@ -272,7 +272,7 @@ ebml_dumper_c::dump_impl(EbmlElement const *element,
   m_buffer << EBML_NAME(element);
 
   if (m_addresses)
-    m_buffer << (boost::format(" @%1%") % element);
+    m_buffer << (strformat::bstr(" @%1%") % element);
 
   if (m_values)
     m_buffer << " " << to_string(element);

@@ -88,7 +88,7 @@ public:
   virtual std::string getline(boost::optional<std::size_t> max_chars = boost::none);
   virtual bool getline2(std::string &s, boost::optional<std::size_t> max_chars = boost::none);
   virtual size_t puts(const std::string &s);
-  inline size_t puts(const boost::format &format) {
+  inline size_t puts(const strformat::bstr &format) {
     return puts(format.str());
   }
   virtual bool write_bom(const std::string &charset);

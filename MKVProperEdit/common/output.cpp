@@ -56,7 +56,7 @@ display_json_output(nlohmann::json json) {
   json["warnings"] = to_json_array(s_warnings_emitted);
   json["errors"]   = to_json_array(s_errors_emitted);
 
-  mxinfo(boost::format("%1%\n") % mtx::json::dump(json, 2));
+  mxinfo(strformat::bstr("%1%\n") % mtx::json::dump(json, 2));
 }
 
 static void
@@ -124,7 +124,7 @@ mxmsg(unsigned int level,
     prefix += mtx::date_time::to_string(boost::posix_time::microsec_clock::local_time(), "%Y-%m-%d %H:%M:%S.%f ");
   }
   if (s_memory_usage_in_messages) {
-    prefix += (boost::format("%1% kB ") % (mtx::sys::get_memory_usage() / 1024)).str();
+    prefix += (strformat::bstr("%1% kB ") % (mtx::sys::get_memory_usage() / 1024)).str();
   }
 
   if (level == MXMSG_ERROR) {
@@ -132,10 +132,10 @@ mxmsg(unsigned int level,
       g_mm_stdio->puts("\n");
     if (balg::starts_with(message, Y("Error:")))
       message.erase(0, std::string{Y("Error:")}.length());
-    g_mm_stdio->puts(mtx::cli::g_gui_mode ? "#GUI#error " : (boost::format("%1%%2% ") % prefix % Y("Error:")).str());
+    g_mm_stdio->puts(mtx::cli::g_gui_mode ? "#GUI#error " : (strformat::bstr("%1%%2% ") % prefix % Y("Error:")).str());
 
   } else if (level == MXMSG_WARNING)
-    g_mm_stdio->puts(mtx::cli::g_gui_mode ? "#GUI#warning " : (boost::format("%1%%2% ") % prefix % Y("Warning:")).str());
+    g_mm_stdio->puts(mtx::cli::g_gui_mode ? "#GUI#warning " : (strformat::bstr("%1%%2% ") % prefix % Y("Warning:")).str());
 
   else if (level == MXMSG_DEBUG)
     g_mm_stdio->puts(Y("Debug> "));
@@ -206,40 +206,40 @@ mxerror(std::string const &error) {
 void
 mxinfo_fn(const std::string &file_name,
           const std::string &info) {
-  mxinfo((boost::format(Y("'%1%': %2%")) % file_name % info).str());
+  mxinfo((strformat::bstr(Y("'%1%': %2%")) % file_name % info).str());
 }
 
 void
 mxinfo_tid(const std::string &file_name,
            int64_t track_id,
            const std::string &info) {
-  mxinfo((boost::format(Y("'%1%' track %2%: %3%")) % file_name % track_id % info).str());
+  mxinfo((strformat::bstr(Y("'%1%' track %2%: %3%")) % file_name % track_id % info).str());
 }
 
 void
 mxwarn_fn(const std::string &file_name,
           const std::string &warning) {
-  mxwarn(boost::format(Y("'%1%': %2%")) % file_name % warning);
+  mxwarn(strformat::bstr(Y("'%1%': %2%")) % file_name % warning);
 }
 
 void
 mxwarn_tid(const std::string &file_name,
            int64_t track_id,
            const std::string &warning) {
-  mxwarn(boost::format(Y("'%1%' track %2%: %3%")) % file_name % track_id % warning);
+  mxwarn(strformat::bstr(Y("'%1%' track %2%: %3%")) % file_name % track_id % warning);
 }
 
 void
 mxerror_fn(const std::string &file_name,
            const std::string &error) {
-  mxerror(boost::format(Y("'%1%': %2%")) % file_name % error);
+  mxerror(strformat::bstr(Y("'%1%': %2%")) % file_name % error);
 }
 
 void
 mxerror_tid(const std::string &file_name,
             int64_t track_id,
             const std::string &error) {
-  mxerror(boost::format(Y("'%1%' track %2%: %3%")) % file_name % track_id % error);
+  mxerror(strformat::bstr(Y("'%1%' track %2%: %3%")) % file_name % track_id % error);
 }
 
 void
@@ -249,7 +249,7 @@ mxverb_fn(unsigned int level,
   if (verbose < level)
     return;
 
-  mxinfo((boost::format(Y("'%1%': %2%")) % file_name % message).str());
+  mxinfo((strformat::bstr(Y("'%1%': %2%")) % file_name % message).str());
 }
 
 void
@@ -260,7 +260,7 @@ mxverb_tid(unsigned int level,
   if (verbose < level)
     return;
 
-  mxinfo((boost::format(Y("'%1%' track %2%: %3%")) % file_name % track_id % message).str());
+  mxinfo((strformat::bstr(Y("'%1%' track %2%: %3%")) % file_name % track_id % message).str());
 }
 
 void

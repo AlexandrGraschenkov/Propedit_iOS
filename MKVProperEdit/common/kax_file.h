@@ -63,7 +63,7 @@ protected:
   virtual EbmlElement *read_next_level1_element_internal(uint32_t wanted_id = 0);
   virtual EbmlElement *resync_to_level1_element_internal(uint32_t wanted_id = 0);
 
-  virtual void report(boost::format const &message);
+  virtual void report(strformat::bstr const &message);
   virtual void report(std::string const &message);
 };
 using kax_file_cptr = std::shared_ptr<kax_file_c>;

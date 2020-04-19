@@ -219,7 +219,7 @@ std::string
 frame_c::to_string(bool verbose)
   const {
   if (!verbose)
-    return (boost::format("position %1% BS ID %2% size %3% E-AC-3 %4%") % m_stream_position % m_bs_id % m_bytes % is_eac3()).str();
+    return (strformat::bstr("position %1% BS ID %2% size %3% E-AC-3 %4%") % m_stream_position % m_bs_id % m_bytes % is_eac3()).str();
 
   const std::string &frame_type = !is_eac3()                                  ? "---"
                                 : m_frame_type == EAC3_FRAME_TYPE_INDEPENDENT ? "independent"
@@ -228,7 +228,7 @@ frame_c::to_string(bool verbose)
                                 : m_frame_type == EAC3_FRAME_TYPE_RESERVED    ? "reserved"
                                 :                                               "unknown";
 
-  std::string output = (boost::format("position %1% size %3% garbage %2% BS ID %4% E-AC-3 %15% sample rate %5% bit rate %6% channels %7% flags %8% samples %9% type %10% (%13%) "
+  std::string output = (strformat::bstr("position %1% size %3% garbage %2% BS ID %4% E-AC-3 %15% sample rate %5% bit rate %6% channels %7% flags %8% samples %9% type %10% (%13%) "
                                       "sub stream ID %11% has dependent frames %12% total size %14%")
                         % m_stream_position
                         % m_garbage_size
@@ -248,7 +248,7 @@ frame_c::to_string(bool verbose)
                         ).str();
 
   for (auto &frame : m_dependent_frames)
-    output += (boost::format(" { %1% }") % frame.to_string(verbose)).str();
+    output += (strformat::bstr(" { %1% }") % frame.to_string(verbose)).str();
 
   return output;
 }
@@ -357,7 +357,7 @@ parser_c::find_consecutive_frames(unsigned char const *buffer,
   std::size_t base = 0;
 
   do {
-    mxdebug_if(s_debug, boost::format("Starting search for %2% headers with base %1%, buffer size %3%\n") % base % num_required_headers % buffer_size);
+    mxdebug_if(s_debug, strformat::bstr("Starting search for %2% headers with base %1%, buffer size %3%\n") % base % num_required_headers % buffer_size);
 
     std::size_t position = base;
 
@@ -365,7 +365,7 @@ parser_c::find_consecutive_frames(unsigned char const *buffer,
     while (((position + 8) < buffer_size) && !first_frame.decode_header(&buffer[position], buffer_size - position))
       ++position;
 
-    mxdebug_if(s_debug, boost::format("First frame at %1% valid %2%\n") % position % first_frame.m_valid);
+    mxdebug_if(s_debug, strformat::bstr("First frame at %1% valid %2%\n") % position % first_frame.m_valid);
 
     if (!first_frame.m_valid)
       return -1;
@@ -381,7 +381,7 @@ parser_c::find_consecutive_frames(unsigned char const *buffer,
         break;
 
       if (8 > current_frame.m_bytes) {
-        mxdebug_if(s_debug, boost::format("Current frame at %1% has invalid size %2%\n") % offset % current_frame.m_bytes);
+        mxdebug_if(s_debug, strformat::bstr("Current frame at %1% has invalid size %2%\n") % offset % current_frame.m_bytes);
         break;
       }
 
@@ -389,19 +389,19 @@ parser_c::find_consecutive_frames(unsigned char const *buffer,
           && (current_frame.m_channels    != first_frame.m_channels)
           && (current_frame.m_sample_rate != first_frame.m_sample_rate)) {
         mxdebug_if(s_debug,
-                   boost::format("Current frame at %7% differs from first frame. (first/current) BS ID: %1%/%2% channels: %3%/%4% sample rate: %5%/%6%\n")
+                   strformat::bstr("Current frame at %7% differs from first frame. (first/current) BS ID: %1%/%2% channels: %3%/%4% sample rate: %5%/%6%\n")
                    % first_frame.m_bs_id % current_frame.m_bs_id % first_frame.m_channels % current_frame.m_channels % first_frame.m_sample_rate % current_frame.m_sample_rate % offset);
         break;
       }
 
-      mxdebug_if(s_debug, boost::format("Current frame at %1% equals first frame, found %2%\n") % offset % (num_headers_found + 1));
+      mxdebug_if(s_debug, strformat::bstr("Current frame at %1% equals first frame, found %2%\n") % offset % (num_headers_found + 1));
 
       ++num_headers_found;
       offset += current_frame.m_bytes;
     }
 
     if (num_headers_found == num_required_headers) {
-      mxdebug_if(s_debug, boost::format("Found required number of headers at %1%\n") % position);
+      mxdebug_if(s_debug, strformat::bstr("Found required number of headers at %1%\n") % position);
       return position;
     }
 

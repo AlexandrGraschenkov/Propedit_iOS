@@ -85,9 +85,9 @@ write_simple(KaxChapters &chapters,
   for (auto const &entry : chapter_entries) {
     ++chapter_num;
 
-    out.puts(g_cc_stdio->native((boost::format("CHAPTER%|1$02d|=%|2$02d|:%|3$02d|:%|4$02d|.%|5$03d|\n")
+    out.puts(g_cc_stdio->native((strformat::bstr("CHAPTER%|1$02d|=%|2$02d|:%|3$02d|:%|4$02d|.%|5$03d|\n")
                                  % chapter_num % entry.first.to_h() % (entry.first.to_m() % 60) % (entry.first.to_s() % 60) % (entry.first.to_ms() % 1000)).str()));
-    out.puts(g_cc_stdio->native((boost::format("CHAPTER%|1$02d|NAME=%2%\n") % chapter_num % entry.second).str()));
+    out.puts(g_cc_stdio->native((strformat::bstr("CHAPTER%|1$02d|NAME=%2%\n") % chapter_num % entry.second).str()));
   }
 
   return chapter_num;

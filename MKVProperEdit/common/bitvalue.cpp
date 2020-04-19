@@ -61,11 +61,11 @@ value_c::value_c(std::string s,
 
     // Invalid character?
     if (!ishexdigit(s[i]))
-      throw mtx::bits::value_parser_x{boost::format(Y("Not a hex digit at position %1%")) % i};
+      throw mtx::bits::value_parser_x{strformat::bstr(Y("Not a hex digit at position %1%")) % i};
 
     // Input too long?
     if ((allowed_bitlength > 0) && ((s2.length() * 4) >= allowed_bitlength))
-      throw mtx::bits::value_parser_x{boost::format(Y("Input too long: %1% > %2%")) % (s2.length() * 4) % allowed_bitlength};
+      throw mtx::bits::value_parser_x{strformat::bstr(Y("Input too long: %1% > %2%")) % (s2.length() * 4) % allowed_bitlength};
 
     // Store the value.
     s2 += s[i];

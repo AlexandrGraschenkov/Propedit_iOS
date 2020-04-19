@@ -27,7 +27,7 @@ set_tcp_error(const std::string &error) {
 }
 
 inline bool
-set_tcp_error(const boost::format &error) {
+set_tcp_error(const strformat::bstr &error) {
   timestamp_parser_error = error.str();
   return false;
 }
@@ -140,7 +140,7 @@ parse_timestamp(const std::string &src,
       num_digits = 0;
 
     } else
-      return set_tcp_error(boost::format(Y("Invalid format: unknown character '%1%' found")) % src[i]);
+      return set_tcp_error(strformat::bstr(Y("Invalid format: unknown character '%1%' found")) % src[i]);
   }
 
   if (1 > num_colons)
@@ -183,9 +183,9 @@ parse_timestamp(const std::string &src,
   }
 
   if (m > 59)
-    return set_tcp_error(boost::format(Y("Invalid number of minutes: %1% > 59")) % m);
+    return set_tcp_error(strformat::bstr(Y("Invalid number of minutes: %1% > 59")) % m);
   if (s > 59)
-    return set_tcp_error(boost::format(Y("Invalid number of seconds: %1% > 59")) % s);
+    return set_tcp_error(strformat::bstr(Y("Invalid number of seconds: %1% > 59")) % s);
 
   timestamp              = (((int64_t)h * 60 * 60 + (int64_t)m * 60 + (int64_t)s) * 1000000000ll + n) * negative;
   timestamp_parser_error = Y("no error");

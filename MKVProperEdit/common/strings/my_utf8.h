@@ -57,7 +57,7 @@ to_utfstring(std::string const &source) {
 }
 
 inline ::libebml::UTFstring
-to_utfstring(boost::format const &source) {
+to_utfstring(strformat::bstr const &source) {
   return to_utfstring(source.str());
 }
 
@@ -74,7 +74,7 @@ to_utf8(std::string const &source) {
 }
 
 inline std::string
-to_utf8(boost::format const &source) {
+to_utf8(strformat::bstr const &source) {
   return source.str();
 }
 

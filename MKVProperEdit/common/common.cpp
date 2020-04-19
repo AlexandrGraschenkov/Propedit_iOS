@@ -203,3 +203,64 @@ std::string const &
 get_program_name() {
   return s_program_name;
 }
+
+
+namespace strformat {
+
+bstr::bstr(const std::string& x) {
+    innerStr = x;
+}
+//bstr& bstr::operator%(const std::string& other) {
+//    std::string findStr = "%" + std::to_string(index) + "%";
+//    auto foundIndex = innerStr.find(findStr, 0);
+//    if (foundIndex == std::string::npos) return *this;
+//
+//    innerStr.replace(foundIndex, findStr.size(), other);
+//    index++;
+//
+//    return *this;
+//}
+
+//bstr& bstr::operator%(char const (&) *other) {
+//    return operator%(std::string(other));
+//}
+    
+//bstr& bstr::operator%(const int& other) {
+//    return operator%(std::to_string(other));
+//}
+//
+//bstr& bstr::operator%(const std::exception& other) {
+//    return operator%(std::string(other.what()));
+//}
+
+
+//std::ostream &operator<<(std::ostream &os, char * const &m) {
+//    boost::format{"%1%.%2%.%3%"} % 12 % 5 % 2014;
+//    return os << std::string(m);
+//}
+
+//template <typename C>
+//bstr& bstr::operator%(C const& other) {
+//    std::ostringstream strStream;
+//    strStream << other;
+//    std::string str = strStream.str();
+//    
+//    std::string findStr = "%" + std::to_string(index) + "%";
+//    auto foundIndex = innerStr.find(findStr, 0);
+//    if (foundIndex == std::string::npos) return *this;
+//
+//    innerStr.replace(foundIndex, findStr.size(), str);
+//    index++;
+//    
+//    return *this;
+//}
+
+//bstr::
+bstr::operator std::string () {return innerStr;};
+
+const std::string& bstr::str() const { return innerStr;}
+
+std::ostream &operator<<(std::ostream &os, bstr const &m) {
+    return os << m.str();
+}
+};

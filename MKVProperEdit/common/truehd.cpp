@@ -105,7 +105,7 @@ truehd_frame_t::parse_truehd_header(unsigned char const *data,
     auto has_content     = !!r.get_bits(4);
 
     mxdebug_if(s_debug,
-               boost::format("is_vbr %1% maximum_bitrate %2% num_substreams %3% has_extensions %4% num_extensions %5% has_content %6%\n")
+               strformat::bstr("is_vbr %1% maximum_bitrate %2% num_substreams %3% has_extensions %4% num_extensions %5% has_content %6%\n")
                % is_vbr % maximum_bitrate % num_substreams % has_extensions % num_substreams % has_content);
 
     if (!has_extensions)
@@ -203,7 +203,7 @@ truehd_parser_c::parse(bool end_of_stream) {
     frame->m_data = memory_c::clone(&data[offset], frame->m_size);
 
     mxverb(3,
-           boost::format("codec %7% type %1% offset %2% size %3% channels %4% sampling_rate %5% samples_per_frame %6%\n")
+           strformat::bstr("codec %7% type %1% offset %2% size %3% channels %4% sampling_rate %5% samples_per_frame %6%\n")
            % (  frame->is_sync()   ? "S"
               : frame->is_normal() ? "n"
               : frame->is_ac3()    ? "A"

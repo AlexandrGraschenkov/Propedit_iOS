@@ -106,7 +106,7 @@ public:
 
   info_c &
   add(std::string const &key,
-      boost::format const &value) {
+      strformat::bstr const &value) {
     return add(key, value.str());
   }
 

@@ -130,7 +130,7 @@ remove_trailing_zero_bytes(memory_c &buffer) {
   auto new_size = size - idx;
   buffer.set_size(new_size);
 
-  mxdebug_if(s_debug_trailing_zero_byte_removal, boost::format("Removing trailing zero bytes from old size %1% down to new size %2%, removed %3%\n") % size % new_size % idx);
+  mxdebug_if(s_debug_trailing_zero_byte_removal, strformat::bstr("Removing trailing zero bytes from old size %1% down to new size %2%, removed %3%\n") % size % new_size % idx);
 }
 
 }}

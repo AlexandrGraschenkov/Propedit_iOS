@@ -29,7 +29,7 @@
 static void
 display_update_element_result(const EbmlCallbacks &callbacks,
                               kax_analyzer_c::update_element_result_e result) {
-  std::string message((boost::format(Y("Updating the '%1%' element failed. Reason:")) % callbacks.DebugName).str());
+  std::string message((strformat::bstr(Y("Updating the '%1%' element failed. Reason:")) % callbacks.DebugName).str());
   message += " ";
 
   switch (result) {
@@ -46,19 +46,19 @@ display_update_element_result(const EbmlCallbacks &callbacks,
       break;
 
     case kax_analyzer_c::uer_error_opening_for_reading:
-      message += (boost::format("%1% %2%")
+      message += (strformat::bstr("%1% %2%")
                   % Y("The file could not be opened for reading.")
                   % Y("Possible reasons are: the file is not a Matroska file; the file is write-protected; the file is locked by another process; you do not have permission to access the file.")).str();
       break;
 
     case kax_analyzer_c::uer_error_opening_for_writing:
-      message += (boost::format("%1% %2%")
+      message += (strformat::bstr("%1% %2%")
                   % Y("The file could not be opened for writing.")
                   % Y("Possible reasons are: the file is not a Matroska file; the file is write-protected; the file is locked by another process; you do not have permission to access the file.")).str();
       break;
 
     case kax_analyzer_c::uer_error_fixing_last_element_unknown_size_failed:
-      message += (boost::format("%1% %2% %3% %4% %5%")
+      message += (strformat::bstr("%1% %2% %3% %4% %5%")
                   % Y("The Matroska file's last element is set to an unknown size.")
                   % Y("Due to the particular structure of the file this situation cannot be fixed automatically.")
                   % Y("The file can be fixed by multiplexing it with mkvmerge again.")
@@ -98,7 +98,7 @@ write_changes(options_cptr &options,
       if (id_to_write != l1_element.Generic().GlobalId)
         continue;
 
-      mxverb(2, boost::format(Y("Element %1% is written.\n")) % l1_element.Generic().DebugName);
+      mxverb(2, strformat::bstr(Y("Element %1% is written.\n")) % l1_element.Generic().DebugName);
 
       auto result = l1_element.ListSize() ? analyzer->update_element(&l1_element, target->write_elements_set_to_default_value(), target->add_mandatory_elements_if_missing())
                   :                         analyzer->remove_elements(EbmlId(l1_element));
@@ -116,14 +116,14 @@ run(options_cptr &options) {
 
   try {
     if (!kax_analyzer_c::probe(options->m_file_name))
-      mxerror(boost::format("The file '%1%' is not a Matroska file or it could not be found.\n") % options->m_file_name);
+      mxerror(strformat::bstr("The file '%1%' is not a Matroska file or it could not be found.\n") % options->m_file_name);
 
     analyzer = console_kax_analyzer_cptr(new console_kax_analyzer_c(options->m_file_name));
   } catch (mtx::mm_io::exception &ex) {
-    mxerror(boost::format("The file '%1%' could not be opened for reading and writing: %1.\n") % options->m_file_name % ex);
+    mxerror(strformat::bstr("The file '%1%' could not be opened for reading and writing: %1.\n") % options->m_file_name % ex);
   }
 
-  mxinfo(boost::format("%1%\n") % Y("The file is being analyzed."));
+  mxinfo(strformat::bstr("%1%\n") % Y("The file is being analyzed."));
 
   analyzer->set_show_progress(options->m_show_progress);
 
@@ -135,7 +135,7 @@ run(options_cptr &options) {
       .set_throw_on_error(true)
       .process();
   } catch (mtx::exception &ex) {
-    mxerror(boost::format(Y("The file '%1%' could not be opened for reading and writing, or a read/write operation on it failed: %2%.\n")) % options->m_file_name % ex);
+    mxerror(strformat::bstr(Y("The file '%1%' could not be opened for reading and writing, or a read/write operation on it failed: %2%.\n")) % options->m_file_name % ex);
   } catch (...) {
   }
 

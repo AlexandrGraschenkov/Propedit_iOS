@@ -169,7 +169,7 @@ find_consecutive_headers(unsigned char const *buf,
   unsigned int base = pos;
 
   do {
-    mxdebug_if(s_debug, boost::format("find_cons_dts_h: starting with base at %1%\n") % base);
+    mxdebug_if(s_debug, strformat::bstr("find_cons_dts_h: starting with base at %1%\n") % base);
 
     int offset = header.frame_byte_size;
     unsigned int i;
@@ -180,7 +180,7 @@ find_consecutive_headers(unsigned char const *buf,
       pos = find_header(&buf[base + offset], size - base - offset, new_header, false);
       if (0 == pos) {
         if (new_header == header) {
-          mxdebug_if(s_debug, boost::format("find_cons_dts_h: found good header %1%\n") % i);
+          mxdebug_if(s_debug, strformat::bstr("find_cons_dts_h: found good header %1%\n") % i);
           offset += new_header.frame_byte_size;
           continue;
         } else
@@ -216,33 +216,33 @@ header_t::print()
   if (frametype == frametype_e::normal) {
     mxinfo("normal");
   } else {
-    mxinfo(boost::format("termination, deficit sample count = %1%") % deficit_sample_count);
+    mxinfo(strformat::bstr("termination, deficit sample count = %1%") % deficit_sample_count);
   }
   mxinfo("\n");
 
-  mxinfo(boost::format("CRC available          : %1%\n") % (crc_present ? "yes" : "no"));
+  mxinfo(strformat::bstr("CRC available          : %1%\n") % (crc_present ? "yes" : "no"));
 
-  mxinfo(boost::format("Frame Size             : PCM core samples=32*%1%=%2%, %3% milliseconds, %4% byte\n")
+  mxinfo(strformat::bstr("Frame Size             : PCM core samples=32*%1%=%2%, %3% milliseconds, %4% byte\n")
          % num_pcm_sample_blocks % (num_pcm_sample_blocks * 32) % ((num_pcm_sample_blocks * 32000.0) / core_sampling_frequency) % frame_byte_size);
 
-  mxinfo(boost::format("Audio Channels         : %1%%2%, arrangement: %3%\n")
+  mxinfo(strformat::bstr("Audio Channels         : %1%%2%, arrangement: %3%\n")
          % audio_channels % (source_surround_in_es ? " ES" : "") % audio_channel_arrangement);
 
-  mxinfo(boost::format("Core sampling frequency: %1%\n") % core_sampling_frequency);
+  mxinfo(strformat::bstr("Core sampling frequency: %1%\n") % core_sampling_frequency);
 
   if ((-1 < transmission_bitrate) || (-3 > transmission_bitrate))
-    mxinfo(boost::format("Transmission bitrate   : %1%\n") % transmission_bitrate);
+    mxinfo(strformat::bstr("Transmission bitrate   : %1%\n") % transmission_bitrate);
   else
-    mxinfo(boost::format("Transmission_bitrate   : %1%\n")
+    mxinfo(strformat::bstr("Transmission_bitrate   : %1%\n")
            % (  transmission_bitrate == -1 ? "open"
               : transmission_bitrate == -2 ? "variable"
               :                              "lossless"));
 
-  mxinfo(boost::format("Embedded Down Mix      : %1%\n") % (embedded_down_mix      ? "yes" : "no"));
-  mxinfo(boost::format("Embedded Dynamic Range : %1%\n") % (embedded_dynamic_range ? "yes" : "no"));
-  mxinfo(boost::format("Embedded Time Stamp    : %1%\n") % (embedded_time_stamp    ? "yes" : "no"));
-  mxinfo(boost::format("Embedded Auxiliary Data: %1%\n") % (auxiliary_data         ? "yes" : "no"));
-  mxinfo(boost::format("HDCD Master            : %1%\n") % (hdcd_master            ? "yes" : "no"));
+  mxinfo(strformat::bstr("Embedded Down Mix      : %1%\n") % (embedded_down_mix      ? "yes" : "no"));
+  mxinfo(strformat::bstr("Embedded Dynamic Range : %1%\n") % (embedded_dynamic_range ? "yes" : "no"));
+  mxinfo(strformat::bstr("Embedded Time Stamp    : %1%\n") % (embedded_time_stamp    ? "yes" : "no"));
+  mxinfo(strformat::bstr("Embedded Auxiliary Data: %1%\n") % (auxiliary_data         ? "yes" : "no"));
+  mxinfo(strformat::bstr("HDCD Master            : %1%\n") % (hdcd_master            ? "yes" : "no"));
 
   mxinfo("Extended Coding        : ");
   if (extended_coding) {
@@ -264,7 +264,7 @@ header_t::print()
     mxinfo("no");
   mxinfo("\n");
 
-  mxinfo(boost::format("Audio Sync in sub-subs : %1%\n") % (audio_sync_word_in_sub_sub ? "yes" : "no"));
+  mxinfo(strformat::bstr("Audio Sync in sub-subs : %1%\n") % (audio_sync_word_in_sub_sub ? "yes" : "no"));
 
   mxinfo("Low Frequency Effects  : ");
   switch (lfe_type) {
@@ -283,16 +283,16 @@ header_t::print()
   }
   mxinfo("\n");
 
-  mxinfo(boost::format("Predictor History used : %1%\n") % (predictor_history_flag ? "yes" : "no"));
+  mxinfo(strformat::bstr("Predictor History used : %1%\n") % (predictor_history_flag ? "yes" : "no"));
 
-  mxinfo(boost::format("Multirate Interpolator : %1%\n") % (multirate_interpolator == multirate_interpolator_e::non_perfect ? "non perfect" : "perfect"));
+  mxinfo(strformat::bstr("Multirate Interpolator : %1%\n") % (multirate_interpolator == multirate_interpolator_e::non_perfect ? "non perfect" : "perfect"));
 
-  mxinfo(boost::format("Encoder Software Vers. : %1%\n") % encoder_software_revision);
-  mxinfo(boost::format("Copy History Bits      : %1%\n") % copy_history);
-  mxinfo(boost::format("Source PCM Resolution  : %1%\n") % source_pcm_resolution);
-  mxinfo(boost::format("Front Encoded as Diff. : %1%\n") % (front_sum_difference    ? "yes" : "no"));
-  mxinfo(boost::format("Surr. Encoded as Diff. : %1%\n") % (surround_sum_difference ? "yes" : "no"));
-  mxinfo(boost::format("Dialog Normaliz. Gain  : %1%\n") % dialog_normalization_gain);
+  mxinfo(strformat::bstr("Encoder Software Vers. : %1%\n") % encoder_software_revision);
+  mxinfo(strformat::bstr("Copy History Bits      : %1%\n") % copy_history);
+  mxinfo(strformat::bstr("Source PCM Resolution  : %1%\n") % source_pcm_resolution);
+  mxinfo(strformat::bstr("Front Encoded as Diff. : %1%\n") % (front_sum_difference    ? "yes" : "no"));
+  mxinfo(strformat::bstr("Surr. Encoded as Diff. : %1%\n") % (surround_sum_difference ? "yes" : "no"));
+  mxinfo(strformat::bstr("Dialog Normaliz. Gain  : %1%\n") % dialog_normalization_gain);
 
   if (!has_exss)
     mxinfo("Extension substream    : no\n");
@@ -304,7 +304,7 @@ header_t::print()
                   : dts_type_e::x96_24          == dts_type ? "96/24"
                   :                                           "unknown";
 
-    mxinfo(boost::format("Extension substream    : %1%, size %2%\n\n") % type_str % exss_part_size);
+    mxinfo(strformat::bstr("Extension substream    : %1%, size %2%\n\n") % type_str % exss_part_size);
   }
 }
 
@@ -809,7 +809,7 @@ header_t::decode_x96_header(unsigned char const *buf,
     bc.skip_bits(32);             // sync word
 
     auto x96_size = bc.peek_bits(12) + 1;
-    mxinfo(boost::format("x96 size %1%\n") % x96_size);
+    mxinfo(strformat::bstr("x96 size %1%\n") % x96_size);
     bc.skip_bits((x96_size - 4) * 8);
     dts_type = dts_type_e::x96_24;
 

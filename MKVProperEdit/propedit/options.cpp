@@ -93,7 +93,7 @@ options_c::add_track_or_segmentinfo_target(std::string const &spec) {
 void
 options_c::set_file_name(const std::string &file_name) {
   if (!m_file_name.empty())
-    mxerror(boost::format(Y("More than one file name has been given ('%1%' and '%2%').\n")) % m_file_name % file_name);
+    mxerror(strformat::bstr(Y("More than one file name has been given ('%1%' and '%2%').\n")) % m_file_name % file_name);
 
   m_file_name = file_name;
 }
@@ -114,7 +114,7 @@ void
 options_c::dump_info()
   const
 {
-  mxinfo(boost::format("options:\n"
+  mxinfo(strformat::bstr("options:\n"
                        "  file_name:     %1%\n"
                        "  show_progress: %2%\n"
                        "  parse_mode:    %3%\n")
@@ -149,7 +149,7 @@ read_element(kax_analyzer_c *analyzer,
     e = analyzer->read_element(index);
 
   if (require_existance && (!e || !dynamic_cast<T *>(e.get())))
-    mxerror(boost::format(Y("Modification of properties in the section '%1%' was requested, but no corresponding level 1 element was found in the file. %2%\n")) % category % "FILE_NOT_MODIFIED");
+    mxerror(strformat::bstr(Y("Modification of properties in the section '%1%' was requested, but no corresponding level 1 element was found in the file. %2%\n")) % category % "FILE_NOT_MODIFIED");
 
   return e;
 }
@@ -188,7 +188,7 @@ options_c::merge_targets() {
 
     existing_target_it->second->merge_changes(*track_target);
 
-    mxwarn(boost::format(Y("The edit specifications '%1%' and '%2%' resolve to the same track with the UID %3%.\n"))
+    mxwarn(strformat::bstr(Y("The edit specifications '%1%' and '%2%' resolve to the same track with the UID %3%.\n"))
            % existing_target_it->second->get_spec() % track_target->get_spec() % track_uid);
   }
 

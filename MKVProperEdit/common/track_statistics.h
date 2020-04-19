@@ -78,7 +78,7 @@ public:
   std::string to_string() const {
     auto duration = get_duration();
     auto bps      = get_bits_per_second();
-    return (boost::format("<#b:%1% #f:%2% min:%3% max:%4% dur:%5% bps:%6%>")
+    return (strformat::bstr("<#b:%1% #f:%2% min:%3% max:%4% dur:%5% bps:%6%>")
             % m_num_bytes
             % m_num_frames
             % (m_min_timestamp              ? *m_min_timestamp              : -1)

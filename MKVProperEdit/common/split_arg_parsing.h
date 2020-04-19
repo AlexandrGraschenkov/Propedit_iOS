@@ -23,7 +23,7 @@ protected:
   std::string m_message;
 public:
   explicit format_x(std::string const &message)  : m_message(message)       { }
-  explicit format_x(boost::format const &message): m_message(message.str()) { }
+  explicit format_x(strformat::bstr const &message): m_message(message.str()) { }
   virtual ~format_x() throw() { }
 
   virtual char const *what() const throw() {

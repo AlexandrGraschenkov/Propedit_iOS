@@ -67,7 +67,7 @@ engage_hacks(const std::string &hacks) {
     if (engage_args[aidx] == "list") {
       mxinfo(Y("Valid hacks are:\n"));
       for (hidx = 0; s_available_hacks[hidx].name; ++hidx)
-        mxinfo(boost::format("%1%\n") % s_available_hacks[hidx].name);
+        mxinfo(strformat::bstr("%1%\n") % s_available_hacks[hidx].name);
       mxexit();
 
     } else if (engage_args[aidx] == "cow") {
@@ -90,7 +90,7 @@ engage_hacks(const std::string &hacks) {
       }
 
     if (!valid_hack)
-      mxerror(boost::format(Y("'%1%' is not a valid hack.\n")) % engage_args[aidx]);
+      mxerror(strformat::bstr(Y("'%1%' is not a valid hack.\n")) % engage_args[aidx]);
   }
 }
 

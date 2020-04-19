@@ -66,7 +66,7 @@ protected:
   std::string m_message;
 public:
   explicit exception(std::string const &message)  : m_message(message)       { }
-  explicit exception(boost::format const &message): m_message(message.str()) { }
+  explicit exception(strformat::bstr const &message): m_message(message.str()) { }
   virtual ~exception() throw() { }
 
   virtual char const *what() const throw() {

@@ -216,7 +216,7 @@ latm_parser_c::parse_audio_specific_config(size_t asc_length) {
 
 void
 latm_parser_c::parse_stream_mux_config() {
-  mxdebug_if(m_debug, boost::format("Parsing stream mux config\n"));
+  mxdebug_if(m_debug, strformat::bstr("Parsing stream mux config\n"));
 
   auto start_position = m_bc->get_bit_position();
   m_audio_mux_version = m_bc->get_bit();
@@ -224,7 +224,7 @@ latm_parser_c::parse_stream_mux_config() {
     m_audio_mux_version_a = m_bc->get_bit();
 
   if (m_audio_mux_version_a != 0) {
-    mxdebug_if(m_debug, boost::format("audio_mux_version_a is not 0; not supported\n"));
+    mxdebug_if(m_debug, strformat::bstr("audio_mux_version_a is not 0; not supported\n"));
     throw false;
   }
 
@@ -236,14 +236,14 @@ latm_parser_c::parse_stream_mux_config() {
   if (m_bc->get_bits(4) != 0) {
     // More than one program is not supported at the moment; DVB
     // always only uses a single program.
-    mxdebug_if(m_debug, boost::format("more than one program in LOAS/LATM\n"));
+    mxdebug_if(m_debug, strformat::bstr("more than one program in LOAS/LATM\n"));
     throw false;
   }
 
   if (m_bc->get_bits(3) != 0) {
     // More than one layer is not supported at the moment; DVB
     // always only uses a single layer.
-    mxdebug_if(m_debug, boost::format("more than one layer in LOAS/LATM\n"));
+    mxdebug_if(m_debug, strformat::bstr("more than one layer in LOAS/LATM\n"));
     throw false;
   }
 
@@ -298,8 +298,8 @@ latm_parser_c::parse_stream_mux_config() {
     m_bc->skip_bits(8);          // config_crc
 
   mxdebug_if(m_debug,
-             boost::format("stream_mux_config: bit size %1% m_audio_mux_version %2% m_audio_mux_version_a %3% m_frame_length_type %4% m_fixed_frame_length %5% header %6%\n")
-             % (m_bc->get_bit_position() - start_position) % m_audio_mux_version % m_audio_mux_version_a %  m_frame_length_type % m_fixed_frame_length % m_header);
+             strformat::bstr("stream_mux_config: bit size %1% m_audio_mux_version %2% m_audio_mux_version_a %3% m_frame_length_type %4% m_fixed_frame_length %5% header %6%\n")
+             % (m_bc->get_bit_position() - start_position) % m_audio_mux_version % m_audio_mux_version_a %  m_frame_length_type % m_fixed_frame_length % "m_header");
 }
 
 size_t
@@ -358,7 +358,7 @@ latm_parser_c::parse_audio_mux_element() {
   }
 
   if (!m_config_parsed) {
-    mxdebug_if(m_debug, boost::format("Configuration not parsed; not continuing with audio mux element parsing\n"));
+    mxdebug_if(m_debug, strformat::bstr("Configuration not parsed; not continuing with audio mux element parsing\n"));
     throw false;
   }
 
@@ -394,9 +394,9 @@ std::string
 frame_c::to_string(bool verbose)
   const {
   if (!verbose)
-    return (boost::format("position %1% size %2% ID %3% profile %4%") % m_stream_position % m_header.bytes % m_header.id % m_header.config.profile).str();
+    return (strformat::bstr("position %1% size %2% ID %3% profile %4%") % m_stream_position % m_header.bytes % m_header.id % m_header.config.profile).str();
 
-  return (boost::format("position %1% size %2% garbage %3% ID %4% profile %5% sample rate %6% bit rate %7% channels %8%")
+  return (strformat::bstr("position %1% size %2% garbage %3% ID %4% profile %5% sample rate %6% bit rate %7% channels %8%")
           % m_stream_position
           % m_header.bytes
           % m_garbage_size
@@ -618,7 +618,7 @@ parser_c::decode_loas_latm_header(unsigned char const *buffer,
 
     if (decoded_frame_end_bits > (loas_frame_end * 8)) {
       mxdebug_if(m_debug,
-                 boost::format("decode_loas_latm_header: decoded_frame_end_bits (%1%) > loas_frame_end_bits (%2%); decoded_frame_length: %3% end_of_header_bit_pos %4%\n")
+                 strformat::bstr("decode_loas_latm_header: decoded_frame_end_bits (%1%) > loas_frame_end_bits (%2%); decoded_frame_length: %3% end_of_header_bit_pos %4%\n")
                  % decoded_frame_end_bits % (loas_frame_end * 8) % decoded_frame_length % end_of_header_bit_pos);
       return { failure, 2 };
     }
@@ -646,7 +646,7 @@ parser_c::decode_loas_latm_header(unsigned char const *buffer,
     push_frame(frame);
 
     mxdebug_if(m_debug,
-               boost::format("decode_loas_latm_header: headerok %6% buffer_size %1% loas_frame_size %2% header_byte_size %3% data_byte_size %4% bytes %5% decoded_frame_offset %7% decoded_frame_length %8% "
+               strformat::bstr("decode_loas_latm_header: headerok %6% buffer_size %1% loas_frame_size %2% header_byte_size %3% data_byte_size %4% bytes %5% decoded_frame_offset %7% decoded_frame_length %8% "
                              "first_four_bytes %|9$08x| end_of_header_bit_pos %10%\n")
                % buffer_size % loas_frame_size % frame.m_header.header_byte_size % frame.m_header.data_byte_size % frame.m_header.bytes % new_header.is_valid % m_latm_parser.get_frame_bit_offset() % decoded_frame_length
                % (dst_buffer && (decoded_frame_length >= 4) ? get_uint32_be(dst_buffer) : 0) % end_of_header_bit_pos);
@@ -730,7 +730,7 @@ parser_c::parse() {
     m_parsed_stream_position += num_bytes;
 
     mxdebug_if(m_debug,
-               boost::format("result_status %1% remainig_bytes %2% result_bytes %3% num_bytes %4% position before %5% after %6%\n")
+               strformat::bstr("result_status %1% remainig_bytes %2% result_bytes %3% num_bytes %4% position before %5% after %6%\n")
                % (result.first == success ? "success" : result.first == failure ? "failure" : "need-more-data")
                % remaining_bytes % result.second % num_bytes % (position - num_bytes) % position);
 
@@ -775,7 +775,7 @@ parser_c::find_consecutive_frames(unsigned char const *buffer,
   static auto s_debug = debugging_option_c{"aac_consecutive_frames"};
 
   for (int base = 0; (base + 8) < static_cast<int>(buffer_size); ++base) {
-    mxdebug_if(s_debug, boost::format("Starting search for %2% headers with base %1%, buffer size %3%\n") % base % num_required_frames % buffer_size);
+    mxdebug_if(s_debug, strformat::bstr("Starting search for %2% headers with base %1%, buffer size %3%\n") % base % num_required_frames % buffer_size);
 
     auto value = get_uint24_be(&buffer[base]);
     // Speeding up checks by using shortcuts here instead of going
@@ -834,12 +834,12 @@ parser_c::find_consecutive_frames(unsigned char const *buffer,
       auto frame = parser.get_frame();
       frames.push_back(frame);
 
-      garbage_sizes += (boost::format(" %1%") % frame.m_garbage_size).str();
+      garbage_sizes += (strformat::bstr(" %1%") % frame.m_garbage_size).str();
       if (frame.m_garbage_size)
         garbage_found = true;
     }
 
-    mxdebug_if(s_debug, boost::format("  Found enough headers at %1%; garbage sizes:%2% found garbage: %3%\n") % base % garbage_sizes % garbage_found);
+    mxdebug_if(s_debug, strformat::bstr("  Found enough headers at %1%; garbage sizes:%2% found garbage: %3%\n") % base % garbage_sizes % garbage_found);
 
     if (garbage_found)
       continue;
@@ -854,7 +854,7 @@ parser_c::find_consecutive_frames(unsigned char const *buffer,
           && (current_frame.m_header.config.channels    != first_frame.m_header.config.channels)
           && (current_frame.m_header.config.sample_rate != first_frame.m_header.config.sample_rate)) {
         mxdebug_if(s_debug,
-                   boost::format("Current frame number %9% at %10% differs from first frame. (first/current) ID: %1%/%2% profile: %3%/%4% channels: %5%/%6% sample rate: %7%/%8%\n")
+                   strformat::bstr("Current frame number %9% at %10% differs from first frame. (first/current) ID: %1%/%2% profile: %3%/%4% channels: %5%/%6% sample rate: %7%/%8%\n")
                    % first_frame.m_header.id                 % current_frame.m_header.id
                    % first_frame.m_header.config.profile     % current_frame.m_header.config.profile
                    % first_frame.m_header.config.channels    % current_frame.m_header.config.channels
@@ -883,7 +883,7 @@ header_c::header_c()
 std::string
 header_c::to_string()
   const {
-  return (boost::format("sample_rate: %1%; bit_rate: %2%; channels: %3%; bytes: %4%; id: %5%; profile: %6%; header_bit_size: %7%; header_byte_size: %8%; data_byte_size: %9%; is_sbr: %10%; is_valid: %11%")
+  return (strformat::bstr("sample_rate: %1%; bit_rate: %2%; channels: %3%; bytes: %4%; id: %5%; profile: %6%; header_bit_size: %7%; header_byte_size: %8%; data_byte_size: %9%; is_sbr: %10%; is_valid: %11%")
           % config.sample_rate % bit_rate % config.channels % bytes % id % config.profile % header_bit_size % header_byte_size % data_byte_size % config.sbr % is_valid).str();
 }
 
@@ -1092,7 +1092,7 @@ header_c::parse_audio_specific_config(mtx::bits::reader_c &bc,
     }
 
   } catch (mtx::exception &ex) {
-    mxdebug_if(s_debug_parse_data, boost::format("mtx::aac::parse_audio_specific_config: exception: %1%\n") % ex);
+    mxdebug_if(s_debug_parse_data, strformat::bstr("mtx::aac::parse_audio_specific_config: exception: %1%\n") % ex);
   }
 
   m_bc = nullptr;
@@ -1105,7 +1105,7 @@ header_c::parse_audio_specific_config(const unsigned char *data,
   if (size < 2)
     return;
 
-  mxdebug_if(s_debug_parse_data, boost::format("mtx::aac::parse_audio_specific_config: size %1%, data: %2%\n") % size % to_hex(data, size));
+  mxdebug_if(s_debug_parse_data, strformat::bstr("mtx::aac::parse_audio_specific_config: size %1%, data: %2%\n") % size % to_hex(data, size));
 
   mtx::bits::reader_c bc{data, static_cast<unsigned int>(size)};
   parse_audio_specific_config(bc, look_for_sync_extension);
@@ -1119,7 +1119,7 @@ header_c::parse_program_config_element(mtx::bits::reader_c &bc) {
     read_program_config_element();
 
   } catch (mtx::exception &ex) {
-    mxdebug_if(s_debug_parse_data, boost::format("mtx::aac::parse_audio_specific_config: exception: %1%\n") % ex);
+    mxdebug_if(s_debug_parse_data, strformat::bstr("mtx::aac::parse_audio_specific_config: exception: %1%\n") % ex);
   }
 
   m_bc = nullptr;

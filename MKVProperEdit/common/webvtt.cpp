@@ -116,7 +116,7 @@ webvtt_parser_c::add_block() {
   }
 
   mxdebug_if(m->debug,
-             boost::format("label «%1%» start «%2%» end «%3%» settings list «%4%» additional «%5%» content «%6%»\n")
+             strformat::bstr("label «%1%» start «%2%» end «%3%» settings list «%4%» additional «%5%» content «%6%»\n")
              % label % matches[1].str() % matches[2].str() % matches[3].str()
              % boost::regex_replace(additional, boost::regex{"\n+", boost::regex::perl}, "–")
              % boost::regex_replace(content,    boost::regex{"\n+", boost::regex::perl}, "–"));
@@ -183,6 +183,6 @@ webvtt_parser_c::adjust_embedded_timestamps(std::string const &text,
   return boost::regex_replace(text, s_embedded_timestamp_re, [&offset](boost::smatch const &match) -> std::string {
     timestamp_c timestamp;
     parse_timestamp(match[1].str(), timestamp);
-    return (boost::format("<%1%>") % format_timestamp(timestamp + offset, 3)).str();
+    return (strformat::bstr("<%1%>") % format_timestamp(timestamp + offset, 3)).str();
   });
 }

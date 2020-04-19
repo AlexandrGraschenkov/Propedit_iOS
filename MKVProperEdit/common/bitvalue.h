@@ -26,7 +26,7 @@ protected:
   std::string m_message;
 public:
   value_parser_x(const std::string &message)  : m_message(message)       { }
-  value_parser_x(const boost::format &message): m_message(message.str()) { }
+  value_parser_x(const strformat::bstr &message): m_message(message.str()) { }
   virtual ~value_parser_x() throw() { }
 
   virtual const char *what() const throw() {

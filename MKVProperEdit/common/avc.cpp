@@ -109,7 +109,7 @@ timing_info_t::is_valid()
 
 void
 sps_info_t::dump() {
-  mxinfo(boost::format("sps_info dump:\n"
+  mxinfo(strformat::bstr("sps_info dump:\n"
                        "  id:                                    %1%\n"
                        "  profile_idc:                           %2%\n"
                        "  profile_compat:                        %3%\n"
@@ -174,7 +174,7 @@ sps_info_t::timing_info_valid()
 
 void
 pps_info_t::dump() {
-  mxinfo(boost::format("pps_info dump:\n"
+  mxinfo(strformat::bstr("pps_info dump:\n"
                        "id: %1%\n"
                        "sps_id: %2%\n"
                        "pic_order_present: %3%\n"
@@ -188,7 +188,7 @@ pps_info_t::dump() {
 void
 slice_info_t::dump()
   const {
-  mxinfo(boost::format("slice_info dump:\n"
+  mxinfo(strformat::bstr("slice_info dump:\n"
                        "  nalu_type:                  %1%\n"
                        "  nal_ref_idc:                %2%\n"
                        "  type:                       %3%\n"
@@ -256,7 +256,7 @@ parse_sps(memory_cptr const &buffer,
     time_scale        = frame_rate.numerator();
   }
 
-  mxdebug_if(s_debug_fix_bistream_timing_info, boost::format("fix_bitstream_timing_info: duration %1%: units/tick: %2% time_scale: %3%\n") % duration % num_units_in_tick % time_scale);
+  mxdebug_if(s_debug_fix_bistream_timing_info, strformat::bstr("fix_bitstream_timing_info: duration %1%: units/tick: %2% time_scale: %3%\n") % duration % num_units_in_tick % time_scale);
 
   w.copy_bits(3, r);            // forbidden_zero_bit, nal_ref_idc
   if (w.copy_bits(5, r) != 7)   // nal_unit_type
@@ -342,11 +342,11 @@ parse_sps(memory_cptr const &buffer,
   }
 
   sps.vui_present = r.get_bit();
-  mxdebug_if(s_debug_fix_bistream_timing_info || s_debug_remove_bistream_ar_info, boost::format("VUI present? %1%\n") % sps.vui_present);
+  mxdebug_if(s_debug_fix_bistream_timing_info || s_debug_remove_bistream_ar_info, strformat::bstr("VUI present? %1%\n") % sps.vui_present);
   if (sps.vui_present) {
     w.put_bit(1);
     bool ar_info_present = r.get_bit();
-    mxdebug_if(s_debug_remove_bistream_ar_info, boost::format("ar_info_present? %1%\n") % ar_info_present);
+    mxdebug_if(s_debug_remove_bistream_ar_info, strformat::bstr("ar_info_present? %1%\n") % ar_info_present);
     if (ar_info_present) {     // ar_info_present
       int ar_type = r.get_bits(8);
 
@@ -375,7 +375,7 @@ parse_sps(memory_cptr const &buffer,
         sps.ar_found = false;
 
       mxdebug_if(s_debug_remove_bistream_ar_info,
-                 boost::format("keep_ar_info %1% ar_type %2% par_num %3% par_den %4%\n")
+                 strformat::bstr("keep_ar_info %1% ar_type %2% par_num %3% par_den %4%\n")
                  % keep_ar_info % ar_type % sps.par_num % sps.par_den);
 
     } else
@@ -404,7 +404,7 @@ parse_sps(memory_cptr const &buffer,
       if (   sps.timing_info.is_valid()
           && (sps.timing_info.default_duration() < 5'000ll)) {
         mxdebug_if(s_debug_fix_bistream_timing_info,
-                   boost::format("timing info present && bogus values detected (#units %2% time_scale %3%); defaulting to 25 FPS (default duration 20'000'000)\n")
+                   strformat::bstr("timing info present && bogus values detected (#units %2% time_scale %3%); defaulting to 25 FPS (default duration 20'000'000)\n")
                    % sps.timing_info.is_present % sps.timing_info.num_units_in_tick % sps.timing_info.time_scale);
         sps.timing_info.num_units_in_tick = 1;
         sps.timing_info.time_scale        = 50;
@@ -412,7 +412,7 @@ parse_sps(memory_cptr const &buffer,
     }
 
     mxdebug_if(s_debug_fix_bistream_timing_info,
-               boost::format("timing info present? %1% #units %2% time_scale %3% fixed rate %4%\n")
+               strformat::bstr("timing info present? %1% #units %2% time_scale %3% fixed rate %4%\n")
                % sps.timing_info.is_present % sps.timing_info.num_units_in_tick % sps.timing_info.time_scale % sps.timing_info.fixed_frame_rate);
 
     if (fix_bitstream_frame_rate) {                      // write the new timing info
@@ -593,7 +593,7 @@ fix_sps_fps(memory_cptr const &buffer,
     unsigned int num_sps = avcc.read_uint8();
     new_avcc.write_uint8(num_sps);
     num_sps &= 0x1f;
-    mxdebug_if(s_debug_fix_bistream_timing_info, boost::format("p_mpeg4_p10_fix_sps_fps: num_sps %1%\n") % num_sps);
+    mxdebug_if(s_debug_fix_bistream_timing_info, strformat::bstr("p_mpeg4_p10_fix_sps_fps: num_sps %1%\n") % num_sps);
 
     unsigned int sps;
     for (sps = 0; sps < num_sps; sps++) {

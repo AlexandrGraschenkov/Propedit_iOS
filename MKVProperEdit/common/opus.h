@@ -32,7 +32,7 @@ protected:
   std::string m_message;
 public:
   explicit decode_error(std::string const &message)  : m_message(message)       { }
-  explicit decode_error(boost::format const &message): m_message(message.str()) { }
+  explicit decode_error(strformat::bstr const &message): m_message(message.str()) { }
   virtual ~decode_error() throw() { }
 
   virtual char const *what() const throw() {

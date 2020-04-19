@@ -91,7 +91,7 @@ ebml_chapters_converter_c::fix_edition_entry(KaxEditionEntry &eentry)
     if (dynamic_cast<KaxEditionUID *>(element)) {
       euid = static_cast<KaxEditionUID *>(element);
       if (!is_unique_number(euid->GetValue(), UNIQUE_EDITION_IDS)) {
-        mxwarn(boost::format(Y("Chapter parser: The EditionUID %1% is not unique and could not be reused. A new one will be created.\n")) % euid->GetValue());
+        mxwarn(strformat::bstr(Y("Chapter parser: The EditionUID %1% is not unique and could not be reused. A new one will be created.\n")) % euid->GetValue());
         euid->SetValue(create_unique_number(UNIQUE_EDITION_IDS));
       }
 
@@ -143,7 +143,7 @@ ebml_chapters_converter_c::fix_display(KaxChapterDisplay &display)
     int index = map_to_iso639_2_code(std::string(*clanguage));
 
     if (-1 == index)
-      throw conversion_x{boost::format(Y("'%1%' is not a valid ISO639-2 language code.")) % std::string(*clanguage)};
+      throw conversion_x{strformat::bstr(Y("'%1%' is not a valid ISO639-2 language code.")) % std::string(*clanguage)};
 
   }
 
@@ -154,7 +154,7 @@ ebml_chapters_converter_c::fix_display(KaxChapterDisplay &display)
   auto country = ccountry->GetValue();
   auto cctld   = map_to_cctld(country);
   if (!cctld)
-    throw conversion_x{boost::format(Y("'%1%' is not a valid ccTLD country code.")) % country};
+    throw conversion_x{strformat::bstr(Y("'%1%' is not a valid ccTLD country code.")) % country};
 
   if (country != *cctld)
     ccountry->SetValue(*cctld);
@@ -215,13 +215,13 @@ ebml_chapters_converter_c::parse_file(std::string const &file_name,
     return parse();
 
   } catch (mtx::mm_io::exception &ex) {
-    mxerror(boost::format(Y("The XML chapter file '%1%' could not be read.\n")) % file_name);
+    mxerror(strformat::bstr(Y("The XML chapter file '%1%' could not be read.\n")) % file_name);
 
   } catch (mtx::xml::xml_parser_x &ex) {
-    mxerror(boost::format(Y("The XML chapter file '%1%' contains an error at position %3%: %2%\n")) % file_name % ex.result().description() % ex.result().offset);
+    mxerror(strformat::bstr(Y("The XML chapter file '%1%' contains an error at position %3%: %2%\n")) % file_name % ex.result().description() % ex.result().offset);
 
   } catch (mtx::xml::exception &ex) {
-    mxerror(boost::format(Y("The XML chapter file '%1%' contains an error: %2%\n")) % file_name % ex.what());
+    mxerror(strformat::bstr(Y("The XML chapter file '%1%' contains an error: %2%\n")) % file_name % ex.what());
   }
 
   return mtx::chapters::kax_cptr{};

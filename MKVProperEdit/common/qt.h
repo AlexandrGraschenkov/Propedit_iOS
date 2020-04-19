@@ -46,7 +46,7 @@ to_qs(std::wstring const &source) {
 }
 
 inline QString
-to_qs(boost::format const &source) {
+to_qs(strformat::bstr const &source) {
   return QString::fromUtf8(source.str().c_str());
 }
 
