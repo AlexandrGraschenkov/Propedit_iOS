@@ -30,6 +30,8 @@
 #include "propedit/change.h"
 #include "propedit/propedit.h"
 
+#define FILE_NOT_MODIFIED Y("The file has not been modified.")
+
 change_c::change_c(change_c::change_type_e type,
                    const std::string &name,
                    const std::string &value)

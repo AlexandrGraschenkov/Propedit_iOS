@@ -14,6 +14,8 @@
 #include "propedit/segment_info_target.h"
 #include "propedit/track_target.h"
 
+#define FILE_NOT_MODIFIED Y("The file has not been modified.")
+
 options_c::options_c()
   : m_show_progress(false)
   , m_parse_mode(kax_analyzer_c::parse_mode_fast)

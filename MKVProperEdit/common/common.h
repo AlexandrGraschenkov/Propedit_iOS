@@ -133,3 +133,36 @@ extern unsigned int verbose;
 
 void mtx_common_init(std::string const &program_name, char const *argv0);
 std::string const &get_program_name();
+
+namespace strformat {
+class bstr {
+public:
+    bstr (const std::string& x) {
+        innerStr = x;
+    }
+    bstr& operator%(const std::string& other) {
+        std::string findStr = "%" + std::to_string(index) + "%";
+        auto foundIndex = innerStr.find(findStr, 0);
+        if (foundIndex == std::string::npos) return *this;
+
+        innerStr.replace(foundIndex, findStr.size(), other);
+        index++;
+        
+        return *this;
+    }
+    
+    operator std::string() {return innerStr;}
+    const std::string& str() const { return innerStr;}
+private:
+    std::string innerStr;
+    int index = 1;
+};
+
+std::ostream &operator<<(std::ostream &os, bstr const &m) {
+    return os << m.str();
+}
+
+static bstr format(const std::string & x) {
+    return bstr(x);
+}
+};

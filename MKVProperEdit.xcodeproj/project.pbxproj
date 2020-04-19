@@ -11,6 +11,15 @@
 		FA46AD3424430E0F005CA1E2 /* MKVProperEdit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */; };
 		FA46AD3524430E0F005CA1E2 /* MKVProperEdit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA46AD3A2443580A005CA1E2 /* fs_sys_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA46AD392443580A005CA1E2 /* fs_sys_helpers.cpp */; };
+		FA46AD3B24436051005CA1E2 /* ebml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; };
+		FA46AD3C24436051005CA1E2 /* ebml.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA46AD3F24436051005CA1E2 /* matroska.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE31CD92441AED9006D1642 /* matroska.framework */; };
+		FA46AD4024436051005CA1E2 /* matroska.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAE31CD92441AED9006D1642 /* matroska.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA46AD4324436051005CA1E2 /* MKVProperEdit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */; };
+		FA53634124443EC600A6EA52 /* ebml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; platformFilter = ios; };
+		FA53634224443EC600A6EA52 /* ebml.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FA53638A244B3A3200A6EA52 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7F2FB32441C52000340485 /* boost.framework */; };
+		FA53638B244B3A3200A6EA52 /* boost.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA7F2FB32441C52000340485 /* boost.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA77F14323D1A1C8009DCB2C /* MKVProperEdit.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F14123D1A1C8009DCB2C /* MKVProperEdit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA77F16423D1A1E1009DCB2C /* propedit_cli_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F14B23D1A1E1009DCB2C /* propedit_cli_parser.cpp */; };
 		FA77F16623D1A1E1009DCB2C /* options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F14D23D1A1E1009DCB2C /* options.cpp */; };
@@ -264,9 +273,6 @@
 		FA77F37323D1A22C009DCB2C /* hevc_types.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F27B23D1A22C009DCB2C /* hevc_types.h */; };
 		FA77F37423D1A22C009DCB2C /* id3.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F27C23D1A22C009DCB2C /* id3.h */; };
 		FA7F2FB42441C52000340485 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7F2FB32441C52000340485 /* boost.framework */; };
-		FA7F2FB52441C52100340485 /* boost.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA7F2FB32441C52000340485 /* boost.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA7F2FB62441C59700340485 /* ebml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; platformFilter = ios; };
-		FA7F2FB72441C59700340485 /* ebml.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA9821AF24420A61007BA2FC /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9821AD244209B2007BA2FC /* libiconv.tbd */; };
 		FA9821B924420C21007BA2FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9821B824420C21007BA2FC /* AppDelegate.m */; };
 		FA9821BC24420C22007BA2FC /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9821BB24420C22007BA2FC /* SceneDelegate.m */; };
@@ -335,7 +341,6 @@
 		FAD6F3F6243D2ECC00C4FDC3 /* StdIOCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAD6F3BB243D2ECC00C4FDC3 /* StdIOCallback.cpp */; };
 		FAD6F3F8243D2F3100C4FDC3 /* ebml_export.h in Headers */ = {isa = PBXBuildFile; fileRef = FAD6F3F7243D2F3100C4FDC3 /* ebml_export.h */; };
 		FAD6F3F9243D2F5A00C4FDC3 /* ebml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; };
-		FAD6F3FA243D2F5A00C4FDC3 /* ebml.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAD6F3FF243DB22B00C4FDC3 /* json.hpp in Headers */ = {isa = PBXBuildFile; fileRef = FAD6F3FE243DB22B00C4FDC3 /* json.hpp */; };
 		FAE31CDD2441AED9006D1642 /* matroska.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE31CDB2441AED9006D1642 /* matroska.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE31D102441B1BD006D1642 /* KaxCluster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE31CE22441B1BD006D1642 /* KaxCluster.cpp */; };
@@ -383,7 +388,6 @@
 		FAE31D3A2441B1BD006D1642 /* libmatroska_t.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE31D0E2441B1BD006D1642 /* libmatroska_t.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FAE31D3B2441B1BD006D1642 /* KaxAttached.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE31D0F2441B1BD006D1642 /* KaxAttached.h */; };
 		FAE31D3C2441B217006D1642 /* matroska.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE31CD92441AED9006D1642 /* matroska.framework */; };
-		FAE31D3D2441B217006D1642 /* matroska.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAE31CD92441AED9006D1642 /* matroska.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FAE31D472441B490006D1642 /* matroska_export.h in Headers */ = {isa = PBXBuildFile; fileRef = FAE31D462441B490006D1642 /* matroska_export.h */; };
 		FAE31D4F2441B72B006D1642 /* pugixml.hpp in Headers */ = {isa = PBXBuildFile; fileRef = FAE31D4D2441B72B006D1642 /* pugixml.hpp */; };
 		FAE31D502441B72B006D1642 /* pugixml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE31D4E2441B72B006D1642 /* pugixml.cpp */; };
@@ -392,6 +396,27 @@
 
 /* Begin PBXContainerItemProxy section */
 		FA46AD3624430E0F005CA1E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA77F13523D1A1C8009DCB2C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA77F13D23D1A1C8009DCB2C;
+			remoteInfo = MKVProperEdit;
+		};
+		FA46AD3D24436051005CA1E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA77F13523D1A1C8009DCB2C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAD6F36F243D2EAC00C4FDC3;
+			remoteInfo = ebml;
+		};
+		FA46AD4124436051005CA1E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA77F13523D1A1C8009DCB2C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FAE31CD82441AED9006D1642;
+			remoteInfo = matroska;
+		};
+		FA46AD4424436051005CA1E2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA77F13523D1A1C8009DCB2C /* Project object */;
 			proxyType = 1;
@@ -428,31 +453,21 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FA46AD3C24436051005CA1E2 /* ebml.framework in Embed Frameworks */,
+				FA46AD4024436051005CA1E2 /* matroska.framework in Embed Frameworks */,
+				FA53638B244B3A3200A6EA52 /* boost.framework in Embed Frameworks */,
 				FA46AD3524430E0F005CA1E2 /* MKVProperEdit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FA7F2FB82441C59700340485 /* Embed Frameworks */ = {
+		FA53634324443EC600A6EA52 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FA7F2FB72441C59700340485 /* ebml.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FAD6F3FD243D2F5A00C4FDC3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				FAE31D3D2441B217006D1642 /* matroska.framework in Embed Frameworks */,
-				FA7F2FB52441C52100340485 /* boost.framework in Embed Frameworks */,
-				FAD6F3FA243D2F5A00C4FDC3 /* ebml.framework in Embed Frameworks */,
+				FA53634224443EC600A6EA52 /* ebml.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -870,7 +885,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA46AD3B24436051005CA1E2 /* ebml.framework in Frameworks */,
+				FA53638A244B3A3200A6EA52 /* boost.framework in Frameworks */,
+				FA46AD3F24436051005CA1E2 /* matroska.framework in Frameworks */,
 				FA46AD3424430E0F005CA1E2 /* MKVProperEdit.framework in Frameworks */,
+				FA46AD4324436051005CA1E2 /* MKVProperEdit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -885,7 +904,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA7F2FB62441C59700340485 /* ebml.framework in Frameworks */,
+				FA53634124443EC600A6EA52 /* ebml.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1752,7 +1771,6 @@
 				FA77F13A23D1A1C8009DCB2C /* Sources */,
 				FA77F13B23D1A1C8009DCB2C /* Frameworks */,
 				FA77F13C23D1A1C8009DCB2C /* Resources */,
-				FAD6F3FD243D2F5A00C4FDC3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1778,6 +1796,9 @@
 			);
 			dependencies = (
 				FA46AD3724430E0F005CA1E2 /* PBXTargetDependency */,
+				FA46AD3E24436051005CA1E2 /* PBXTargetDependency */,
+				FA46AD4224436051005CA1E2 /* PBXTargetDependency */,
+				FA46AD4524436051005CA1E2 /* PBXTargetDependency */,
 			);
 			name = TestProperEdit;
 			productName = TestProperEdit;
@@ -1810,7 +1831,7 @@
 				FAE31CD52441AED9006D1642 /* Sources */,
 				FAE31CD62441AED9006D1642 /* Frameworks */,
 				FAE31CD72441AED9006D1642 /* Resources */,
-				FA7F2FB82441C59700340485 /* Embed Frameworks */,
+				FA53634324443EC600A6EA52 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2117,6 +2138,21 @@
 			target = FA77F13D23D1A1C8009DCB2C /* MKVProperEdit */;
 			targetProxy = FA46AD3624430E0F005CA1E2 /* PBXContainerItemProxy */;
 		};
+		FA46AD3E24436051005CA1E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAD6F36F243D2EAC00C4FDC3 /* ebml */;
+			targetProxy = FA46AD3D24436051005CA1E2 /* PBXContainerItemProxy */;
+		};
+		FA46AD4224436051005CA1E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FAE31CD82441AED9006D1642 /* matroska */;
+			targetProxy = FA46AD4124436051005CA1E2 /* PBXContainerItemProxy */;
+		};
+		FA46AD4524436051005CA1E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA77F13D23D1A1C8009DCB2C /* MKVProperEdit */;
+			targetProxy = FA46AD4424436051005CA1E2 /* PBXContainerItemProxy */;
+		};
 		FAD6F3FC243D2F5A00C4FDC3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = FAD6F36F243D2EAC00C4FDC3 /* ebml */;
@@ -2347,8 +2383,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RE82W8HD52;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = TestProperEdit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2365,8 +2405,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RE82W8HD52;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = TestProperEdit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2380,10 +2424,7 @@
 		FAD6F376243D2EAC00C4FDC3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
@@ -2398,6 +2439,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = gralex.ebml;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -2410,10 +2452,7 @@
 		FAD6F377243D2EAC00C4FDC3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD)",
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
