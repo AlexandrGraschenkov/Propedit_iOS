@@ -72,6 +72,21 @@ private:
 
 std::ostream &operator<<(std::ostream &os, bstr const &m);
 };
+
+#include <algorithm>
+#include <string>
+namespace mbalgm {
+std::string to_upper_copy(std::string str);
+void to_upper(std::string &str);
+
+std::string to_lower_copy(std::string str);
+void to_lower(std::string &str);
+
+std::string join(const std::vector<std::string> &vec, const std::string &sep);
+bool istarts_with(const std::string &str, const std::string &other);
+bool starts_with(const std::string &str, const std::string &other);
+bool iequals(const std::string &str, const std::string &other);
+};
 #endif
 
 #if defined(HAVE_SYS_TYPES_H)
@@ -84,7 +99,6 @@ std::ostream &operator<<(std::ostream &os, bstr const &m);
 # include <inttypes.h>
 #endif // HAVE_INTTYPES_H
 
-#include <boost/algorithm/string.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include <boost/function.hpp>
@@ -101,7 +115,6 @@ std::ostream &operator<<(std::ostream &os, bstr const &m);
 #include <boost/regex.hpp>
 #include <boost/system/error_code.hpp>
 
-namespace balg  = boost::algorithm;
 namespace badap = boost::adaptors;
 namespace bfs   = boost::filesystem;
 namespace brng  = boost::range;

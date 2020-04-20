@@ -137,5 +137,5 @@ content_decoder_c::descriptive_algorithm_list() {
 
   boost::for_each(encodings, [&algorithms](auto const &enc) { algorithms.push_back(to_string(enc.comp_algo)); });
 
-  return boost::join(algorithms, ",");
+  return mbalgm::join(algorithms, ",");
 }

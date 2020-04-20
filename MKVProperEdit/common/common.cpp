@@ -10,6 +10,7 @@
 
    Written by Moritz Bunkus <moritz@bunkus.org>.
 */
+// 
 
 #include "common/common_pch.h"
 
@@ -210,57 +211,80 @@ namespace strformat {
 bstr::bstr(const std::string& x) {
     innerStr = x;
 }
-//bstr& bstr::operator%(const std::string& other) {
-//    std::string findStr = "%" + std::to_string(index) + "%";
-//    auto foundIndex = innerStr.find(findStr, 0);
-//    if (foundIndex == std::string::npos) return *this;
-//
-//    innerStr.replace(foundIndex, findStr.size(), other);
-//    index++;
-//
-//    return *this;
-//}
-
-//bstr& bstr::operator%(char const (&) *other) {
-//    return operator%(std::string(other));
-//}
-    
-//bstr& bstr::operator%(const int& other) {
-//    return operator%(std::to_string(other));
-//}
-//
-//bstr& bstr::operator%(const std::exception& other) {
-//    return operator%(std::string(other.what()));
-//}
-
-
-//std::ostream &operator<<(std::ostream &os, char * const &m) {
-//    boost::format{"%1%.%2%.%3%"} % 12 % 5 % 2014;
-//    return os << std::string(m);
-//}
-
-//template <typename C>
-//bstr& bstr::operator%(C const& other) {
-//    std::ostringstream strStream;
-//    strStream << other;
-//    std::string str = strStream.str();
-//    
-//    std::string findStr = "%" + std::to_string(index) + "%";
-//    auto foundIndex = innerStr.find(findStr, 0);
-//    if (foundIndex == std::string::npos) return *this;
-//
-//    innerStr.replace(foundIndex, findStr.size(), str);
-//    index++;
-//    
-//    return *this;
-//}
-
-//bstr::
 bstr::operator std::string () {return innerStr;};
 
 const std::string& bstr::str() const { return innerStr;}
 
 std::ostream &operator<<(std::ostream &os, bstr const &m) {
     return os << m.str();
+}
+};
+
+namespace mbalgm {
+std::string to_upper_copy(std::string str) {
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+    return str;
+}
+void to_upper(std::string &str) {
+    std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+}
+
+std::string to_lower_copy(std::string str) {
+    std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+    return str;
+}
+void to_lower(std::string &str) {
+    std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+}
+
+std::string join(const std::vector<std::string> &vec, const std::string &sep) {
+    std::string str;
+    bool first = true;
+    for (const std::string &s : vec) {
+        if (!first) str += sep;
+        str += s;
+    }
+    return str;
+}
+
+
+#include <locale>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+// templated version of my_equal so it could work with both char and wchar_t
+template<typename charT>
+struct my_equal {
+    my_equal( const std::locale& loc ) : loc_(loc) {}
+    bool operator()(charT ch1, charT ch2) {
+        return std::toupper(ch1, loc_) == std::toupper(ch2, loc_);
+    }
+private:
+    const std::locale& loc_;
+};
+
+// find substring (case insensitive)
+template<typename T>
+int ci_find_substr( const T& str1, const T& str2, const std::locale& loc = std::locale() )
+{
+    typename T::const_iterator it = std::search( str1.begin(), str1.end(),
+        str2.begin(), str2.end(), my_equal<typename T::value_type>(loc) );
+    if ( it != str1.end() ) return it - str1.begin();
+    else return -1; // not found
+}
+
+bool istarts_with(const std::string &str, const std::string &other) {
+    return ci_find_substr(str, other) == 0;
+}
+
+bool starts_with(const std::string &str, const std::string &other) {
+    return str.rfind(other, 0) == 0;
+}
+
+bool iequals(const std::string &str, const std::string &other) {
+    if (str.size() != other.size())
+        return false;
+    return ci_find_substr(str, other) == 0;
 }
 };

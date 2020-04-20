@@ -10,6 +10,7 @@
 
    Written by Moritz Bunkus <moritz@bunkus.org>.
 */
+// 
 
 #include "common/common_pch.h"
 
@@ -77,7 +78,7 @@ debugging_c::request(const std::string &options,
 
 void
 debugging_c::init() {
-  auto env_vars = std::vector<std::string>{ "MKVTOOLNIX_DEBUG", "MTX_DEBUG", balg::to_upper_copy(get_program_name()) + "_DEBUG" };
+  auto env_vars = std::vector<std::string>{ "MKVTOOLNIX_DEBUG", "MTX_DEBUG", mbalgm::to_upper_copy(get_program_name()) + "_DEBUG" };
 
   for (auto &name : env_vars) {
     auto value = getenv(name.c_str());

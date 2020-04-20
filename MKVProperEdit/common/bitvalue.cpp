@@ -40,7 +40,7 @@ value_c::value_c(std::string s,
     throw mtx::invalid_parameter_x();
 
   unsigned int len = s.size();
-  balg::to_lower(s);
+  mbalgm::to_lower(s);
   std::string s2;
 
   unsigned int i;

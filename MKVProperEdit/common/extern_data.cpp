@@ -2636,7 +2636,7 @@ guess_mime_type_by_ext(std::string ext) {
   auto i = ext.rfind('.');
   if (std::string::npos == i)
     return "";
-  ext = balg::to_lower_copy(ext.substr(i + 1));
+  ext = mbalgm::to_lower_copy(ext.substr(i + 1));
 
   for (auto &mime_type : mime_types)
     if (brng::find(mime_type.extensions, ext) != mime_type.extensions.end())

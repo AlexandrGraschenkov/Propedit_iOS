@@ -864,7 +864,7 @@ extract_par(memory_cptr const &buffer) {
 
 bool
 is_fourcc(const char *fourcc) {
-  return balg::to_lower_copy(std::string{fourcc, 4}) == "hevc";
+  return mbalgm::to_lower_copy(std::string{fourcc, 4}) == "hevc";
 }
 
 memory_cptr

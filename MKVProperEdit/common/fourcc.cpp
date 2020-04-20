@@ -176,15 +176,15 @@ fourcc_c::operator !=(fourcc_c const &cmp)
 bool
 fourcc_c::equiv(char const *cmp)
   const {
-  return balg::to_lower_copy(str()) == balg::to_lower_copy(std::string{cmp});
+  return mbalgm::to_lower_copy(str()) == mbalgm::to_lower_copy(std::string{cmp});
 }
 
 bool
 fourcc_c::equiv(std::vector<std::string> const &cmp)
   const {
-  auto lower = balg::to_lower_copy(str());
+  auto lower = mbalgm::to_lower_copy(str());
   for (auto &s : cmp)
-    if (lower == balg::to_lower_copy(s))
+    if (lower == mbalgm::to_lower_copy(s))
       return true;
   return false;
 }

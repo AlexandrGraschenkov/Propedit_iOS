@@ -88,7 +88,7 @@ webvtt_parser_c::add_block() {
     label          = std::move(m->current_block[0]);
 
   } else {
-    auto content = boost::join(m->current_block, "\n");
+    auto content = mbalgm::join(m->current_block, "\n");
     (m->parsing_global_data ? m->global_blocks : m->local_blocks).emplace_back(std::move(content));
 
     m->current_block.clear();
@@ -102,7 +102,7 @@ webvtt_parser_c::add_block() {
   parse_timestamp(matches[1].str(), start);
   parse_timestamp(matches[2].str(), end);
 
-  auto content       = boost::join(std::make_pair(m->current_block.begin() + timestamp_line + 1, m->current_block.end()), "\n");;
+  auto content       = mbalgm::join(std::vector<std::string>(m->current_block.begin() + timestamp_line + 1, m->current_block.end()), "\n");;
   content            = adjust_embedded_timestamps(content, start.negate());
   auto cue           = std::make_shared<cue_t>();
   cue->m_start       = start;
@@ -111,7 +111,7 @@ webvtt_parser_c::add_block() {
   auto settings_list = matches[3].str();
 
   if (! (label.empty() && settings_list.empty() && m->local_blocks.empty())) {
-    additional = settings_list + "\n" + label + "\n" + boost::join(m->local_blocks, "\n");
+    additional = settings_list + "\n" + label + "\n" + mbalgm::join(m->local_blocks, "\n");
     cue->m_addition = memory_c::clone(additional);
   }
 
@@ -136,7 +136,7 @@ webvtt_parser_c::codec_private_available()
 memory_cptr
 webvtt_parser_c::get_codec_private()
   const {
-  return memory_c::clone(boost::join(m->global_blocks, "\n\n"));
+  return memory_c::clone(mbalgm::join(m->global_blocks, "\n\n"));
 }
 
 bool

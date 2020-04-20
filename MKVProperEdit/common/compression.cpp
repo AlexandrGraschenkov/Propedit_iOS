@@ -99,7 +99,7 @@ compressor_c::create(const char *method) {
 compressor_ptr
 compressor_c::create_from_file_name(std::string const &file_name) {
   auto pos = file_name.rfind(".");
-  auto ext = balg::to_lower_copy(pos == std::string::npos ? file_name : file_name.substr(pos + 1));
+  auto ext = mbalgm::to_lower_copy(pos == std::string::npos ? file_name : file_name.substr(pos + 1));
 
   if (ext == "gz")
     return compressor_ptr(new zlib_compressor_c());

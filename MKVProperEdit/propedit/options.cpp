@@ -66,13 +66,13 @@ target_cptr
 options_c::add_track_or_segmentinfo_target(std::string const &spec) {
   static std::string const track_prefix("track:");
 
-  auto spec_lower = balg::to_lower_copy(spec);
+  auto spec_lower = mbalgm::to_lower_copy(spec);
   target_cptr target;
 
   if ((spec_lower == "segment_info") || (spec_lower == "segmentinfo") || (spec_lower == "info"))
     target = target_cptr{new segment_info_target_c()};
 
-  else if (balg::istarts_with(spec_lower, track_prefix)) {
+  else if (mbalgm::istarts_with(spec_lower, track_prefix)) {
     auto spec_short = spec_lower.substr(track_prefix.length());
     target          = target_cptr{new track_target_c(spec_short)};
     static_cast<track_target_c *>(target.get())->parse_spec(spec_short);

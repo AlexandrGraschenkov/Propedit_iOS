@@ -149,7 +149,7 @@ get_version_info(const std::string &program,
     info.push_back("32-bit");
 #endif
 
-  return boost::join(info, " ");
+  return mbalgm::join(info, " ");
 }
 
 int

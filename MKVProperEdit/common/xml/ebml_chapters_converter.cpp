@@ -186,7 +186,7 @@ ebml_chapters_converter_c::probe_file(std::string const &file_name) {
     while (in.getline2(line)) {
       // I assume that if it looks like XML then it is a XML chapter file :)
       strip(line);
-      if (balg::istarts_with(line, "<?xml"))
+      if (mbalgm::istarts_with(line, "<?xml"))
         return true;
       else if (!line.empty())
         return false;

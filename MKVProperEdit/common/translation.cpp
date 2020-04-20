@@ -10,6 +10,7 @@
 
    Written by Moritz Bunkus <moritz@bunkus.org>.
 */
+// 
 
 #include "common/common_pch.h"
 
@@ -192,11 +193,11 @@ translation_c::get_locale()
 bool
 translation_c::matches(std::string const &locale)
   const {
-  if (balg::iequals(locale, get_locale()))
+  if (mbalgm::iequals(locale, get_locale()))
     return true;
 
 #if defined(SYS_WINDOWS)
-  if (balg::iequals(locale, m_windows_locale_sysname))
+  if (mbalgm::iequals(locale, m_windows_locale_sysname))
     return true;
 #endif
 
@@ -270,7 +271,7 @@ std::string
 translatable_string_c::join(std::vector<std::string> const &strings)
   const {
   auto separator = translation_c::get_active_translation().m_line_breaks_anywhere ? "" : " ";
-  return boost::join(strings, separator);
+  return mbalgm::join(strings, separator);
 }
 
 // ------------------------------------------------------------

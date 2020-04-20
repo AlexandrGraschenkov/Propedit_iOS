@@ -231,7 +231,7 @@ ebml_converter_c::parse_binary(parser_context_t &ctx) {
 
   auto content = strip_copy(ctx.content);
 
-  if (balg::starts_with(content, "@")) {
+  if (mbalgm::starts_with(content, "@")) {
     if (content.length() == 1)
       throw malformed_data_x{ ctx.name, ctx.node.offset_debug(), Y("No filename found after the '@'.") };
 
@@ -255,7 +255,7 @@ ebml_converter_c::parse_binary(parser_context_t &ctx) {
     return;
   }
 
-  auto format = balg::to_lower_copy(std::string{ctx.node.attribute("format").value()});
+  auto format = mbalgm::to_lower_copy(std::string{ctx.node.attribute("format").value()});
   if (format.empty())
     format = "base64";
 

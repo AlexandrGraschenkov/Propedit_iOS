@@ -628,7 +628,7 @@ map_to_iso639_2_code(std::string const &s,
 
     auto names = split(english_name, ";");
     strip(names);
-    if (names.end() != brng::find_if(names, [&source](auto const &name) { return balg::istarts_with(name, source); }))
+    if (names.end() != brng::find_if(names, [&source](auto const &name) { return mbalgm::istarts_with(name, source); }))
       return index;
   }
 

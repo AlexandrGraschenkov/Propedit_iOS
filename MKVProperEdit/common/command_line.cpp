@@ -122,7 +122,7 @@ static void
 read_args_from_file(std::vector<std::string> &args,
                     std::string const &filename) {
   auto path = bfs::path{filename};
-  if (balg::to_lower_copy(path.extension().string()) == ".json")
+  if (mbalgm::to_lower_copy(path.extension().string()) == ".json")
     read_args_from_json_file(args, filename);
 
   else
@@ -143,7 +143,7 @@ command_line_args_from_environment() {
 
   process("MKVTOOLNIX");
   process("MTX");
-  process(balg::to_upper_copy(get_program_name()));
+  process(mbalgm::to_upper_copy(get_program_name()));
 
   return all_args;
 }

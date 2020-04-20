@@ -23,10 +23,10 @@ parse_split_parts(const std::string &arg,
                   bool frames_fields) {
   std::string s = arg;
 
-  if (balg::istarts_with(s, "parts:"))
+  if (mbalgm::istarts_with(s, "parts:"))
     s.erase(0, 6);
 
-  else if (balg::istarts_with(s, "parts-frames:"))
+  else if (mbalgm::istarts_with(s, "parts-frames:"))
     s.erase(0, 13);
 
   if (s.empty())

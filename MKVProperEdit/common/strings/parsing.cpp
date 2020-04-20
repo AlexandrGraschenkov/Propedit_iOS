@@ -214,7 +214,7 @@ parse_timestamp(const std::string &src,
 */
 bool
 parse_bool(std::string value) {
-  balg::to_lower(value);
+  mbalgm::to_lower(value);
 
   if ((value == "yes") || (value == "true") || (value == "1"))
     return true;
@@ -263,7 +263,7 @@ parse_duration_number_with_unit(const std::string &s,
   } else
     return false;
 
-  balg::to_lower(unit);
+  mbalgm::to_lower(unit);
 
   if ((unit == "fps") || (unit == "p") || (unit == "i")) {
     if (unit == "i")

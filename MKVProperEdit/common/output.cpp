@@ -10,7 +10,7 @@
 
    Written by Moritz Bunkus <moritz@bunkus.org>.
 */
-// 
+// 
 
 #include "common/common_pch.h"
 
@@ -130,7 +130,7 @@ mxmsg(unsigned int level,
   if (level == MXMSG_ERROR) {
     if (s_saw_cr_after_nl)
       g_mm_stdio->puts("\n");
-    if (balg::starts_with(message, Y("Error:")))
+    if (mbalgm::starts_with(message, Y("Error:")))
       message.erase(0, std::string{Y("Error:")}.length());
     g_mm_stdio->puts(mtx::cli::g_gui_mode ? "#GUI#error " : (strformat::bstr("%1%%2% ") % prefix % Y("Error:")).str());
 
