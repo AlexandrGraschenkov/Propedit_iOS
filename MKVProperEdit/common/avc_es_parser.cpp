@@ -336,10 +336,10 @@ es_parser_c::handle_slice_nalu(memory_cptr const &nalu,
     }
 
     if (!si.field_pic_flag)
-      m_current_key_frame_bottom_field = boost::none;
+      m_current_key_frame_bottom_field = mbalgm::optional<bool>();
 
     else if (m_current_key_frame_bottom_field && (*m_current_key_frame_bottom_field != si.bottom_field_flag))
-      m_current_key_frame_bottom_field = boost::none;
+      m_current_key_frame_bottom_field = mbalgm::optional<bool>();
 
     else
       m_current_key_frame_bottom_field = si.bottom_field_flag;
@@ -663,7 +663,7 @@ es_parser_c::get_most_often_used_duration()
 
   mxdebug_if(m_debug_timestamps, strformat::bstr("Duration frequency. Result: %1%, diff %2%. Best before adjustment: %3%. All: %4%\n")
              % best.first % best.second % most_often->first
-             % boost::accumulate(m_duration_frequency, std::string(""), [](std::string const &accu, std::pair<int64_t, int64_t> const &pair) {
+             % std::accumulate(m_duration_frequency.begin(), m_duration_frequency.end(), std::string(""), [](std::string const &accu, std::pair<int64_t, int64_t> const &pair) {
                  return accu + (strformat::bstr(" <%1% %2%>") % pair.first % pair.second).str();
                }));
 
@@ -764,13 +764,13 @@ es_parser_c::calculate_provided_timestamps_to_use() {
                            "  provided timestamps (available):\n%5%"
                            "  provided timestamps (to use):\n%6%")
              % num_frames % num_provided_timestamps % provided_timestamps_to_use.size()
-             % boost::accumulate(m_frames, std::string{}, [](auto const &str, auto const &frame) {
+             % std::accumulate(m_frames.begin(), m_frames.end(), std::string{}, [](auto const &str, auto const &frame) {
                  return str + (strformat::bstr("    pos %1% size %2% type %3%\n") % frame.m_position % frame.m_data->get_size() % frame.m_type).str();
                })
-             % boost::accumulate(m_provided_timestamps, std::string{}, [](auto const &str, auto const &provided_timestamp) {
+             % std::accumulate(m_provided_timestamps.begin(), m_provided_timestamps.end(), std::string{}, [](auto const &str, auto const &provided_timestamp) {
                  return str + (strformat::bstr("    pos %1% timestamp %2%\n") % provided_timestamp.second % format_timestamp(provided_timestamp.first)).str();
                })
-             % boost::accumulate(provided_timestamps_to_use, std::string{}, [](auto const &str, auto const &provided_timestamp) {
+             % std::accumulate(provided_timestamps_to_use.begin(), provided_timestamps_to_use.end(), std::string{}, [](auto const &str, auto const &provided_timestamp) {
                  return str + (strformat::bstr("    timestamp %1%\n") % format_timestamp(provided_timestamp)).str();
                }));
 

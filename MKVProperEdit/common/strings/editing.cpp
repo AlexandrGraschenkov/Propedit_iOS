@@ -20,20 +20,20 @@ const std::string empty_string("");
 
 std::vector<std::string>
 split(std::string const &text,
-      boost::regex const &pattern,
+      std::regex const &pattern,
       size_t max,
-      boost::match_flag_type match_flags) {
+      std::regex_constants::match_flag_type match_flags) {
   std::vector<std::string> results;
 
-  auto match = boost::make_regex_iterator(text, pattern, match_flags);
-  boost::sregex_iterator end;
+  auto match = std::sregex_iterator(text.begin(), text.end(), pattern, match_flags);
+  std::sregex_iterator end;
   size_t previous_match_end = 0;
 
   while (   (match != end)
          && (   (0 == max)
              || ((results.size() + 1) < max))) {
-    results.push_back(text.substr(previous_match_end, match->position(static_cast<boost::sregex_iterator::value_type::size_type>(0)) - previous_match_end));
-    previous_match_end = match->position(static_cast<boost::sregex_iterator::value_type::size_type>(0)) + match->length(0);
+    results.push_back(text.substr(previous_match_end, match->position(static_cast<std::sregex_iterator::value_type::size_type>(0)) - previous_match_end));
+    previous_match_end = match->position(static_cast<std::sregex_iterator::value_type::size_type>(0)) + match->length(0);
     ++match;
   }
 
@@ -202,29 +202,34 @@ get_displayable_string(std::string const &src) {
 std::string
 normalize_line_endings(std::string const &str,
                        line_ending_style_e line_ending_style) {
-  static boost::regex s_cr_lf_re, s_cr_re, s_lf_re;
+  static std::regex s_cr_lf_re, s_cr_re, s_lf_re;
+    static bool once = true;
 
-  if (s_cr_lf_re.empty()) {
-    s_cr_lf_re = boost::regex{"\r\n", boost::regex::perl};
-    s_cr_re    = boost::regex{"\r",   boost::regex::perl};
-    s_lf_re    = boost::regex{"\n",   boost::regex::perl};
+    if (once) {
+        once = false;
+    s_cr_lf_re = std::regex{"\r\n"};
+    s_cr_re    = std::regex{"\r"};
+    s_lf_re    = std::regex{"\n"};
   }
 
-  auto result = boost::regex_replace(str,    s_cr_lf_re, "\n");
-  result      = boost::regex_replace(result, s_cr_re,    "\n");
+  auto result = std::regex_replace(str,    s_cr_lf_re, "\n");
+  result      = std::regex_replace(result, s_cr_re,    "\n");
 
   if (line_ending_style_e::lf == line_ending_style)
     return result;
 
-  return boost::regex_replace(result, s_lf_re, "\r\n");
+  return std::regex_replace(result, s_lf_re, "\r\n");
 }
 
 std::string
 chomp(std::string const &str) {
-  static boost::regex s_trailing_lf_re;
+  static std::regex s_trailing_lf_re;
+    static bool once = true;
 
-  if (s_trailing_lf_re.empty())
-    s_trailing_lf_re = boost::regex{"[\r\n]+\\z", boost::regex::perl};
+    if (once) {
+        once = false;
+    s_trailing_lf_re = std::regex{"[\r\n]+\\z"};
+    }
 
-  return boost::regex_replace(str, s_trailing_lf_re, "");
+  return std::regex_replace(str, s_trailing_lf_re, "");
 }

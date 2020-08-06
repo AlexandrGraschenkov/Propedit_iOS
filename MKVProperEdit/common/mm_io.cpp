@@ -205,7 +205,7 @@ mm_file_io_c::open(const std::string &path,
 */
 
 std::string
-mm_io_c::getline(boost::optional<std::size_t> max_chars) {
+mm_io_c::getline(mbalgm::optional<std::size_t> max_chars) {
   char c;
   std::string s;
 
@@ -228,7 +228,7 @@ mm_io_c::getline(boost::optional<std::size_t> max_chars) {
 
 bool
 mm_io_c::getline2(std::string &s,
-                  boost::optional<std::size_t> max_chars) {
+                  mbalgm::optional<std::size_t> max_chars) {
   try {
     s = getline(max_chars);
   } catch(...) {
@@ -986,7 +986,7 @@ mm_text_io_c::has_byte_order_marker(const std::string &string) {
   return detect_byte_order_marker(reinterpret_cast<const unsigned char *>(string.c_str()), string.length(), byte_order, bom_length);
 }
 
-boost::optional<std::string>
+mbalgm::optional<std::string>
 mm_text_io_c::get_encoding(byte_order_e byte_order) {
   if (BO_NONE == byte_order)
     return {};
@@ -1071,7 +1071,7 @@ mm_text_io_c::read_next_char(char *buffer) {
 }
 
 std::string
-mm_text_io_c::getline(boost::optional<std::size_t> max_chars) {
+mm_text_io_c::getline(mbalgm::optional<std::size_t> max_chars) {
   if (eof())
     throw mtx::mm_io::end_of_file_x{mtx::mm_io::make_error_code()};
 

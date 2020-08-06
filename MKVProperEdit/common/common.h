@@ -86,6 +86,54 @@ std::string join(const std::vector<std::string> &vec, const std::string &sep);
 bool istarts_with(const std::string &str, const std::string &other);
 bool starts_with(const std::string &str, const std::string &other);
 bool iequals(const std::string &str, const std::string &other);
+
+template< class Container, class Pred >
+inline Container& remove_erase_if( Container& on, Pred pred )
+{
+    on.erase(
+             std::remove_if(on.begin(), on.end(), pred),
+             on.end());
+    return on;
+}
+
+template <typename T>
+class optional {
+public:
+    optional(){};
+    optional(const T &v) {
+        values.push_back(v);
+    }
+    bool exist() const {
+        return values.size() > 0;
+    }
+//    const T& get() const {
+//        return values[0];
+//    }
+//    const T& getc() const {
+//        return values[0];
+//    }
+//    T& get() {
+//        return values[0];
+//    }
+    bool operator!() const {
+        return values.size() == 0;
+    }
+    
+    operator bool() const {
+        return values.size() > 0;
+    }
+    const T& operator*() const {
+        return values[0];
+    }
+    void reset(const T& v) {
+        if (values.size())
+            values[0] = v;
+        else
+            values.push_back(v);
+    }
+private:
+    std::vector<T> values;
+};
 };
 #endif
 

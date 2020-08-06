@@ -964,7 +964,7 @@ kax_analyzer_c::ensure_front_seek_head_links_to(unsigned int seek_head_idx) {
 
   mxdebug_if(m_debug, strformat::bstr("ensure_front_seek_head_links_to start\n"));
 
-  boost::optional<unsigned int> first_seek_head_idx;
+  mbalgm::optional<unsigned int> first_seek_head_idx;
 
   for (int data_idx = 0, end = m_data.size(); end > data_idx; ++data_idx) {
     auto const &data = *m_data[data_idx];

@@ -130,7 +130,7 @@ struct header_t {
 
   // -1 for "invalid"
   unsigned int core_sampling_frequency{};
-  boost::optional<unsigned int> extension_sampling_frequency;
+  mbalgm::optional<unsigned int> extension_sampling_frequency;
 
   // in bit per second, or -1 == "open", -2 == "variable", -3 == "lossless"
   int transmission_bitrate{};

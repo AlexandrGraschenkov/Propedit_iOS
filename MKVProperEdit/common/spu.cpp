@@ -19,7 +19,7 @@
 
 namespace mtx { namespace spu {
 
-static boost::optional<std::size_t>
+static mbalgm::optional<std::size_t>
 find_stop_display_position(unsigned char const *data,
                            std::size_t const buf_size) {
   static debugging_option_c debug{"spu|spu_find_stop_display_position"};

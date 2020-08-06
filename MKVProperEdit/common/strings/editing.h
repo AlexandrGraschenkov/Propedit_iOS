@@ -14,7 +14,10 @@
 #pragma once
 
 #include "common/common_pch.h"
-//#include <boost/regex.hpp>
+#include <regex>
+#include <string>
+#include <algorithm>
+#include <iterator>
 
 enum class line_ending_style_e {
   cr_lf,
@@ -24,13 +27,26 @@ enum class line_ending_style_e {
 std::string normalize_line_endings(std::string const &str, line_ending_style_e line_ending_style = line_ending_style_e::lf);
 std::string chomp(std::string const &str);
 
-std::vector<std::string> split(std::string const &text, boost::regex const &pattern, size_t max = 0, boost::match_flag_type match_flags = boost::match_default);
+std::vector<std::string> split(std::string const &text, std::regex const &pattern, size_t max = 0, std::regex_constants::match_flag_type match_flags = std::regex_constants::match_default);
 
 inline std::vector<std::string>
 split(std::string const &text,
       std::string const &pattern = ",",
       size_t max = 0) {
-  return split(text, boost::regex(std::string("\\Q") + pattern, boost::regex::perl), max);
+    
+    std::vector<std::string> cont;
+    std::size_t current, previous = 0;
+    current = text.find_first_of(pattern);
+    while (current != std::string::npos) {
+        if (max > 0 && cont.size() >= max) break;
+        cont.push_back(text.substr(previous, current - previous));
+        previous = current + 1;
+        current = text.find_first_of(pattern, previous);
+    }
+    if (max == 0 || cont.size() < max) {
+        cont.push_back(text.substr(previous, current - previous));
+    }
+    return cont;
 }
 
 void strip(std::string &s, bool newlines = false);

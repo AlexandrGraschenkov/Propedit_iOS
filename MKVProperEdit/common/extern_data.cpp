@@ -2761,7 +2761,7 @@ guess_mime_type(std::string ext,
   return mime_type;
 }
 
-boost::optional<std::string>
+mbalgm::optional<std::string>
 map_to_cctld(std::string const &s) {
   auto deprecated = brng::find_if(s_deprecated_cctlds, [&s](std::pair<std::string, std::string> const &entry) { return entry.first == s; });
   if (deprecated != s_deprecated_cctlds.end())
@@ -2771,5 +2771,5 @@ map_to_cctld(std::string const &s) {
   if (current != g_cctlds.end())
     return s;
 
-  return boost::none;
+  return mbalgm::optional<std::string>();
 }

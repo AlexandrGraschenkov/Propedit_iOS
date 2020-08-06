@@ -111,7 +111,7 @@ private:
   parse_mode_e m_parse_mode{parse_mode_full};
   open_mode m_open_mode{MODE_WRITE};
   bool m_throw_on_error{};
-  boost::optional<uint64_t> m_parser_start_position;
+  mbalgm::optional<uint64_t> m_parser_start_position;
   bool m_is_webm{};
 
 public:                         // Static functions

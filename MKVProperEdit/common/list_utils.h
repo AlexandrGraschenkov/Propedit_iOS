@@ -77,17 +77,17 @@ none_of(std::function<bool(T const &)> pred,
 }
 
 template<typename T>
-boost::optional<T>
+mbalgm::optional<T>
 first_of(std::function<bool(T const &)> pred,
          T const &val) {
-  return pred(val) ? val : boost::optional<T>{};
+  return pred(val) ? val : mbalgm::optional<T>{};
 }
 
 // Versions for containers
 
 template<typename T,
          typename... Trest>
-boost::optional<T>
+mbalgm::optional<T>
 first_of(std::function<bool(T const &)> pred,
          T const &val,
          Trest... rest) {

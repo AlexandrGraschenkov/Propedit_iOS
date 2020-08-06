@@ -7,6 +7,7 @@
 
    Written by Moritz Bunkus <moritz@bunkus.org>.
 */
+// 
 
 #include "common/common_pch.h"
 
@@ -135,7 +136,7 @@ options_c::has_changes()
 
 void
 options_c::remove_empty_targets() {
-  boost::remove_erase_if(m_targets, [](target_cptr &target) { return !target->has_changes(); });
+  mbalgm::remove_erase_if(m_targets, [](target_cptr &target) { return !target->has_changes(); });
 }
 
 template<typename T> static ebml_element_cptr

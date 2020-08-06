@@ -287,4 +287,7 @@ bool iequals(const std::string &str, const std::string &other) {
         return false;
     return ci_find_substr(str, other) == 0;
 }
+
+
+
 };

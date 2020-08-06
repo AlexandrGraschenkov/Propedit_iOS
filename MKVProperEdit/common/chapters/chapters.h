@@ -75,7 +75,7 @@ extern std::string g_cue_name_format, g_default_language, g_default_country;
 bool probe_cue(mm_text_io_c *in);
 mtx::chapters::kax_cptr parse_cue(mm_text_io_c *in, int64_t min_ts, int64_t max_ts, int64_t offset, const std::string &language, const std::string &charset, std::unique_ptr<KaxTags> *tags = nullptr);
 
-std::size_t write_simple(KaxChapters &chapters, mm_io_c &out, boost::optional<std::string> const &language_to_extract);
+std::size_t write_simple(KaxChapters &chapters, mm_io_c &out, mbalgm::optional<std::string> const &language_to_extract);
 
 bool select_in_timeframe(KaxChapters *chapters, int64_t min_ts, int64_t max_ts, int64_t offset);
 

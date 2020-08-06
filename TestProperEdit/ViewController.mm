@@ -44,8 +44,11 @@
         data[i] = new char[count];
         std::strncpy(data[i], val, count);
     }
+    double d1 = CACurrentMediaTime();
     run_edit(command.count, data);
-    NSLog(@"Test");
+    double d2 = CACurrentMediaTime();
+    
+    NSLog(@"Test %lf", d2-d1);
 }
 
 

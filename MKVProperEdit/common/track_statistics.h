@@ -25,7 +25,7 @@ class KaxTags;
 
 class track_statistics_c {
 private:
-  boost::optional<int64_t> m_min_timestamp, m_max_timestamp_and_duration;
+  mbalgm::optional<int64_t> m_min_timestamp, m_max_timestamp_and_duration;
   uint64_t m_num_bytes{}, m_num_frames{}, m_track_uid{};
 
 public:
@@ -59,13 +59,13 @@ public:
     return m_num_frames;
   }
 
-  boost::optional<int64_t> get_duration() const {
-    return is_valid() ? *m_max_timestamp_and_duration - *m_min_timestamp : boost::optional<int64_t>{};
+  mbalgm::optional<int64_t> get_duration() const {
+    return is_valid() ? mbalgm::optional<int64_t>(*m_max_timestamp_and_duration - *m_min_timestamp) : mbalgm::optional<int64_t>();
   }
 
-  boost::optional<int64_t> get_bits_per_second() const {
+  mbalgm::optional<int64_t> get_bits_per_second() const {
     auto duration = get_duration();
-    return duration && (*duration != 0) ? ((m_num_bytes * 8000) / (*duration / 1000000)) : boost::optional<int64_t>{};
+    return duration && (*duration != 0) ? mbalgm::optional<int64_t>((m_num_bytes * 8000) / (*duration / 1000000)) : mbalgm::optional<int64_t>();
   }
 
   void account(int64_t timestamp, int64_t duration, uint64_t num_bytes) {

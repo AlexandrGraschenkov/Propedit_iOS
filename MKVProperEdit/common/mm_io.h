@@ -86,8 +86,8 @@ public:
 
   virtual std::string get_file_name() const = 0;
 
-  virtual std::string getline(boost::optional<std::size_t> max_chars = boost::none);
-  virtual bool getline2(std::string &s, boost::optional<std::size_t> max_chars = boost::none);
+  virtual std::string getline(mbalgm::optional<std::size_t> max_chars = mbalgm::optional<std::size_t>());
+  virtual bool getline2(std::string &s, mbalgm::optional<std::size_t> max_chars = mbalgm::optional<std::size_t>());
   virtual size_t puts(const std::string &s);
   inline size_t puts(const strformat::bstr &format) {
     return puts(format.str());
@@ -272,7 +272,7 @@ public:
   mm_text_io_c(mm_io_c *in, bool delete_in = true);
 
   virtual void setFilePointer(int64 offset, seek_mode mode=seek_beginning);
-  virtual std::string getline(boost::optional<std::size_t> max_chars = boost::none);
+  virtual std::string getline(mbalgm::optional<std::size_t> max_chars = mbalgm::optional<std::size_t>());
   virtual int read_next_char(char *buffer);
   virtual byte_order_e get_byte_order() const {
     return m_byte_order;
@@ -283,7 +283,7 @@ public:
   virtual void set_byte_order(byte_order_e byte_order) {
     m_byte_order = byte_order;
   }
-  virtual boost::optional<std::string> get_encoding() const {
+  virtual mbalgm::optional<std::string> get_encoding() const {
     return get_encoding(m_byte_order);
   }
 
@@ -293,7 +293,7 @@ protected:
 public:
   static bool has_byte_order_marker(const std::string &string);
   static bool detect_byte_order_marker(const unsigned char *buffer, unsigned int size, byte_order_e &byte_order, unsigned int &bom_length);
-  static boost::optional<std::string> get_encoding(byte_order_e byte_order);
+  static mbalgm::optional<std::string> get_encoding(byte_order_e byte_order);
 };
 
 using mm_text_io_cptr = std::shared_ptr<mm_text_io_c>;

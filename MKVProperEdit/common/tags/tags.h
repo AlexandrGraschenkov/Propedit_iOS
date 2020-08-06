@@ -38,7 +38,7 @@ namespace mtx { namespace tags {
 
 void remove_track_uid_targets(EbmlMaster *tag);
 void remove_elements_unsupported_by_webm(EbmlMaster &master);
-bool remove_track_statistics(KaxTags *tags, boost::optional<uint64_t> track_uid);
+bool remove_track_statistics(KaxTags *tags, mbalgm::optional<uint64_t> track_uid);
 
 KaxTags *select_for_chapters(KaxTags &tags, KaxChapters &chapters);
 
@@ -103,7 +103,7 @@ find_tag_for(KaxTags &tags,
 template<typename T>
 bool
 remove_simple_tags_for(KaxTags &tags,
-                       boost::optional<uint64_t> id,
+                       mbalgm::optional<uint64_t> id,
                        std::string const &name_to_remove) {
   auto removed_something = false;
   auto tag_idx = 0u;
@@ -116,7 +116,7 @@ remove_simple_tags_for(KaxTags &tags,
 
     if (id) {
       auto targets   = FindChild<KaxTagTargets>(*tag);
-      auto actual_id = targets ? boost::optional<uint64_t>{ FindChildValue<T>(*targets, 0llu) } : boost::optional<uint64_t>{ boost::none };
+      auto actual_id = targets ? mbalgm::optional<uint64_t>{ FindChildValue<T>(*targets, 0llu) } : mbalgm::optional<uint64_t>();
 
       if (!targets || !actual_id || (*actual_id != *id)) {
         ++tag_idx;

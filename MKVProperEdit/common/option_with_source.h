@@ -29,7 +29,7 @@ class option_with_source_c {
 public:
 protected:
   option_source_e m_source;
-  boost::optional<T> m_value;
+  mbalgm::optional<T> m_value;
 
 public:
   option_with_source_c()

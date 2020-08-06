@@ -10,6 +10,7 @@
 
    \author Written by Moritz Bunkus <moritz@bunkus.org>.
 */
+// 
 
 #include "common/common_pch.h"
 
@@ -18,6 +19,7 @@
 #include "common/strings/parsing.h"
 #include "common/translation.h"
 #include "propedit/propedit_cli_parser.h"
+#include <regex>
 
 propedit_cli_parser_c::propedit_cli_parser_c(const std::vector<std::string> &args)
   : mtx::cli::parser_c{args}
@@ -140,9 +142,9 @@ propedit_cli_parser_c::list_property_names_for_table(const std::vector<property_
                                                      const std::string &edit_spec) {
   auto &ebml_type_map = get_ebml_type_abbrev_map();
 
-  auto max_name_len = boost::accumulate(table, 0u, [](size_t a, const property_element_c &e) { return std::max(a, e.m_name.length()); });
+    auto max_name_len = std::accumulate(table.begin(), table.end(), 0u, [](size_t a, const property_element_c &e) { return std::max(a, e.m_name.length()); });
 
-  static boost::regex s_newline_re("\\s*\\n\\s*", boost::regex::perl);
+  static std::regex s_newline_re("\\s*\\n\\s*");
   strformat::bstr format((strformat::bstr("%%|1$-%1%s| | %%|2$-2s| |") % max_name_len).str());
   std::string indent_string = std::string(max_name_len, ' ') + " |    | ";
 
@@ -153,7 +155,7 @@ propedit_cli_parser_c::list_property_names_for_table(const std::vector<property_
     std::string name        = (format % property.m_name % ebml_type_map[property.m_type]).str();
     std::string description = property.m_title.get_translated()
                             + ": "
-                            + boost::regex_replace(property.m_description.get_translated(), s_newline_re, " ",  boost::match_default | boost::match_single_line);
+      + std::regex_replace(property.m_description.get_translated(), s_newline_re, " ",  std::regex_constants::match_default);
     mxinfo(format_paragraph(description, max_name_len + 8, name, indent_string));
   }
 }

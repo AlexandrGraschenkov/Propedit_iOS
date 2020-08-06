@@ -34,8 +34,8 @@ public:
   }
 
   static void hexdump(const void *buffer_to_dump, size_t lenth);
-  static void hexdump(memory_c const &buffer_to_dump, boost::optional<std::size_t> max_length = boost::none);
-  static void hexdump(memory_cptr const &buffer_to_dump, boost::optional<std::size_t> max_length = boost::none);
+  static void hexdump(memory_c const &buffer_to_dump, mbalgm::optional<std::size_t> max_length = mbalgm::optional<std::size_t>());
+  static void hexdump(memory_cptr const &buffer_to_dump, mbalgm::optional<std::size_t> max_length = mbalgm::optional<std::size_t>());
 
   static bool requested(const char *option, std::string *arg = nullptr);
   static bool requested(const std::string &option, std::string *arg = nullptr) {

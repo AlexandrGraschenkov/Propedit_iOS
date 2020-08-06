@@ -19,6 +19,57 @@
 
 #define RE_TIMESTAMP "((?:\\d{2}:)?\\d{2}:\\d{2}\\.\\d{3})"
 
+
+namespace std
+{
+
+
+template<class BidirIt, class Traits, class CharT, class UnaryFunction>
+std::basic_string<CharT> regex_replace_lambda2(BidirIt first, BidirIt last,
+    const std::basic_regex<CharT,Traits>& re, UnaryFunction f)
+{
+    std::basic_string<CharT> s;
+
+    typename std::match_results<BidirIt>::difference_type
+        positionOfLastMatch = 0;
+    auto endOfLastMatch = first;
+
+    auto callback = [&](const std::match_results<BidirIt>& match)
+    {
+        auto positionOfThisMatch = match.position(0);
+        auto diff = positionOfThisMatch - positionOfLastMatch;
+
+        auto startOfThisMatch = endOfLastMatch;
+        std::advance(startOfThisMatch, diff);
+
+        s.append(endOfLastMatch, startOfThisMatch);
+        s.append(f(match));
+
+        auto lengthOfMatch = match.length(0);
+
+        positionOfLastMatch = positionOfThisMatch + lengthOfMatch;
+
+        endOfLastMatch = startOfThisMatch;
+        std::advance(endOfLastMatch, lengthOfMatch);
+    };
+
+    std::regex_iterator<BidirIt> begin(first, last, re), end;
+    std::for_each(begin, end, callback);
+
+    s.append(endOfLastMatch, last);
+
+    return s;
+}
+
+template<class Traits, class CharT, class UnaryFunction>
+std::string regex_replace_lambda2(const std::string& s,
+    const std::basic_regex<CharT,Traits>& re, UnaryFunction f)
+{
+    return regex_replace_lambda2(s.cbegin(), s.cend(), re, f);
+}
+
+} // namespace std
+
 struct webvtt_parser_c::impl_t {
 public:
   std::vector<std::string> current_block, global_blocks, local_blocks;
@@ -27,7 +78,7 @@ public:
   unsigned int current_cue_number{}, total_number_of_cues{};
   debugging_option_c debug{"webvtt_parser"};
 
-  boost::regex timestamp_line_re{"^" RE_TIMESTAMP " --> " RE_TIMESTAMP "(?: ([^\\n]+))?$", boost::regex::perl};
+  std::regex timestamp_line_re{"^" RE_TIMESTAMP " --> " RE_TIMESTAMP "(?: ([^\\n]+))?$"};
 };
 
 webvtt_parser_c::webvtt_parser_c()
@@ -76,14 +127,14 @@ webvtt_parser_c::add_block() {
   if (m->current_block.empty())
     return;
 
-  boost::smatch matches;
+  std::smatch matches;
   std::string label, additional;
   auto timestamp_line = -1;
 
-  if (boost::regex_search(m->current_block[0], matches, m->timestamp_line_re))
+  if (std::regex_search(m->current_block[0], matches, m->timestamp_line_re))
     timestamp_line = 0;
 
-  else if ((m->current_block.size() > 1) && boost::regex_search(m->current_block[1], matches, m->timestamp_line_re)) {
+  else if ((m->current_block.size() > 1) && std::regex_search(m->current_block[1], matches, m->timestamp_line_re)) {
     timestamp_line = 1;
     label          = std::move(m->current_block[0]);
 
@@ -118,8 +169,8 @@ webvtt_parser_c::add_block() {
   mxdebug_if(m->debug,
              strformat::bstr("label «%1%» start «%2%» end «%3%» settings list «%4%» additional «%5%» content «%6%»\n")
              % label % matches[1].str() % matches[2].str() % matches[3].str()
-             % boost::regex_replace(additional, boost::regex{"\n+", boost::regex::perl}, "–")
-             % boost::regex_replace(content,    boost::regex{"\n+", boost::regex::perl}, "–"));
+             % std::regex_replace(additional, std::regex{"\n+"}, "–")
+             % std::regex_replace(content,    std::regex{"\n+"}, "–"));
 
   m->local_blocks.clear();
   m->current_block.clear();
@@ -175,12 +226,15 @@ webvtt_parser_c::get_progress_percentage()
 std::string
 webvtt_parser_c::adjust_embedded_timestamps(std::string const &text,
                                             timestamp_c const &offset) {
-  static boost::regex s_embedded_timestamp_re;
+  static std::regex s_embedded_timestamp_re;
+    static bool once = true;
 
-  if (s_embedded_timestamp_re.empty())
-    s_embedded_timestamp_re = boost::regex{"<" RE_TIMESTAMP ">", boost::regex::perl};
+    if (once) {
+        s_embedded_timestamp_re = std::regex{"<" RE_TIMESTAMP ">"};
+        once = false;
+    }
 
-  return boost::regex_replace(text, s_embedded_timestamp_re, [&offset](boost::smatch const &match) -> std::string {
+  return std::regex_replace_lambda2(text, s_embedded_timestamp_re, [&offset](std::smatch const &match) -> std::string {
     timestamp_c timestamp;
     parse_timestamp(match[1].str(), timestamp);
     return (strformat::bstr("<%1%>") % format_timestamp(timestamp + offset, 3)).str();
