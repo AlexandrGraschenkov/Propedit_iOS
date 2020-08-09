@@ -30,11 +30,11 @@
         @"--edit",
         @"track:a1",
         @"--set",
-        @"flag-default=1",
+        @"flag-default=0",
         @"--edit",
         @"track:a2",
         @"--set",
-        @"flag-default=0",
+        @"flag-default=1",
         @"-v"];
     
     char **data = new char*[command.count];// (char**) malloc(sizeof(char*) * command.count);
