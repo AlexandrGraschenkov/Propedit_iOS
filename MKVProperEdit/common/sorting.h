@@ -100,7 +100,7 @@ public:
   natural_string_c(StrT const &original)
     : m_original{original}
   {
-    static boost::wregex re(L"\\d+", boost::regex::icase | boost::regex::perl);
+    static std::wregex re(L"\\d+", std::regex::icase);
 
     std::wstring wide = to_wide(m_original);
     boost::wsregex_token_iterator it(wide.begin(), wide.end(), re, std::vector<int>{ -1, 0 });

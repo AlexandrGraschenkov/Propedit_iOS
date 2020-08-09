@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6A04FE79242C0092838644B5 /* Pods_MKVProperEdit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6205CC6E44DE28DD7A885F77 /* Pods_MKVProperEdit.framework */; };
+		8641B635B66344BCABC6B73C /* Pods_MKVProperEdit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6205CC6E44DE28DD7A885F77 /* Pods_MKVProperEdit.framework */; };
+		FA0A068E24E08FA0004EA002 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA0A068724E0870A004EA002 /* boost.framework */; };
 		FA46AD3424430E0F005CA1E2 /* MKVProperEdit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */; };
 		FA46AD3524430E0F005CA1E2 /* MKVProperEdit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA46AD3A2443580A005CA1E2 /* fs_sys_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA46AD392443580A005CA1E2 /* fs_sys_helpers.cpp */; };
@@ -15,11 +16,8 @@
 		FA46AD3C24436051005CA1E2 /* ebml.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FA46AD3F24436051005CA1E2 /* matroska.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE31CD92441AED9006D1642 /* matroska.framework */; };
 		FA46AD4024436051005CA1E2 /* matroska.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAE31CD92441AED9006D1642 /* matroska.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA46AD4324436051005CA1E2 /* MKVProperEdit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */; };
 		FA53634124443EC600A6EA52 /* ebml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; platformFilter = ios; };
 		FA53634224443EC600A6EA52 /* ebml.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAD6F370243D2EAC00C4FDC3 /* ebml.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FA53638A244B3A3200A6EA52 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7F2FB32441C52000340485 /* boost.framework */; };
-		FA53638B244B3A3200A6EA52 /* boost.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FA7F2FB32441C52000340485 /* boost.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FA77F14323D1A1C8009DCB2C /* MKVProperEdit.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F14123D1A1C8009DCB2C /* MKVProperEdit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FA77F16423D1A1E1009DCB2C /* propedit_cli_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F14B23D1A1E1009DCB2C /* propedit_cli_parser.cpp */; };
 		FA77F16623D1A1E1009DCB2C /* options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA77F14D23D1A1E1009DCB2C /* options.cpp */; };
@@ -272,7 +270,6 @@
 		FA77F37223D1A22C009DCB2C /* bit_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F27A23D1A22C009DCB2C /* bit_writer.h */; };
 		FA77F37323D1A22C009DCB2C /* hevc_types.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F27B23D1A22C009DCB2C /* hevc_types.h */; };
 		FA77F37423D1A22C009DCB2C /* id3.h in Headers */ = {isa = PBXBuildFile; fileRef = FA77F27C23D1A22C009DCB2C /* id3.h */; };
-		FA7F2FB42441C52000340485 /* boost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA7F2FB32441C52000340485 /* boost.framework */; };
 		FA9821AF24420A61007BA2FC /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9821AD244209B2007BA2FC /* libiconv.tbd */; };
 		FA9821B924420C21007BA2FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9821B824420C21007BA2FC /* AppDelegate.m */; };
 		FA9821BC24420C22007BA2FC /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FA9821BB24420C22007BA2FC /* SceneDelegate.m */; };
@@ -455,7 +452,6 @@
 			files = (
 				FA46AD3C24436051005CA1E2 /* ebml.framework in Embed Frameworks */,
 				FA46AD4024436051005CA1E2 /* matroska.framework in Embed Frameworks */,
-				FA53638B244B3A3200A6EA52 /* boost.framework in Embed Frameworks */,
 				FA46AD3524430E0F005CA1E2 /* MKVProperEdit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -478,6 +474,8 @@
 		515A664DB923EEA482EF406D /* Pods-MKVProperEdit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKVProperEdit.release.xcconfig"; path = "Target Support Files/Pods-MKVProperEdit/Pods-MKVProperEdit.release.xcconfig"; sourceTree = "<group>"; };
 		6205CC6E44DE28DD7A885F77 /* Pods_MKVProperEdit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MKVProperEdit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0EA827E1D379AA3FE78CE74 /* Pods-MKVProperEdit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MKVProperEdit.debug.xcconfig"; path = "Target Support Files/Pods-MKVProperEdit/Pods-MKVProperEdit.debug.xcconfig"; sourceTree = "<group>"; };
+		FA0A068724E0870A004EA002 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = Carthage/Build/iOS/boost.framework; sourceTree = "<group>"; };
+		FA0A068924E08DA1004EA002 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = boost.framework; path = ../../../Downloads/iOSBoostFramework/build/boost.framework; sourceTree = "<group>"; };
 		FA46AD392443580A005CA1E2 /* fs_sys_helpers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = fs_sys_helpers.cpp; sourceTree = "<group>"; };
 		FA77F13E23D1A1C8009DCB2C /* MKVProperEdit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MKVProperEdit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA77F14123D1A1C8009DCB2C /* MKVProperEdit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MKVProperEdit.h; sourceTree = "<group>"; };
@@ -738,7 +736,6 @@
 		FA77F27A23D1A22C009DCB2C /* bit_writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bit_writer.h; sourceTree = "<group>"; };
 		FA77F27B23D1A22C009DCB2C /* hevc_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hevc_types.h; sourceTree = "<group>"; };
 		FA77F27C23D1A22C009DCB2C /* id3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = id3.h; sourceTree = "<group>"; };
-		FA7F2FB32441C52000340485 /* boost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = boost.framework; sourceTree = "<group>"; };
 		FA9821AD244209B2007BA2FC /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		FA9821B024420AFC007BA2FC /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		FA9821B524420C21007BA2FC /* TestProperEdit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestProperEdit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -873,11 +870,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA0A068E24E08FA0004EA002 /* boost.framework in Frameworks */,
 				FAD6F3F9243D2F5A00C4FDC3 /* ebml.framework in Frameworks */,
 				FAE31D3C2441B217006D1642 /* matroska.framework in Frameworks */,
-				FA7F2FB42441C52000340485 /* boost.framework in Frameworks */,
-				6A04FE79242C0092838644B5 /* Pods_MKVProperEdit.framework in Frameworks */,
 				FA9821AF24420A61007BA2FC /* libiconv.tbd in Frameworks */,
+				8641B635B66344BCABC6B73C /* Pods_MKVProperEdit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,10 +883,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA46AD3B24436051005CA1E2 /* ebml.framework in Frameworks */,
-				FA53638A244B3A3200A6EA52 /* boost.framework in Frameworks */,
 				FA46AD3F24436051005CA1E2 /* matroska.framework in Frameworks */,
 				FA46AD3424430E0F005CA1E2 /* MKVProperEdit.framework in Frameworks */,
-				FA46AD4324436051005CA1E2 /* MKVProperEdit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,9 +918,10 @@
 		A0CB765E7C45AB2F90017EC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FA0A068724E0870A004EA002 /* boost.framework */,
+				FA0A068924E08DA1004EA002 /* boost.framework */,
 				FA9821B024420AFC007BA2FC /* libz.tbd */,
 				FA9821AD244209B2007BA2FC /* libiconv.tbd */,
-				FA7F2FB32441C52000340485 /* boost.framework */,
 				6205CC6E44DE28DD7A885F77 /* Pods_MKVProperEdit.framework */,
 			);
 			name = Frameworks;
@@ -2317,12 +2313,15 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = MKVProperEdit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2352,12 +2351,15 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = MKVProperEdit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2383,6 +2385,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RE82W8HD52;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2405,6 +2408,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RE82W8HD52;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2434,6 +2438,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ebml/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2462,6 +2467,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = ebml/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

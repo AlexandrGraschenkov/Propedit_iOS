@@ -17,6 +17,7 @@
 
 #include "common/mm_io_x.h"
 #include "common/xml/xml.h"
+#include <regex>
 
 namespace mtx {
 namespace xml {
@@ -68,15 +69,15 @@ load_file(std::string const &file_name,
     throw mtx::mm_io::end_of_file_x{};
 
   if (BO_NONE == in.get_byte_order()) {
-    boost::regex encoding_re("^ \\s* "              // ignore leading whitespace
+    std::regex encoding_re("^ \\s* "              // ignore leading whitespace
                              "<\\?xml"              // XML declaration start
                              "[^\\?]+"              // skip to encoding, but don't go beyond XML declaration
                              "encoding \\s* = \\s*" // encoding attribute
                              "\" ( [^\"]+ ) \"",    // attribute value
-                             boost::regex::perl | boost::regex::mod_x | boost::regex::icase);
+                             std::regex::icase);
 
-    boost::smatch matches;
-    if (boost::regex_search(content, matches, encoding_re)) {
+    std::smatch matches;
+    if (std::regex_search(content, matches, encoding_re)) {
       // Extract the old encoding, replace the string with "UTF-8" so
       // that pugixml doesn't recode, and recode to UTF-8.
       auto encoding = matches[1].str();

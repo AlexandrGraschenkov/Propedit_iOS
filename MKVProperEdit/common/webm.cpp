@@ -17,6 +17,6 @@
 
 bool
 is_webm_file_name(const std::string &file_name) {
-  static boost::regex s_webm_file_name_re("\\.webm(?:a|v)?$", boost::regex::perl);
-  return boost::regex_search(file_name, s_webm_file_name_re);
+  static std::regex s_webm_file_name_re("\\.webm(?:a|v)?$");
+  return std::regex_search(file_name, s_webm_file_name_re);
 }
