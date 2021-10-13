@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_MKVProperEditVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_MKVProperEditVersionString[];
+FOUNDATION_EXPORT double Pods_TestProperEditVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_TestProperEditVersionString[];
 

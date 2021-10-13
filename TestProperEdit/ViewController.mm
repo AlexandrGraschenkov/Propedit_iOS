@@ -21,8 +21,9 @@
     // Do any additional setup after loading the view.
     
     NSString *docPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString *vidPath = [docPath stringByAppendingPathComponent:@"friends.mkv"];
-    NSLog(@"doc %@", vidPath);
+    NSString *vidPath = [docPath stringByAppendingPathComponent:@"friends.mp4"];
+    BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:vidPath];
+    NSLog(@"doc %@ %@", vidPath, exist ? @"YES" : @"NO");
     
     NSMutableArray<NSString *> *command = @[
         @"mkvpropedit",
