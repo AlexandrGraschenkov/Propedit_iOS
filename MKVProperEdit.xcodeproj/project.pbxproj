@@ -459,6 +459,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FA5BF9D326111796008F2886 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FA5BF9D226111796008F2886 /* boost.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -865,6 +876,7 @@
 			files = (
 				FAD6F3F9243D2F5A00C4FDC3 /* ebml.framework in Frameworks */,
 				FAE31D3C2441B217006D1642 /* matroska.framework in Frameworks */,
+				FA5BF9D126111796008F2886 /* boost.framework in Frameworks */,
 				FA9821AF24420A61007BA2FC /* libiconv.tbd in Frameworks */,
 				FA8CB2C427594A9C005871F2 /* boost.xcframework in Frameworks */,
 			);
@@ -1761,6 +1773,7 @@
 				FA77F13A23D1A1C8009DCB2C /* Sources */,
 				FA77F13B23D1A1C8009DCB2C /* Frameworks */,
 				FA77F13C23D1A1C8009DCB2C /* Resources */,
+				FA5BF9D326111796008F2886 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2320,6 +2333,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -2356,6 +2371,8 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
